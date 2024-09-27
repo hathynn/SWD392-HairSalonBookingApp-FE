@@ -21,10 +21,11 @@ function Login() {
 
     try {
       const response = await fetch(
-        "https://localhost:5145/api/User/Login/login",
+        "http://localhost:5145/api/User/Login/login",
         {
           method: "POST",
           headers: {
+            "accept": "application/json",
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),

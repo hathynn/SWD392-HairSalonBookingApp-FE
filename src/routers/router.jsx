@@ -2,7 +2,8 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Homepage from "../pages/homepage/Homepage";
-import Login from "../pages/login/login";
+import Login from "../pages/login/Login";
+import Register from "../pages/register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -28,5 +29,13 @@ export const router = createBrowserRouter([
         element: <Homepage/>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login/>,
+  },
+  {
+    path: "/sign-up",
+    element: <Register/>,
   },
 ]);

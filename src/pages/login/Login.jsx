@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import Slider from "react-slick";
-import './Login.scss';
+import React, { useState } from "react";
+import "./Login.scss";
 import LoginPicture from "../../assets/login.jpg";
 import { message } from 'antd';
 

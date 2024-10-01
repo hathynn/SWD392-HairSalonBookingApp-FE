@@ -5,14 +5,15 @@ import Homepage from "../pages/homepage/Homepage";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <div>
-        {/* <Header /> */}
+        <Header />
         <Outlet />
-        {/* <Footer /> */}
+        <Footer />
       </div>
     ),
     children: [
@@ -20,14 +21,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Homepage/>,
       },
-      {
-        path: "/login",
-        element: <Login/>,
-      },
-      {
-        path: "/sign-up",
-        element: <Homepage/>,
-      },
+      
     ],
   },
   {

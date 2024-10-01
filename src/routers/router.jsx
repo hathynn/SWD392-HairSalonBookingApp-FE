@@ -3,6 +3,8 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import Homepage from "../pages/homepage/Homepage";
 import Login from "../pages/login/Login";
+import Register from "../pages/register/Register";
+
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +30,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/sign-up",
-    element: <Homepage/>,
+    element: <Register/>,
   },
 ]);

@@ -13,7 +13,7 @@ function Pincode() {
 
     useEffect(() => {
         if (!registrationData) {
-            nav("/register");
+            nav("/sign-up");
         }
     }, [registrationData, nav]);
 
@@ -27,7 +27,7 @@ function Pincode() {
     const verifyPin = async () => {
         try {
             const response = await fetch(`http://localhost:5145/api/User/Verify/verify?token=${pin}`, {
-                method: "POST",  // Change to POST method
+                method: "POST",
             });
 
             if (!response.ok) throw new Error("Invalid or expired pin");

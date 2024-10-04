@@ -56,6 +56,8 @@ function Footer() {
           fontSize: "0.9em",
           paddingRight: "4em",
           marginTop: "4em",
+          marginBottom:"1em",
+          fontWeight:'bolder'
         }}
       >
         © 2024, Maverick Barber Shop.

@@ -18,7 +18,7 @@ function Header() {
           <p>Home</p>
           <p>Booking</p>
           <p>Service</p>
-         
+          <p>About us</p>
         </Flex>
         <Flex className="header__item__button">
             <ConfigProvider

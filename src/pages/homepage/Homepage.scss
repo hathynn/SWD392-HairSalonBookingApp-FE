@@ -30,12 +30,76 @@
     transform: translate(-50%, -50%);
     &__buttons {
       height: 40px;
-      width:8em;
+      width: 8em;
       font-size: 1.2em;
       font-family: "Teko";
       font-weight: 500;
       border-radius: 0px;
-      padding-top:0.4em;
+      padding-top: 0.4em;
     }
+  }
+}
+
+.swiper {
+  background-color: #252525;
+  padding-bottom: 6em;
+  &__title {
+    font-family: "Teko";
+    font-size: 4em;
+    text-align: center;
+    padding-top: 1em;
+    color: #96885f;
+  }
+
+  &__content {
+    font-family: "Gantari";
+   color:rgb(169, 168, 168);
+   text-align: center;
+   padding:2em 0;
+  }
+
+  .custom-horizontal-divider {
+    border-color: #96885f;
+    border-width: 2px;
+    width: 100%;
+  }
+
+  .slider-container {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+
+    .slick-slide {
+      display: flex;
+      justify-content: center;
+
+      .slider-image {
+        object-fit: cover;
+      }
+    }
+
+    .slick-prev,
+    .slick-next {
+      z-index: 1;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .slick-prev {
+      left: -2em;
+      z-index: 1;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .slick-next {
+      right: -1.6em;
+    }
+  }
+}
+
+.slider2-container {
+  .slider2-image {
+    object-fit: cover;
   }
 }

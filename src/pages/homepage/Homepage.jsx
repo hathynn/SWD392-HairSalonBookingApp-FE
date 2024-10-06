@@ -1,6 +1,6 @@
 import React from "react";
 import "./Homepage.scss";
-import { Button, ConfigProvider, Divider, Image } from "antd";
+import { Button, Col, ConfigProvider, Divider, Image, Row } from "antd";
 import Slider from "react-slick";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
@@ -27,6 +27,21 @@ function SamplePrevArrow(props) {
 }
 
 function Homepage() {
+  const data = [
+    "https://timbarbershop.vn/wp-content/uploads/2023/04/chinh3-1025x1536.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2019/04/hoan-1025x1536.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2019/04/dai-2-1025x1536.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2019/04/hung-1025x1536.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2019/04/kien-1025x1536.jpg",
+  ];
+
+  const data2 = [
+    "https://timbarbershop.vn/wp-content/uploads/2019/04/DLE8588-scaled.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2023/04/quay.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2022/01/270641397_955658441727761_4328470883924018224_n-1270x715.jpg",
+    "https://timbarbershop.vn/wp-content/uploads/2023/04/a-duong-8844-copy-scaled.jpg",
+  ];
+
   const settings = {
     infinite: true,
     slidesToShow: 3,
@@ -52,7 +67,7 @@ function Homepage() {
   };
 
   return (
-    <div>
+    <div className="homepage">
       <div className="hero">
         <img
           src="https://knockouts.com/bellevue-ne/wp-content/uploads/sites/68/2020/03/knockouts-franchise-locations-header-2020.jpg"
@@ -96,7 +111,7 @@ function Homepage() {
           <Slider {...settings}>
             <div>
               <Image
-                width={300}
+                width={290}
                 height={300}
                 src="https://timbarbershop.vn/wp-content/uploads/2019/04/284499850_581120373344750_2981993326988884564_n-404x606.jpg"
                 className="slider-image"
@@ -105,7 +120,7 @@ function Homepage() {
             </div>
             <div>
               <Image
-                width={300}
+                width={290}
                 height={300}
                 src="https://timbarbershop.vn/wp-content/uploads/2019/04/DLE8585-404x269.jpg"
                 className="slider-image"
@@ -114,7 +129,7 @@ function Homepage() {
             </div>
             <div>
               <Image
-                width={300}
+                width={290}
                 height={300}
                 src="https://timbarbershop.vn/wp-content/uploads/2019/04/04-404x404.jpg"
                 className="slider-image"
@@ -123,7 +138,7 @@ function Homepage() {
             </div>
             <div>
               <Image
-                width={300}
+                width={290}
                 height={300}
                 src="https://timbarbershop.vn/wp-content/uploads/2023/04/chinh4.jpg"
                 className="slider-image"
@@ -133,47 +148,52 @@ function Homepage() {
           </Slider>
         </div>
       </div>
-      <div className="slider2-container">
-        <Slider {...settings2}>
-          <div>
-            <Image
-              width={530}
-              height={400}
-              src="https://timbarbershop.vn/wp-content/uploads/2023/04/a-duong-8844-copy-scaled.jpg"
-              className="slider2-image"
-              preview={false}
-            />
-          </div>
-          <div>
-            <Image
-              width={530}
-              height={400}
-              src="https://timbarbershop.vn/wp-content/uploads/2022/01/270641397_955658441727761_4328470883924018224_n-1270x715.jpg"
-              className="slider2-image"
-              preview={false}
-            />
-          </div>
-          <div>
-            <Image
-              width={530}
-              height={400}
-              src="https://timbarbershop.vn/wp-content/uploads/2023/04/quay.jpg"
-              className="slider2-image"
-              preview={false}
-            />
-          </div>
-     
-         
-          <div>
-            <Image
-              width={530}
-              height={400}
-              src="https://timbarbershop.vn/wp-content/uploads/2019/04/DLE8588-scaled.jpg"
-              className="slider2-image"
-              preview={false}
-            />
-          </div>
+      <div>
+        <Slider {...settings2} className="slider2-container">
+          {data2.map((src, index) => (
+            <div key={index}>
+              <Image
+                width={530}
+                height={400}
+                src={src}
+                className="slider2-image"
+                preview={false}
+              />
+            </div>
+          ))}
         </Slider>
+      </div>
+      <div>
+        <Row className="member">
+          <Col span={2}></Col>
+          <Col span={5} className="member__left">
+            <p className="member__left__title">
+              <span style={{ color: "#96885F" }}>Team </span> member
+            </p>
+            <div style={{ width: "20%" }}>
+              <Divider className="custom-horizontal-divider" />
+            </div>
+          </Col>
+          <Col span={15} className="member__right">
+            <div className="slider-container">
+              <Slider {...settings}>
+                {data.map((src, index) => (
+                  <div key={index}>
+                    <Image
+                      width={300}
+                      height={500}
+                      src={src}
+                      className="slider-image"
+                      preview={false}
+                      style={{ borderRadius: "20px" }}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          </Col>
+          <Col span={2}></Col>
+        </Row>
       </div>
     </div>
   );

@@ -15,10 +15,10 @@ function Header() {
           <img className="header__item__logo" src={logo2} />
         </Link>
         <Flex className="header__item__menu">
-          <p>Home</p>
+          <p onClick={() => nav('/')}>Home</p>
           <p>Booking</p>
           <p>Service</p>
-          <p>About us</p>
+          <p onClick={() => nav('/about-us')}>About us</p>
         </Flex>
         <Flex className="header__item__button">
             <ConfigProvider

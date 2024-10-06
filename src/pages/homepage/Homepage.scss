@@ -1,8 +1,15 @@
+@import "../../styles/variables.scss";
+
+.homepage {
+  overflow-y: hidden;
+}
+
+
 .hero {
   position: relative;
   width: 100%;
   height: 75vh;
-  overflow: hidden;
+
 
   &__img {
     width: 100%;
@@ -42,7 +49,7 @@
 
 .swiper {
   background-color: #252525;
-  padding-bottom: 6em;
+  padding-bottom: 8em;
   &__title {
     font-family: "Teko";
     font-size: 4em;
@@ -99,7 +106,62 @@
 }
 
 .slider2-container {
+  margin: 0;
+  padding: 0;
+  background-color:  $secondary-color;
   .slider2-image {
+   
     object-fit: cover;
+  }
+}
+
+.member {
+  padding: 10em 0;
+  background-color: $secondary-color;
+  align-items: center;
+  &__left {
+    align-items: center;
+    &__title {
+      font-family: $font-primary;
+      font-size: 6em;
+      color: white;
+      line-height: 1em;
+    }
+  }
+
+  &__right {
+    .slider-container {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+
+        .slider-image {
+          object-fit: cover;
+        }
+      }
+
+      .slick-next {
+        z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .slick-next {
+        right: -1.6em;
+      }
+
+      .slick-prev {
+        display: none !important;
+      }
+    }
+  }
+  .custom-horizontal-divider {
+    border-color: $text-color;
+    border-width: 2px;
+    width: 100%;
   }
 }

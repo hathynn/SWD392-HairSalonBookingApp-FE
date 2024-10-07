@@ -1,0 +1,62 @@
+.header {
+  width: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  padding-top: 2em;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+
+  &__item {
+    // background-color: rgb(0, 0, 0);
+
+    padding: 0 1em;
+    border-radius: 10px;
+    border-color: #ffffff;
+    &__logo {
+      margin-top: 0.3em;
+      height: 3em;
+      width: 12em;
+    }
+
+    &__menu {
+      margin: 0.7em 0em;
+      font-family: "Teko";
+      font-weight: 500;
+      gap: 1em;
+      color: rgb(190, 190, 190);
+      font-size: 1.2em;
+      cursor: pointer;
+
+      p:hover {
+        color: rgb(255, 255, 255);
+      }
+    }
+
+    &__button {
+      gap: 0.5em;
+      padding-right: 2em;
+      &__left {
+        height: 38px;
+        padding-top: 0.4em;
+        font-size: 1.2em;
+        font-family: "Teko";
+        font-weight: 500;
+        border-radius: 0px;
+        width: 90%;
+        margin-right: 2em;
+      }
+
+      &__right {
+        height: 38px;
+        padding-top: 0.4em;
+        font-size: 1.2em;
+        font-family: "Teko";
+        font-weight: 500;
+        border-radius: 0px;
+        width: 140%;
+      }
+    }
+  }
+}

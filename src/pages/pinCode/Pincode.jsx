@@ -19,15 +19,18 @@ function Pincode() {
 
     const onChange = (e) => {
         const value = e.target.value;
-        if (/^\d*$/.test(value)) {
-            setPin(value);
-        }
+        setPin(value);
+
     };
 
     const verifyPin = async () => {
         try {
             const response = await fetch(`http://localhost:5145/api/User/Verify/verify?token=${pin}`, {
                 method: "POST",
+                header: {
+                    "accept": "application/json",
+                    "Content-Type": "application/json",
+                }
             });
 
             if (!response.ok) throw new Error("Invalid or expired pin");

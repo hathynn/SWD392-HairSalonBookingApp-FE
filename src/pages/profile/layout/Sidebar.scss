@@ -1,0 +1,23 @@
+/* Profile.scss */
+
+/* Custom styles for Header */
+.custom-header {
+    padding: 0;
+    background-color: #ffffff; /* Replace this with the value of your token */
+  }
+  
+  /* Custom styles for Content */
+  .custom-content {
+    margin: 24px 16px;
+    padding: 24px;
+    background-color: #ffffff; /* Replace this with the value of your token */
+    border-radius: 8px; /* Replace with the value of your borderRadiusLG token */
+  }
+  
+  /* Style for toggle button (optional) */
+  .toggle-btn {
+    font-size: 16px;
+    width: 64px;
+    height: 64px;
+  }
+  

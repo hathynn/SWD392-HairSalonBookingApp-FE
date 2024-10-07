@@ -4,11 +4,14 @@ import LoginPicture from "../../assets/login.jpg";
 import { message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const nav = useNavigate();
+  const [user, setUser] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,10 +39,17 @@ function Login() {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
+      if (data.error === 0) {
+        console.log("Login successful:", data);
+        message.success(data.message);
+        setUser(data.data);
+        localStorage.setItem("user", JSON.stringify(data.data));
+        nav("/user-profile");
+      } else {
+        throw new Error(message.error("Login failed! " + data.message));
+      }
     } catch (error) {
       console.error("Error:", error.message);
-      message.error("Login failed! Please check your credentials.");
     }
   };
 
@@ -90,7 +100,7 @@ function Login() {
         </form>
         <div className="login-options" >
           <button className="google-login-btn">
-            <FontAwesomeIcon icon={faGoogle} style={{paddingTop:'0.1em'}} />
+            <FontAwesomeIcon icon={faGoogle} style={{ paddingTop: '0.1em' }} />
             Sign in with Google
           </button>
           <p>

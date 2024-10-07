@@ -6,6 +6,8 @@ import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import Pincode from "../pages/pinCode/Pincode";
 import AboutUs from "../pages/aboutUs/AboutUs";
+import Profile from "../pages/profile/pages/Profile";
+import Sidebar from "../pages/profile/layout/Sidebar";
 
 
 export const router = createBrowserRouter([
@@ -41,5 +43,9 @@ export const router = createBrowserRouter([
   {
     path: "/pin-code",
     element: <Pincode/>,
+  },
+  {
+    path: "/user-profile",
+    element: <Sidebar/>,
   },
 ]);

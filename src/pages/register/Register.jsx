@@ -9,6 +9,8 @@ import * as Yup from 'yup';
 function Register() {
     const [error, setError] = useState(null);
     const nav = useNavigate();
+    const [isChecked, setIsChecked] = useState(false);
+
 
     //VALIDATION
     const validationSchema = Yup.object({
@@ -49,13 +51,18 @@ function Register() {
                 throw new Error(message.error("Register failed! This email is already registered"));
             }
             const data = await response.json();
-            console.log("Register successful:", data);
-            sessionStorage.setItem('registrationData', JSON.stringify(payload));
-            nav('/pin-code');
+
+            if (data.error === 0) {
+                console.log("Register successful:", data);
+                sessionStorage.setItem('registrationData', JSON.stringify(payload));
+                nav('/pin-code');
+            } else {
+                throw new Error(message.error(data.message));
+            }
+
         } catch (error) {
             console.error("Error:", error.message);
             setError(error.message);
-            message.error("Register failed! Please check your information");
         }
     };
 
@@ -102,8 +109,13 @@ function Register() {
                                     <Field name="confirmPassword" type="password" />
                                     <ErrorMessage name="confirmPassword" component="div" className="error-message" />
                                 </div>
-                                <Checkbox className="privacy-checked">I agree with the <span style={{ fontWeight: "bold" }}>Term of Service</span> and <span style={{ fontWeight: "bold" }}>Privacy Policy</span>. </Checkbox>
-                                <button type="submit" className="register-btn">
+                                <Checkbox
+                                    className="privacy-checked"
+                                    checked={isChecked}
+                                    onChange={(e) => setIsChecked(e.target.checked)}
+                                >
+                                    I agree with the <span style={{ fontWeight: "bold" }}>Term of Service</span> and <span style={{ fontWeight: "bold" }}>Privacy Policy</span>. </Checkbox>
+                                <button type="submit" className="register-btn" disabled={!isChecked}>
                                     Register
                                 </button>
                                 {error && <p className="error-message">{error}</p>}

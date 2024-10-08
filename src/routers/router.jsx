@@ -29,6 +29,10 @@ export const router = createBrowserRouter([
         path: "/about-us",
         element: <AboutUs/>,
       },
+      {
+        path: "/user-profile",
+        element: <Sidebar/>,
+      },
       
     ],
   },
@@ -44,8 +48,5 @@ export const router = createBrowserRouter([
     path: "/pin-code",
     element: <Pincode/>,
   },
-  {
-    path: "/user-profile",
-    element: <Sidebar/>,
-  },
+ 
 ]);

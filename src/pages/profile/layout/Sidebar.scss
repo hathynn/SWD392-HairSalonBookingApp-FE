@@ -1,23 +1,81 @@
-/* Profile.scss */
+@import "../../../styles/variables.scss";
 
 /* Custom styles for Header */
 .custom-header {
-    padding: 0;
-    background-color: #ffffff; /* Replace this with the value of your token */
+  padding: 0;
+  background-color: white; /* Replace this with the value of your token */
+}
+
+/* Custom styles for Content */
+.custom-content {
+  margin: 24px 16px;
+  padding: 24px;
+  background-color: white; /* Replace this with the value of your token */
+  border-radius: 8px; /* Replace with the value of your borderRadiusLG token */
+}
+
+
+
+.profile-page {
+  overflow-y: hidden;
+  position: relative;
+   border-bottom:1px solid rgba(0, 0, 0, 0.363);
+
+  &__header-img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
   }
-  
-  /* Custom styles for Content */
-  .custom-content {
-    margin: 24px 16px;
-    padding: 24px;
-    background-color: #ffffff; /* Replace this with the value of your token */
-    border-radius: 8px; /* Replace with the value of your borderRadiusLG token */
+
+  &__header-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $text-color;
+    font-size: 4em;
+    font-weight: bold;
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-family: "Teko";
   }
-  
-  /* Style for toggle button (optional) */
-  .toggle-btn {
-    font-size: 16px;
-    width: 64px;
-    height: 64px;
+}
+
+.menu-sidebar {
+  background-color: white !important;
+  border-inline-end: 1px solid black;
+
+  .ant-menu-item,
+  .ant-menu-submenu,
+  .ant-menu-sub {
+      font-family: 'Gantari';
+      color: black;
+      background-color: white !important;
+
+      border-radius: 0;
+
+      span {
+          font-size: 1.1em;
+      }
+      .anticon {
+          font-size: 1.5em !important;
+      }
   }
-  
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      
+  }
+  .ant-menu-item-selected {
+      color: black;
+      border-left: 3px solid white;
+      background-color: transparent;
+      
+  }
+
+  &.ant-menu-light.ant-menu.ant-menu-root.ant-menu-inline {
+    height: 60vh;
+    border-inline-end: 1px solid rgba(73, 72, 72, 0.578);
+  }
+}

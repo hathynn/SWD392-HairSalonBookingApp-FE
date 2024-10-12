@@ -73,3 +73,42 @@
     border-inline-end: 1px solid rgba(73, 72, 72, 0.578);
   }
 }
+
+.menu2-sidebar {
+  background-color: white !important;
+  border-inline-end: 1px solid black;
+
+  .ant-menu-item,
+  .ant-menu-submenu,
+  .ant-menu-sub {
+      font-family: 'Gantari';
+      color: black;
+      background-color: white !important;
+
+      border-radius: 0;
+
+      span {
+          font-size: 1.1em;
+      }
+      .anticon {
+          font-size: 1.5em !important;
+      }
+  }
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      
+  }
+  .ant-menu-item-selected {
+      color: black;
+      border-left: 3px solid white;
+      background-color: transparent;
+      
+  }
+
+  &.ant-menu-light.ant-menu.ant-menu-root.ant-menu-inline {
+    
+    border-inline-end: 1px solid rgba(73, 72, 72, 0.578);
+  }
+}

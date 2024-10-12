@@ -63,6 +63,20 @@ function Sidebar() {
                 },
               ]}
             />
+            <Menu
+              
+              mode="inline"
+              defaultSelectedKeys={["1"]}
+              className="menu2-sidebar"
+              items={[
+                
+                {
+                  key: "1",
+                  icon: <LogoutOutlined />,
+                  label: "Logout",
+                },
+              ]}
+            />
           </Sider>
           <Layout style={{ backgroundColor: "white" }}>
        

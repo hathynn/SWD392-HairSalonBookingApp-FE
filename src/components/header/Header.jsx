@@ -16,7 +16,7 @@ function Header() {
         </Link>
         <Flex className="header__item__menu">
           <p onClick={() => nav('/')}>Home</p>
-          <p>Booking</p>
+          <p onClick={() => nav('/booking')}>Booking</p>
           <p>Service</p>
           <p onClick={() => nav('/about-us')}>About us</p>
         </Flex>

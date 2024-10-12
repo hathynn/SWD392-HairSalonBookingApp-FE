@@ -8,6 +8,7 @@ import Pincode from "../pages/pinCode/Pincode";
 import AboutUs from "../pages/aboutUs/AboutUs";
 import Profile from "../pages/profile/pages/Profile";
 import Sidebar from "../pages/profile/layout/Sidebar";
+import Booking from "../pages/booking/Booking";
 
 
 export const router = createBrowserRouter([
@@ -32,7 +33,13 @@ export const router = createBrowserRouter([
       {
         path: "/user-profile",
         element: <Sidebar/>,
-      },     
+      },
+      {
+        path: "/booking",
+        element: <Booking/>,
+      },
+  
+
     ],
   },
   {

@@ -38,6 +38,8 @@ export const router = createBrowserRouter([
         path: "/booking",
         element: <Booking/>,
       },
+  
+
     ],
   },
   {

@@ -1,25 +1,21 @@
 @import "../../../styles/variables.scss";
 
-/* Custom styles for Header */
 .custom-header {
   padding: 0;
-  background-color: white; /* Replace this with the value of your token */
+  background-color: white; 
 }
 
-/* Custom styles for Content */
 .custom-content {
   margin: 24px 16px;
   padding: 24px;
-  background-color: white; /* Replace this with the value of your token */
-  border-radius: 8px; /* Replace with the value of your borderRadiusLG token */
+  background-color: white; 
+  border-radius: 8px; 
 }
-
-
 
 .profile-page {
   overflow-y: hidden;
   position: relative;
-   border-bottom:1px solid rgba(0, 0, 0, 0.363);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.363);
 
   &__header-img {
     width: 100%;
@@ -48,30 +44,28 @@
   .ant-menu-item,
   .ant-menu-submenu,
   .ant-menu-sub {
-      font-family: 'Gantari';
-      color: black;
-      background-color: white !important;
+    font-family: 'Gantari';
+    color: black;
+    background-color: white !important;
+    border-radius: 0;
 
-      border-radius: 0;
-
-      span {
-          font-size: 1.1em;
-      }
-      .anticon {
-          font-size: 1.5em !important;
-      }
+    span {
+      font-size: 1.1em;
+    }
+    
+    .anticon {
+      font-size: 1.5em !important;
+    }
   }
+
   .ant-menu-item,
   .ant-menu-submenu-title {
-      margin-top: 1em;
-      margin-bottom: 1em;
-      
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
+
   .ant-menu-item-selected {
-      color: black;
-      border-left: 3px solid white;
-      background-color: transparent;
-      
+    border-left: 3px solid $primary-color; 
   }
 
   &.ant-menu-light.ant-menu.ant-menu-root.ant-menu-inline {

@@ -9,7 +9,6 @@ import {
 import { Button, Layout, Menu } from "antd";
 import Profile from "../pages/Profile";
 import "./Sidebar.scss"; // Import the SCSS file
-import Header from "../../../components/header/Header";
 
 const { Sider, Content } = Layout;
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.scss";
 import LoginPicture from "../../assets/login.jpg";
+import Logo from "../../assets/logo.png";
 import { message } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
@@ -11,8 +12,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const nav = useNavigate();
-  const [user, setUser] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,10 +39,9 @@ function Login() {
 
       const data = await response.json();
       if (data.error === 0) {
-        console.log("Login successful:", data);
         message.success(data.message);
-        setUser(data.data);
-        localStorage.setItem("user", JSON.stringify(data.data));
+        localStorage.setItem("userId", data.data?.id);
+        localStorage.setItem("user", data.data);
         nav("/user-profile");
       } else {
         throw new Error(message.error("Login failed! " + data.message));
@@ -60,8 +58,7 @@ function Login() {
       </div>
 
       <div className="login-form-container">
-        <h2>Hello Again!</h2>
-        <p>Welcome to Maverick</p>
+      <img src={Logo} alt="Logo" />
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label htmlFor="email">Email</label>

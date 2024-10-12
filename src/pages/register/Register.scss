@@ -1,3 +1,5 @@
+@import "../../styles/variables.scss";
+
 .register-container {
     display: flex;
     height: 100vh;
@@ -68,8 +70,8 @@
             .register-btn {
                 width: 100%;
                 padding: 12px;
-                background-color: #001F3F;
-                color: white;
+                background-color: $primary-color;
+                color: black;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
@@ -90,9 +92,9 @@
         line-height: 3em;
 
         .login-link {
-            color: #001F3F;
+            color: $secondary-color;
             text-decoration: none;
-            font-family: 'Gantari', sans-serif;
+            font-family: $font-secondary;
 
             &:hover {
                 text-decoration: underline;

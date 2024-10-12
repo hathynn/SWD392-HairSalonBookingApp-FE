@@ -1,6 +1,7 @@
 import './Register.scss'
 import { useState } from 'react';
 import RegisterPicture from '../../assets/register.jpg';
+import Logo from "../../assets/logo.png";
 import { Checkbox, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -70,7 +71,7 @@ function Register() {
         <>
             <div className="register-container">
                 <div className="register-form-container">
-                    <h2>Welcome to Maverick</h2>
+                <img src={Logo} alt="Logo" />
                     <Formik
                         initialValues={{
                             fullName: '',

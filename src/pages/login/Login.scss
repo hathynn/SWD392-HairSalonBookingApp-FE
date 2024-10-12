@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .login-container {
     display: flex;
     height: 100vh;
@@ -28,31 +30,30 @@
         h2 {
             font-size: 40px;
             margin-bottom: 4px;
-            font-family: 'Teko';
+            font-family: $font-primary;
         }
 
         p {
             font-size: 16px;
             color: #777;
-            font-family: 'Gantari', sans-serif;
+            font-family: $font-secondary;
         }
 
         .login-form {
             width: 100%;
             max-width: 400px;
-            font-family: 'Gantari', sans-serif;
+            font-family: $font-secondary;
 
             .form-group {
                 margin-bottom: 10px;
-                font-family: 'Gantari', sans-serif;
-
+                
                 input {
                     width: 100%;
                     padding: 12px;
                     margin-top: 5px;
                     border: 1px solid #ccc;
                     border-radius: 5px;
-                    font-family: 'Gantari', sans-serif;
+                    font-family: $font-secondary;
                 }
 
             }
@@ -61,17 +62,15 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 10px;
-                font-family: 'Gantari', sans-serif;
+                font-family: $font-secondary;
 
                 .recovery-link {
                     color: #001F3F;
                     text-decoration: none;
-                    font-family: 'Gantari', sans-serif;
                     font-size: 12px;
 
                     &:hover {
                         text-decoration: underline;
-                        font-family: 'Gantari', sans-serif;
                     }
                 }
 
@@ -91,8 +90,8 @@
             .login-btn {
                 width: 100%;
                 padding: 12px;
-                background-color: #001F3F;
-                color: white;
+                background-color: $primary-color;
+                color: black;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
@@ -130,9 +129,9 @@
         }
 
         .signup-link {
-            color: #001F3F;
+            color: $secondary-color;
             text-decoration: none;
-            font-family: 'Gantari', sans-serif;
+            font-family: $font-secondary;
 
             &:hover {
                 text-decoration: underline;

@@ -7,38 +7,44 @@ function Profile() {
     fullName: '',
     email: '',
     phoneNumber: '',
-    gender: '',
+    address: '',
+    password: '',
   });
   const navigate = useNavigate();
-  useEffect(() => {
-    const userData = localStorage.getItem("user");
-    console.log(userData);
-
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        fullName: parsedUser.fullName,
-        email: parsedUser.email,
-      }));
+  const userId = localStorage.getItem('userId');
+  const [error, setError] = useState(null);
+  //USER PROFILE BY ID
+  const userProfileById = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5145/api/User/GetUserById?id=${userId}`, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setProfile({
+          fullName: data.data.fullName,
+          email: data.data.email,
+          phoneNumber: data.data.phone,
+        });
+      } else {
+        throw new Error('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      setError('Failed to load user data');
     }
-  }, []);
+  };
+
   const handleUpdateProfile = () => {
-    navigate('/update-profile'); 
+    navigate('/update-profile');
   };
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-    console.log(userData);
-
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        fullName: parsedUser.fullName,
-        email: parsedUser.email,
-      }));
-    }
+    userProfileById(userId);
   }, []);
 
   return (
@@ -53,11 +59,19 @@ function Profile() {
           />
         </div>
         <div className="form-row">
-          <label>Gender</label>
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={profile.phoneNumber}
+          />
+        </div>
+        <div className="form-row">
+          <label>Address</label>
           <input
             type="text"
-            name="fullName"
-            value={profile.gender}
+            name="address"
+            value={profile.address}
           />
         </div>
         <div className="form-row">
@@ -69,15 +83,15 @@ function Profile() {
           />
         </div>
         <div className="form-row">
-          <label>Phone Number</label>
+          <label>Password</label>
           <input
-            type="tel"
-            name="phoneNumber"
-            value={profile.phoneNumber}
+            type="password"
+            name="password"
+            value={profile.password}
           />
         </div>
       </div>
-      <button className="save-btn" onClick={handleUpdateProfile}>
+      <button className="update-btn" onClick={handleUpdateProfile}>
         Update Profile
       </button>
     </div>

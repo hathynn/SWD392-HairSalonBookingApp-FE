@@ -9,7 +9,7 @@ import AboutUs from "../pages/aboutUs/AboutUs";
 import Profile from "../pages/profile/pages/Profile";
 import Sidebar from "../pages/profile/layout/Sidebar";
 import Booking from "../pages/booking/Booking";
-
+import Main from "../pages/dashboard/layout/main-dashboard/Main";
 
 export const router = createBrowserRouter([
   {
@@ -24,35 +24,42 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Homepage/>,
+        element: <Homepage />,
       },
       {
         path: "/about-us",
-        element: <AboutUs/>,
+        element: <AboutUs />,
       },
       {
         path: "/user-profile",
-        element: <Sidebar/>,
+        element: <Sidebar />,
       },
       {
         path: "/booking",
-        element: <Booking/>,
+        element: <Booking />,
       },
-  
-
     ],
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "/sign-up",
-    element: <Register/>,
+    element: <Register />,
   },
   {
     path: "/pin-code",
-    element: <Pincode/>,
+    element: <Pincode />,
   },
- 
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
+        path: "/dashboard/manager",
+        element: <div></div>,
+      },
+    ],
+  },
 ]);

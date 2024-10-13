@@ -52,8 +52,10 @@ export const router = createBrowserRouter([
     path: "/pin-code",
     element: <Pincode />,
   },
+
+  //dashboard
   {
-    path: "/",
+    path: "/dashboard",
     element: <Main />,
     children: [
       {

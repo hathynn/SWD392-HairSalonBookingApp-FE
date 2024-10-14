@@ -17,7 +17,7 @@ function NavDashboard() {
           : user.Role == "manager"
           ? navDashboardConfig
           : user.Role == "salestaff"
-          ? navDashboardConfigStaff
+          ? navDashboardConfuigStaff
           : null
       ).map((nav, index) => (
         <Link

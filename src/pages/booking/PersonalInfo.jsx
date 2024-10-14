@@ -217,13 +217,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
           </Slider>
         </div>
       </div>
-      <div
-        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button className="next-button" style={{ marginTop: "0.6em" }}>
-          Next
-        </Button>
-      </div>
+     
     </div>
   );
 }

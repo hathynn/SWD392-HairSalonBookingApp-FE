@@ -74,7 +74,6 @@
     width: 100%;
     margin: 0 auto;
 
-
     .slick-slide {
       display: flex;
       justify-content: center;
@@ -101,8 +100,6 @@
     .slick-next {
       right: -0.5em;
     }
-
-   
   }
 
   &__card {
@@ -110,23 +107,110 @@
     width: 96%;
     height: 24vh;
     border-radius: 0px;
-    margin: 1em 0;
+    margin-top: 1em;
     img {
       height: 24vh;
       object-fit: cover;
     }
 
     &__title {
-      font-size:1.2em !important;
+      font-size: 1.2em !important;
     }
     &__subtitle {
-      font-size:1em !important;
-      color:$secondary-text-color;
+      font-size: 1em !important;
+      color: $secondary-text-color;
     }
   }
 }
 
-.next-button {
-  display: flex;
-  justify-content: flex-end;
+.service-container {
+  &__title {
+    font-family: $font-secondary;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
+  .service-container__scroll {
+    height: 350px;
+    overflow-y: scroll;
+  }
+
+  &__card {
+    border-radius: 0px;
+  
+    &__content {
+     padding-bottom:1.5em;
+      &__title {
+        font-size: 1.2em;
+        font-weight: 600;
+       padding-bottom:0.5em;
+      }
+      &__subtitle {
+        color:$secondary-text-color;
+        font-size: 0.8em;
+      }
+    }
+
+    &__buttons {
+      width:100%;
+      display: flex;
+      justify-content: space-between;
+      &__left {
+        width:69%;
+      }
+      &__right {
+        width:29%;
+      }
+    }
+  }
 }
+
+.date-container {
+  display:flex;
+  gap: 2em;
+  p {
+    font-family: $font-secondary;
+    padding-top:0.3em;
+    font-size:1.2em;
+  }
+}
+
+// .stylist-container {
+//   &__title {
+//     font-family: $font-secondary;
+//     font-size: 1.2em;
+//     margin-bottom: 0.5em;
+//   }
+//   .stylist-container__scroll {
+//     height: 350px;
+//     overflow-y: scroll;
+//   }
+
+//   &__card {
+//     border-radius: 0px;
+  
+//     &__content {
+//    line-height: 2em;
+//       &__title {
+//         font-size: 1.2em;
+//         font-weight: 600;
+    
+//       }
+//       &__subtitle {
+//         color:$secondary-text-color;
+//         font-size: 0.8em;
+//       }
+//     }
+
+//     &__buttons {
+//       width:100%;
+//       display: flex;
+//       gap:0.5em;
+//       &__left {
+//         width:50%;
+//       }
+//       &__right {
+//         width:50%;
+//       }
+//     }
+//   }
+// }

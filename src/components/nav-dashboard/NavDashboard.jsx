@@ -12,11 +12,11 @@ function NavDashboard() {
   return (
     <div className="dashboard-navigator">
       {navDashboardConfig(
-        user.Role == "admin"
+        user.Role == "Admin"
           ? navDashboardConfigAdmin
-          : user.Role == "manager"
+          : user.Role == "Salon Manager"
           ? navDashboardConfig
-          : user.Role == "salestaff"
+          : user.Role == "Salon Staff"
           ? navDashboardConfuigStaff
           : null
       ).map((nav, index) => (

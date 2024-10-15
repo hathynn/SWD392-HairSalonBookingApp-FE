@@ -1,19 +1,22 @@
-// import axios from "axios";
+import axios from "axios";
+const baseUrl = "http://localhost:5145/api";
+const config = {
+  baseUrl,
+  timeout: 3000000,
+};
+const api = axios.create(config);
+api.defaults.baseURL = baseUrl;
 
-// const config = {
-//     baseURL: "https://localhost:5145/api/",
-// }
+const handleBefore = (config) => {
+  const token = localStorage.getItem("token")?.replaceAll('"', "");
+  config.headers["Authorization"] = `Bearer ${token}`;
+  console.log(token);
+  return config;
+};
+const handleError = (error) => {
+  console.log(error);
+  return;
+};
+api.interceptors.request.use(handleBefore, handleError);
 
-// const api = axios.create(config);
-
-// // Apply the interceptor to the api instance only
-// api.interceptors.request.use(function (config) {
-//     // Do something before request is sent
-//     console.log("Sending request to API:", config.url);
-//     return config;
-// }, function (error) {
-//     // Do something with request error
-//     return Promise.reject(error);
-// });
-
-// export default api;
+export default api;

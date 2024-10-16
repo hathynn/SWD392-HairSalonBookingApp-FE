@@ -56,11 +56,7 @@ function Sidebar() {
                   icon: <CalendarOutlined />,
                   label: "Bookings",
                 },
-                {
-                  key: "3",
-                  icon: <LogoutOutlined />,
-                  label: "Logout",
-                },
+                
               ]}
             />
             <Menu

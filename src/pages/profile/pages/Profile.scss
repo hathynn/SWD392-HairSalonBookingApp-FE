@@ -2,8 +2,15 @@
 
 .profile-container {
   margin: 0 auto;
-  padding: 20px;
   background-color: #fff;
+  width:100%;
+}
+
+.custom-content {
+  margin: 0 0 0 6em !important;
+  padding: 0 !important;
+  background-color: white;
+  border-radius: 8px;
 }
 
 .profile-form {
@@ -20,6 +27,7 @@
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  font-family: $font-secondary;
 }
 
 .form-row input {
@@ -27,25 +35,65 @@
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  font-family: $font-secondary;
 }
 
 .update-btn {
   font-family: $font-secondary;
-  display: block;
   padding: 10px;
   background-color: $primary-color;
   color: black;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 7vh;
   font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
+
 }
 
 .update-btn:hover {
   color: white;
   background-color: $secondary-color;
+}
+
+.form-detail {
+  font-family: "Gantari";
+  padding: 1em 0;
+}
+
+.update-profile {
+  &__modal {
+    width:950px !important;
+    height: 70vh !important;
+
+    .ant-modal-content {
+      height: 40vh;
+
+      .ant-btn-variant-outlined {
+        color:black;
+        margin-top:1.6em;
+        font-family: $font-secondary;
+      }
+      .ant-btn-variant-outlined:hover {
+        color:black;
+        border-color: black;
+      }
+
+      .ant-btn-variant-solid {
+        background-color: $primary-color;
+        font-family: $font-secondary;
+        color:black;
+        font-weight: 400;
+      }
+      .ant-btn-variant-solid:hover {
+        background-color: black;
+        color:white;
+        font-weight: 400;
+      }
+    }
+  }
+ 
+  
+
 }

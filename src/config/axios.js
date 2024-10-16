@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "http://localhost:5145/api";
+// const baseUrl = "http://localhost:5145/api";
+const baseUrl = "https://swd-web-deploy.azurewebsites.net/api/";
 const config = {
   baseUrl,
   timeout: 3000000,

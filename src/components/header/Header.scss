@@ -33,6 +33,19 @@
         color: rgb(255, 255, 255);
       }
     }
+    &__profile {
+      margin: 0.5em 0em;
+      font-family: "Teko";
+      font-weight: 500;
+      gap: 1em;
+      color: rgb(190, 190, 190);
+      font-size: 1.2em;
+      cursor: pointer;
+
+      p:hover {
+        color: rgb(255, 255, 255);
+      }
+    }
 
     &__button {
       gap: 0.5em;

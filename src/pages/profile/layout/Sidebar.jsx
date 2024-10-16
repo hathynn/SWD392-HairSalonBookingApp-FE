@@ -9,11 +9,24 @@ import {
 import { Button, Layout, Menu } from "antd";
 import Profile from "../pages/Profile";
 import "./Sidebar.scss"; // Import the SCSS file
+import BookingCustomer from "../pages/bookingCustomer/BookingCustomer";
 
 const { Sider, Content } = Layout;
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState("1"); 
+
+  const renderContent = () => {
+    switch (selectedKey) {
+      case "1":
+        return <Profile />;
+      case "2":
+        return <BookingCustomer />; 
+      default:
+        return <Profile />;
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -25,14 +38,11 @@ function Sidebar() {
       <div className="profile-page__header-text">Profile.</div>
       <div
         style={{
-       
           display: "flex",
           justifyContent: "center",
         }}
       >
-        <Layout
-          style={{ backgroundColor: "white", padding: "10vh 10vw" }}
-        >
+        <Layout style={{ backgroundColor: "white", padding: "10vh 10vw" }}>
           <Sider
             trigger={null}
             collapsible
@@ -41,10 +51,10 @@ function Sidebar() {
           >
             <div className="demo-logo-vertical" />
             <Menu
-              
               mode="inline"
               defaultSelectedKeys={["1"]}
               className="menu-sidebar"
+              onClick={(e) => setSelectedKey(e.key)} 
               items={[
                 {
                   key: "1",
@@ -56,16 +66,13 @@ function Sidebar() {
                   icon: <CalendarOutlined />,
                   label: "Bookings",
                 },
-                
               ]}
             />
             <Menu
-              
               mode="inline"
               defaultSelectedKeys={["1"]}
               className="menu2-sidebar"
               items={[
-                
                 {
                   key: "1",
                   icon: <LogoutOutlined />,
@@ -75,9 +82,8 @@ function Sidebar() {
             />
           </Sider>
           <Layout style={{ backgroundColor: "white" }}>
-       
             <Content className="custom-content">
-              <Profile />
+              {renderContent()} 
             </Content>
           </Layout>
         </Layout>

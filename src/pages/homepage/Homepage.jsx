@@ -1,8 +1,11 @@
 import React from "react";
 import "./Homepage.scss";
-import { Button, Col, ConfigProvider, Divider, Image, Row } from "antd";
+import { Button, Col, ConfigProvider, Divider, Image, Row, notification } from "antd";
 import Slider from "react-slick";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/counterSlice";
+import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -27,6 +30,18 @@ function SamplePrevArrow(props) {
 }
 
 function Homepage() {
+  const user = useSelector(selectUser);
+  const nav = useNavigate();
+
+  const handleClick = () => {
+    notification.info({
+      message: "Information",
+      description: "You need to login first.",
+      placement: "topRight",
+      duration: 3, // Thời gian thông báo tồn tại
+    });
+  };
+  
   const data = [
     "https://timbarbershop.vn/wp-content/uploads/2023/04/chinh3-1025x1536.jpg",
     "https://timbarbershop.vn/wp-content/uploads/2019/04/hoan-1025x1536.jpg",
@@ -75,27 +90,61 @@ function Homepage() {
           className="hero__img"
         />
         <div className="hero__overlay-text">Maverick Haircuts & Grooming</div>
-        <div className="hero__button">
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  defaultColor: "black",
-                  defaultBg: "#FAA300",
-                  defaultBorderColor: "#FAA300",
-                  defaultHoverBorderColor: "black",
-                  defaultHoverColor: "white",
-                  defaultHoverBg: "black",
-                  defaultActiveBg: "#FAA300",
-                  defaultActiveBorderColor: "#FAA300",
-                  defaultActiveColor: "black",
+        {user ? (
+          <div className="hero__button">
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    defaultColor: "black",
+                    defaultBg: "#FAA300",
+                    defaultBorderColor: "#FAA300",
+                    defaultHoverBorderColor: "black",
+                    defaultHoverColor: "white",
+                    defaultHoverBg: "black",
+                    defaultActiveBg: "#FAA300",
+                    defaultActiveBorderColor: "#FAA300",
+                    defaultActiveColor: "black",
+                  },
                 },
-              },
-            }}
-          >
-            <Button className="hero__button__buttons">Book Now</Button>
-          </ConfigProvider>
-        </div>
+              }}
+            >
+              <Button
+                onClick={() => nav("/booking")}
+                className="hero__button__buttons"
+              >
+                Book Now
+              </Button>
+            </ConfigProvider>
+          </div>
+        ) : (
+          <div className="hero__button">
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    defaultColor: "black",
+                    defaultBg: "#FAA300",
+                    defaultBorderColor: "#FAA300",
+                    defaultHoverBorderColor: "black",
+                    defaultHoverColor: "white",
+                    defaultHoverBg: "black",
+                    defaultActiveBg: "#FAA300",
+                    defaultActiveBorderColor: "#FAA300",
+                    defaultActiveColor: "black",
+                  },
+                },
+              }}
+            >
+              <Button
+                className="hero__button__buttons"
+                onClick={handleClick} // Gọi hàm để hiện notification
+              >
+                Book Now
+              </Button>
+            </ConfigProvider>
+          </div>
+        )}
       </div>
 
       <div className="swiper">

@@ -3,8 +3,11 @@ import "./NavDashboard.scss";
 import navDashboardConfig, {
   navDashboardConfigAdmin,
   navDashboardConfigStaff,
+  navDashboardConfigStylist,
 } from "./config";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/counterSlice";
 
 function NavDashboard() {
   const [isActive, setIsActive] = useState(2);
@@ -17,7 +20,9 @@ function NavDashboard() {
           : user.Role == "Salon Manager"
           ? navDashboardConfig
           : user.Role == "Salon Staff"
-          ? navDashboardConfuigStaff
+          ? navDashboardConfigStaff
+          : user.Role == "Stylist"
+          ? navDashboardConfigStylist
           : null
       ).map((nav, index) => (
         <Link

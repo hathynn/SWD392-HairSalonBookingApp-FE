@@ -48,11 +48,16 @@ function Login() {
       if (user.Role === "Customer") {
         nav("/")
       }
+      if (user.Role === "Admin") {
+        nav("/dashboard")
+      }
+      if (user.Role === "Salon Manager") {
+        nav("/dashboard/manager")
+      }
+      if (user.Role === "Salon Staff") {
+        nav("/dashboard/staff")
+      }
       
- 
-
-
-
       // Điều hướng đến trang user profile
       // message.success("Login successful!");
       // nav("/user-profile");

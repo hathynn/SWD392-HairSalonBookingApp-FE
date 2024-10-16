@@ -2,40 +2,27 @@ import {
   SolutionOutlined,
   TeamOutlined,
   ShoppingCartOutlined,
+  DollarCircleOutlined,
+  UserOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 
-import { PiTicketLight } from "react-icons/pi";
 
 export const navDashboardConfig = [
   {
     key: "1",
-    icon: <ShoppingCartOutlined />,
-    label: "Orders",
+    icon: <CalendarOutlined />,
+    label: "Bookings",
   },
   {
     key: "2",
-    icon: <PiTicketLight style={{ fontSize: "1.4em" }} />,
-    label: "Vouchers",
+    icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
+    label: "Stylist",
   },
   {
     key: "11",
-    icon: <SolutionOutlined style={{ fontSize: "1.4em" }} />,
-    label: "Requests",
-  },
-  {
-    key: "14",
-    icon: <TeamOutlined />,
-    label: "Staff",
-    children: [
-      {
-        key: "141",
-        label: "Sale Staff",
-      },
-      {
-        key: "142",
-        label: "Delivery Staff",
-      },
-    ],
+    icon: <DollarCircleOutlined style={{ fontSize: "1.4em" }} />,
+    label: "Revenue",
   },
 ];
 
@@ -54,7 +41,7 @@ export const navDashboardConfigAdmin = [
   {
     key: "13",
     icon: <ShoppingCartOutlined />,
-    label: "Orders",
+    label: "Services",
   },
   
 ];
@@ -62,8 +49,8 @@ export const navDashboardConfigAdmin = [
 export const navDashboardConfigStaff = [
   {
     key: "7",
-    icon: <TeamOutlined />,
-    label: "Orders",
+    icon: <CalendarOutlined />,
+    label: "Bookings",
   },
   {
     key: "8",
@@ -82,23 +69,33 @@ export const navDashboardConfigStaff = [
   },
 ];
 
-export const navDashboardConfigDelivery = [
+export const navDashboardConfigStylist = [
   {
     key: "9",
-    icon: <TeamOutlined />,
-    label: "Delivery",
+    icon: <CalendarOutlined />,
+    label: "Bookings",
+  },
+  {
+    key: "10",
+    icon: <DollarCircleOutlined />,
+    label: "Salary",
+  },
+  {
+    key: "11",
+    icon: <DollarCircleOutlined />,
+    label: "Feedbacks",
   },
 ];
 
 export const navpath = {
   1: {
-    path: "/dashboard/manager/orders",
+    path: "/dashboard/manager/bookings",
   },
   2: {
-    path: "/dashboard/manager/voucher",
+    path: "/dashboard/manager/stylists",
   },
   3: {
-    path: "/dashboard/manager/products",
+    path: "/dashboard/manager/revenue",
   },
   4: {
     path: "/dashboard/admin/users",
@@ -107,19 +104,25 @@ export const navpath = {
     path: "/dashboard/admin/summary",
   },
   6: {
-    path: "/dashboard/admin/transaction",
+    path: "/dashboard/admin/services",
   },
   7: {
-    path: "/dashboard/salestaff/orders",
+    path: "/dashboard/salonstaff/bookings",
   },
   81: {
-    path: "/dashboard/salestaff/view-inbox",
-  },
-  82: {
-    path: "/dashboard/salestaff/send-mail",
+    path: "/dashboard/salonstaff/view-request",
   },
   83: {
-    path: "/dashboard/salestaff/send-request",
+    path: "/dashboard/salonstaff/send-request",
+  },
+  9: {
+    path: "/dashboard/stylist/bookings",
+  },
+  10: {
+    path: "/dashboard/stylist/salary",
+  },
+  11: {
+    path: "/dashboard/stylist/feedbacks",
   },
 };
 

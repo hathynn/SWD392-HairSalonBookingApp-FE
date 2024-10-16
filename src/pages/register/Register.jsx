@@ -6,6 +6,7 @@ import { Checkbox, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import api from '../../config/axios';
 
 function Register() {
     const [error, setError] = useState(null);
@@ -39,30 +40,17 @@ function Register() {
         };
 
         try {
-            const response = await fetch("http://localhost:5145/api/User/Register/register", {
-                method: "POST",
-                headers: {
-                    "accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (!response.ok) {
-                throw new Error(message.error("Register failed! This email is already registered"));
-            }
-            const data = await response.json();
-
+            const response = await api.post("/User/Register/register", payload);
+            const data = response.data;
             if (data.error === 0) {
+                message.success("Successfully registered!")
                 console.log("Register successful:", data);
-                sessionStorage.setItem('registrationData', JSON.stringify(payload));
+                localStorage.setItem('registrationData', payload);
                 nav('/pin-code');
             } else {
-                throw new Error(message.error(data.message));
+                message.error(data.message);
             }
-
         } catch (error) {
-            console.error("Error:", error.message);
             setError(error.message);
         }
     };

@@ -1,17 +1,14 @@
 import { Menu } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import "./SideNav.scss";
-
 import { logout, selectUser } from "../../../../redux/features/counterSlice";
 import { AiOutlineLogout } from "react-icons/ai";
 import navDashboardConfig, {
   navDashboardConfigAdmin,
-  navDashboardConfigDelivery,
   navDashboardConfigStaff,
+  navDashboardConfigStylist,
   navpath,
 } from "../../../../components/nav-dashboard/config";
-import img from "../../../../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 
 function SideNav({}) {
@@ -38,14 +35,14 @@ function SideNav({}) {
         mode="inline"
         theme="dark"
         items={
-          user.Role == "manager"
+          user.Role == "Salon Manager"
             ? navDashboardConfig
-            : user.Role == "admin"
+            : user.Role == "Admin"
             ? navDashboardConfigAdmin
-            : user.Role == "salestaff"
+            : user.Role == "Salon Staff"
             ? navDashboardConfigStaff
-            : user.Role == "deliverystaff"
-            ? navDashboardConfigDelivery
+            : user.Role == "Stylist"
+            ? navDashboardConfigStylist
             : null
         }
         className="menu-sidebar"

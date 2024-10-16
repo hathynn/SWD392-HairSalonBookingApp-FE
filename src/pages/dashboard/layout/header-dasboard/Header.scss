@@ -1,0 +1,15 @@
+.header-dashboard {
+    height: 7vh;
+    padding: 0 2em;
+    background-color: #a9deeb;
+    &__header-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .dash-info {
+      justify-content: end;
+    }
+  }
+  
+  

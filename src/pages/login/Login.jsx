@@ -18,7 +18,6 @@ function Login() {
   const [error, setError] = useState(null);
   const nav = useNavigate();
   const dispatch = useDispatch();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,7 +25,6 @@ function Login() {
       email,
       password,
     };
-
     try {
       // const response = await fetch("http://localhost:5145/api/User/Login/login", {
       //   method: 'POST',
@@ -57,10 +55,6 @@ function Login() {
       if (user.Role === "Salon Staff") {
         nav("/dashboard/staff")
       }
-      
-      // Điều hướng đến trang user profile
-      // message.success("Login successful!");
-      // nav("/user-profile");
     } catch (error) {
       console.error("Error:", error.message);
       message.error("Login failed! " + error.message);
@@ -71,9 +65,13 @@ function Login() {
   return (
     <div className="login-container">
       <div className="introduction-image">
-        <img src={LoginPicture} alt="Login" />
+        <img
+          src={LoginPicture}
+          alt="Login"
+          onClick={() => nav("/")}
+          style={{ cursor: 'pointer' }}
+        />
       </div>
-
       <div className="login-form-container">
         <img src={Logo} alt="Logo" />
         <form onSubmit={handleSubmit} className="login-form">

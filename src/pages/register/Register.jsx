@@ -40,12 +40,12 @@ function Register() {
         };
 
         try {
-            const response = await api.post("/User/Register/register", payload);
+            const response = await api.post("/User/Register/register", values);
             const data = response.data;
             if (data.error === 0) {
-                message.success("Successfully registered!")
-                console.log("Register successful:", data);
-                localStorage.setItem('registrationData', payload);
+                message.success(data.message);
+                sessionStorage.setItem('registrationData', JSON.stringify(payload));
+                console.log('registrationData');
                 nav('/pin-code');
             } else {
                 message.error(data.message);
@@ -59,7 +59,7 @@ function Register() {
         <>
             <div className="register-container">
                 <div className="register-form-container">
-                <img src={Logo} alt="Logo" />
+                    <img src={Logo} alt="Logo" />
                     <Formik
                         initialValues={{
                             fullName: '',

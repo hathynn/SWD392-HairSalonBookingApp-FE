@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import "./Pincode.scss";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ReloadOutlined } from "@ant-design/icons";
+import api from "../../config/axios";
 
 function Pincode() {
-    const [pin, setPin] = useState("");
+    const [pin, setPin] = useState(""); 
     const [count, setCount] = useState(60);
-    const [message, setMessage] = useState("");
+    const [message1, setMessage] = useState("");
     const nav = useNavigate();
     const registrationData = JSON.parse(sessionStorage.getItem('registrationData'));
 
@@ -20,27 +21,27 @@ function Pincode() {
     const onChange = (e) => {
         const value = e.target.value;
         setPin(value);
-
     };
 
     const verifyPin = async () => {
         try {
-            const response = await fetch(`http://localhost:5145/api/User/Verify/verify?token=${pin}`, {
-                method: "POST",
-                header: {
-                    "accept": "application/json",
-                    "Content-Type": "application/json",
-                }
-            });
-
-            if (!response.ok) throw new Error("Invalid or expired pin");
-            nav('/login');
+            const data = {
+                token: pin,
+            }
+            const response = await api.post('User/Verify/verify', data);
+            const responseData = response.data;
+            if (responseData.error === 0) {
+                message.success(responseData.message, 3);
+                console.log(responseData);
+                nav('/login'); 
+            } else {
+                message.error(response.message);
+            }
         } catch (error) {
             console.error(error);
             setMessage("Pin verification failed!");
         }
     };
-
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -57,18 +58,15 @@ function Pincode() {
                 </p>
                 <h1 className="pin__title">Enter Pin Code</h1>
                 <div className="pin__email">{registrationData?.email}</div>
-                {count > 0 ? (
-                    <Input.OTP
-                        value={pin}
-                        onChange={onChange}
-                        maxLength={6}
-                        placeholder="Enter 6-digit pin"
-                        inputMode="numeric"
-                    />
-                ) : (
-                    <Input disabled placeholder="PIN expired" />
-                )}
-                {message && <p className="pin__error">{message}</p>}
+                <Input
+                    value={pin}
+                    onChange={onChange}
+                    maxLength={6} 
+                    placeholder="Enter 6-digit PIN"
+                    inputMode="numeric"
+                    style={{ width: "100%", marginBottom: "10px" }} 
+                />
+                {message1 && <p className="pin__error">{message1}</p>}
                 {count > 0 ? (
                     <p>PIN expires in: {count}s</p>
                 ) : (
@@ -81,6 +79,7 @@ function Pincode() {
                     className="pin__btn"
                     onClick={() => {
                         setCount(60);
+                        setPin(""); // Reset the pin input
                     }}
                 >
                     <ReloadOutlined /> Resend

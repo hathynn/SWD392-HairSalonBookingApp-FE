@@ -3,16 +3,18 @@
 .login-container {
     display: flex;
     height: 100vh;
-   
+
 
     .introduction-image {
         flex: 1;
         display: flex;
-      
 
         img {
             width: 100%;
             object-fit: cover;
+            &:hover {
+                cursor: pointer;
+            }
         }
 
     }
@@ -25,7 +27,7 @@
         align-items: center;
         padding: 40px;
         background-color: #ffffff;
-      
+
 
         h2 {
             font-size: 40px;
@@ -46,7 +48,7 @@
 
             .form-group {
                 margin-bottom: 10px;
-                
+
                 input {
                     width: 100%;
                     padding: 12px;
@@ -77,6 +79,7 @@
                 .remember-me {
                     display: flex;
                     font-size: 12px;
+
                     input[type="checkbox"] {
                         transform: scale(0.8);
                     }

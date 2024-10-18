@@ -45,7 +45,7 @@ function SideNav({}) {
             ? navDashboardConfigStylist
             : null
         }
-        className="menu-sidebar"
+        className="menu-sidenav"
       />
       <div className="logout-container" onClick={handleLogout}>
         <AiOutlineLogout style={{ fontSize: "1em", marginTop:'0.15em' }} />

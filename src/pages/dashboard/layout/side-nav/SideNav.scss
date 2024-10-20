@@ -1,3 +1,5 @@
+@import "../../../../styles/variables.scss";
+
 .brand {
     img {
       height: 4.5em;
@@ -24,28 +26,26 @@
     font-size: 1.3em;
   }
   
-  .side-nav-container {
+  .menu-side-nav-container {
     display: flex;
     flex-direction: column;
     margin-top: 1.52rem;
-    height: 92%;
+    height: 94%;
   }
   
-  .menu-sidebar {
+  .menu-sidenav {
     flex-grow: 1;
   }
   
   .menu-sidenav {
-    background-color: #1A1F36 !important;
+    background-color: $secondary-color !important;
     .ant-menu-item,
     .ant-menu-submenu,
     .ant-menu-sub {
       font-family: "Gantari";
       color: white;
-      background-color: #1A1F36 !important;
-  
+      background-color: $secondary-color !important;
       border-radius: 0;
-  
       span {
         font-size: 1.1em;
       }

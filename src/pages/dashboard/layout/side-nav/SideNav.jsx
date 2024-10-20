@@ -28,7 +28,7 @@ function SideNav({}) {
   return (
     
 
-<div className="side-nav-container">
+<div className="menu-side-nav-container">
       <Menu
         onClick={onClick}
         defaultOpenKeys={["sub1"]}

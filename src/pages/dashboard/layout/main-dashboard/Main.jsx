@@ -46,10 +46,10 @@ function Main({children}) {
         }}
         className="sider-primary ant-layout-sider-primary sider-toggle"
       >
-        <LeftCircleFilled
+        {/* <LeftCircleFilled
           className={`expand-icon ${isExpand ? "rotate" : ""}`}
           onClick={() => setIsExpand(!isExpand)}
-        />
+        /> */}
         <SideNav style={{ width: "100%" }} />
       </Sider>
       <Layout>

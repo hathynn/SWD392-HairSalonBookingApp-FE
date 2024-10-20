@@ -10,19 +10,22 @@ import { Button, Layout, Menu } from "antd";
 import Profile from "../pages/Profile";
 import "./Sidebar.scss"; // Import the SCSS file
 import BookingCustomer from "../pages/bookingCustomer/BookingCustomer";
+import HistoryBooking from "../pages/historyBooking/HistoryBooking";
 
 const { Sider, Content } = Layout;
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey, setSelectedKey] = useState("1"); 
+  const [selectedKey, setSelectedKey] = useState("1");
 
   const renderContent = () => {
     switch (selectedKey) {
       case "1":
         return <Profile />;
       case "2":
-        return <BookingCustomer />; 
+        return <BookingCustomer />;
+      case "3":
+        return <HistoryBooking />;
       default:
         return <Profile />;
     }
@@ -54,7 +57,7 @@ function Sidebar() {
               mode="inline"
               defaultSelectedKeys={["1"]}
               className="menu-sidebar"
-              onClick={(e) => setSelectedKey(e.key)} 
+              onClick={(e) => setSelectedKey(e.key)}
               items={[
                 {
                   key: "1",
@@ -65,6 +68,11 @@ function Sidebar() {
                   key: "2",
                   icon: <CalendarOutlined />,
                   label: "Bookings",
+                },
+                {
+                  key: "3",
+                  icon: <CalendarOutlined />,
+                  label: "History",
                 },
               ]}
             />
@@ -83,7 +91,7 @@ function Sidebar() {
           </Sider>
           <Layout style={{ backgroundColor: "white" }}>
             <Content className="custom-content">
-              {renderContent()} 
+              {renderContent()}
             </Content>
           </Layout>
         </Layout>

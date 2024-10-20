@@ -130,7 +130,7 @@ function Profile() {
                 <input
                   type="tel"
                   name="phoneNumber"
-                  value={profile.phoneNumber}
+                  value={profile.phone}
                   onChange={(e) =>
                     setProfile({ ...profile, phone: e.target.value })
                   }

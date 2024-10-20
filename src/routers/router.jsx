@@ -10,6 +10,7 @@ import Profile from "../pages/profile/pages/Profile";
 import Sidebar from "../pages/profile/layout/Sidebar";
 import Booking from "../pages/booking/Booking";
 import Main from "../pages/dashboard/layout/main-dashboard/Main";
+import HistoryBooking from "../pages/profile/pages/historyBooking/HistoryBooking";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/booking",
         element: <Booking />,
+      },
+      {
+        path: "/history-bookings",
+        element: <HistoryBooking />,
       },
     ],
   },

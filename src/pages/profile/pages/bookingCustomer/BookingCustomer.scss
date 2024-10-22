@@ -1,0 +1,44 @@
+@import "../../../../styles/variables.scss";
+
+.booking-steps {
+    margin-top:1em;
+  &__step {
+    font-family: $font-secondary;
+  }
+  .ant-steps .ant-steps-item-finish .ant-steps-item-icon {
+    background-color: #faa20085;
+    border-color: #faa20085;
+  }
+
+  .anticon svg {
+    color: black;
+  }
+
+  .ant-steps
+    .ant-steps-item-finish
+    > .ant-steps-item-container
+    > .ant-steps-item-content
+    > .ant-steps-item-title::after {
+    background-color: #faa300;
+  }
+
+  .ant-steps .ant-steps-item-process .ant-steps-item-icon {
+    background-color: #faa300;
+    border-color: #faa300;
+    font-family: $font-secondary;
+  }
+
+  .ant-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+    color: #000000;
+  }
+
+  .ant-steps .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
+    color: rgba(0, 0, 0, 0.65);
+    font-family: $font-secondary;
+  }
+}
+
+.booking-detail {
+  font-family: $font-secondary;
+  margin-top: 3em;
+}

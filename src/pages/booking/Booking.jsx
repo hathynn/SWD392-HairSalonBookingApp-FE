@@ -44,10 +44,10 @@ function Booking() {
       title: "Select Date, Time & Stylist",
       description: "Chọn ngày giờ và stylist",
       component: (
-        <AppointmentSelector 
-          setAppointmentDate={setAppointmentDate} 
-          setAppointmentTime={setAppointmentTime} 
-          setStylist={setStylist} 
+        <AppointmentSelector
+          setAppointmentDate={setAppointmentDate}
+          setAppointmentTime={setAppointmentTime}
+          setStylist={setStylist}
         />
       ),
     },
@@ -56,11 +56,11 @@ function Booking() {
       description: "Xác nhận thông tin cuộc hẹn",
       component: (
         <ConfirmPage
-          personalInfo={personalInfo} 
-          service={service} 
-          appointmentDate={appointmentDate} 
-          appointmentTime={appointmentTime} 
-          stylist={stylist} 
+          personalInfo={personalInfo}
+          service={service}
+          appointmentDate={appointmentDate}
+          appointmentTime={appointmentTime}
+          stylist={stylist}
         />
       ),
     },
@@ -81,7 +81,13 @@ function Booking() {
   };
 
   const handleSubmit = async () => {
-    const bookingData = { ...personalInfo, service, appointmentDate, appointmentTime, stylist };
+    const bookingData = {
+      ...personalInfo,
+      service,
+      appointmentDate,
+      appointmentTime,
+      stylist,
+    };
     try {
       // Gửi dữ liệu đặt lịch qua API
       alert("Đặt lịch thành công!");
@@ -101,15 +107,27 @@ function Booking() {
       <div>
         <Row className="booking__container">
           <Col span={6} className="booking_container__left">
-            <Steps
-              progressDot
-              current={currentStep}
-              direction="vertical"
-              items={steps.map((step) => ({
-                title: step.title,
-                description: step.description,
-              }))}
-            />
+            <ConfigProvider
+              theme={{
+                components: {
+                  Steps: {
+                    processIconColor: "black", // Màu của chấm bước hiện tại
+                    processTitleColor: "black", // Màu của tiêu đề bước hiện tại
+                  },
+                },
+              }}
+            >
+              <Steps
+                progressDot
+                current={currentStep}
+                direction="vertical"
+                items={steps.map((step) => ({
+                  title: step.title,
+                  description: step.description,
+                }))}
+                className="booking_container__left__steps"
+              />
+            </ConfigProvider>
           </Col>
           <Col span={18} className="booking_container__right">
             {steps[currentStep].component}

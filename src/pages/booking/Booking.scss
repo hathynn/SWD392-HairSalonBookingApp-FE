@@ -35,13 +35,31 @@
     background-color: white;
     padding: 2em;
     border-radius: 20px;
-    &__left {
-    }
+    // &__left {
+    //   &__steps {
+    //     .ant-steps-item-process .ant-steps-item-icon .ant-steps-icon-dot::after {
+    //       background-color: red !important; /* Màu mà bạn muốn */
+    //       border-color: red !important; /* Đổi màu viền */
+    //     }
+    //   }
+    // }
 
-    &__right {
-    }
+    // &__right {
+    // }
   }
 }
+
+// .booking_container__left__steps {
+
+//   .ant-steps-item-process .ant-steps-icon-dot::after {
+//     background-color: $primary-color !important; 
+//   }
+
+//   .ant-steps-item-process .ant-steps-item-title {
+//    font-family: $font-secondary;
+//   }
+// }
+
 
 .personalInfo {
   p {

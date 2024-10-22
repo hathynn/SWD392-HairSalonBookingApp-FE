@@ -11,7 +11,7 @@ function Profile() {
   const [profile, setProfile] = useState({
     fullName: "",
     email: "",
-    phoneNumber: "",
+    phone: "",
     address: "",
     password: "",
   });
@@ -27,15 +27,35 @@ function Profile() {
   };
 
   const handleOk = async () => {
+    const formData = new FormData();
+  
+    // Append fields to FormData
+    formData.append("Id", user.Id); // Assuming userId is the ID of the user
+    formData.append("FullName", profile.fullName);
+    formData.append("Phone", profile.phone);
+    formData.append("Email", profile.email);
+    formData.append("Address", profile.address);
+  
     try {
-     
-      // await api.post(`/User/UpdateUser`, profile);  
-      setIsModalOpen(false);
+      const response = await api.post("/User/UpdateProfile/update-profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.data.error === 0) {
+        message.success("Profile updated successfully!");
+        setIsModalOpen(false);
+        userProfileById(userId); // Reload the updated profile
+      } else {
+        message.error(response.data.message || "Failed to update profile.");
+      }
     } catch (error) {
       console.error("Error updating user profile:", error);
-      setError("Failed to update user data");
+      message.error("Failed to update profile.");
     }
   };
+  
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -44,8 +64,8 @@ function Profile() {
   const userProfileById = async () => {
     try {
       const response = await api.get(`/User/GetUserById?id=${user.Id}`);
-      setProfile(response.data.data);  
-      setLoading(false); 
+      setProfile(response.data.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching user profile:", error);
       setError("Failed to load user data");
@@ -53,7 +73,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    userProfileById(userId); 
+    userProfileById(userId);
   }, [userId]);
 
   return (
@@ -129,7 +149,7 @@ function Profile() {
                 <label>Phone Number</label>
                 <input
                   type="tel"
-                  name="phoneNumber"
+                  name="phone"
                   value={profile.phone}
                   onChange={(e) =>
                     setProfile({ ...profile, phone: e.target.value })

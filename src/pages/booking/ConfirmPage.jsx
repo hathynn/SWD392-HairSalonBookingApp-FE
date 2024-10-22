@@ -10,7 +10,7 @@ function ConfirmPage({ personalInfo, service }) {
         column={2}
         style={{ marginBottom: "1em"}}
       >
-        <Descriptions.Item label="Name">{personalInfo.name}</Descriptions.Item>
+        <Descriptions.Item label="Name">{personalInfo.fullName}</Descriptions.Item>
         <Descriptions.Item label="Phone">
           {personalInfo.phone}
         </Descriptions.Item>

@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DatePicker, Select } from "antd";
+import api from "../../config/axios";
 
 const { Option } = Select;
 
 const AppointmentSelector = ({ setAppointmentDate, setAppointmentTime, setStylist }) => {
+  const [stylists, setStylists] = useState();
+  const getStylist = async () => {
+    try {
+      const response = await api.get("/User/PrintAllSalonMember");
+      if (response.data.error === 0) {
+        const data = response.data.data;
+        setStylists(data);
+        // console.log(data);
+      } else {
+        message.error(response.data.message);
+
+      }
+    } catch (error) {
+      message.error(response.data.message);
+    }
+  }
+
+  const disabledDate = (current) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set today's time to midnight
+    return current && current.valueOf() < today.getTime(); // Disable dates before today
+  };
+  
+  useEffect(() => {
+    getStylist();
+  }, [])
   return (
     <div>
       <DatePicker
         onChange={(date) => setAppointmentDate(date)}
+        disabledDate={disabledDate} 
         style={{ marginBottom: "1em" }}
       />
       <Select
@@ -23,12 +51,18 @@ const AppointmentSelector = ({ setAppointmentDate, setAppointmentTime, setStylis
       </Select>
       <Select
         placeholder="Choose stylist (Optional)"
-        onChange={(value) => setStylist(value)}
+        onChange={(value) => setStylist(value)} 
         style={{ width: "100%" }}
       >
-        <Option value="stylist1">Stylist 1</Option>
-        <Option value="stylist2">Stylist 2</Option>
-        <Option value="stylist3">Stylist 3</Option>
+        {stylists && stylists.length > 0 ? (
+          stylists.map((stylist) => (
+            <Option key={stylist.email} value={stylist.fullName}>
+              {stylist.fullName}
+            </Option>
+          ))
+        ) : (
+          <Option disabled>Loading stylists...</Option>
+        )}
       </Select>
     </div>
   );

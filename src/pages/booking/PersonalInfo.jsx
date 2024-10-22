@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import "./Booking.scss";
 import Slider from "react-slick/lib/slider";
 import api from "../../config/axios";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/counterSlice";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -35,8 +37,21 @@ function SamplePrevArrow(props) {
 
 function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
   const [salons, setSalons] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const userId = localStorage.getItem("userId");
+  const user = useSelector(selectUser);
   const handleChange = (e) => {
     setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
+  };
+  const userProfileById = async () => {
+    try {
+      const response = await api.get(`/User/GetUserById?id=${user.Id}`);
+      const data = response.data.data;
+      setPersonalInfo(data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      setError("Failed to load user data");
+    }
   };
 
   const getHairSalon = async () => {
@@ -46,26 +61,27 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
       console.log(data);
       setSalons(data);
     } catch (error) {
-      message.error(data.message);
+      message.error(response.data.message);
     }
   }
   useEffect(() => {
+    userProfileById(userId);
     getHairSalon();
-  }, []);
+  }, [userId]);
 
   const settings = {
-    infinite: salons.length > 1,  
-    slidesToShow: Math.min(2, salons.length),  
+    infinite: salons.length > 1,
+    slidesToShow: Math.min(2, salons.length),
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-    autoplay: salons.length > 1, 
+    autoplay: salons.length > 1,
     autoplaySpeed: 6000,
     pauseOnHover: true,
     centerMode: true,
     centerPadding: "0",
   };
-  
+
 
   return (
     <div className="personalInfo">
@@ -75,10 +91,14 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
           size="middle"
           placeholder="Customer name"
           prefix={<UserOutlined />}
+          name="customerName"
+          value={personalInfo.fullName }
+          onChange={handleChange}
         />
         <Input
           size="middle"
           placeholder="Customer phone number"
+          value={personalInfo.phone}
           prefix={<PhoneOutlined />}
         />
       </div>
@@ -98,7 +118,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
                     cover={
                       <img
                         alt={salon.salonName}
-                        src={salon.image} 
+                        src={salon.image}
                       />
                     }
                     className="personalInfo__card"

@@ -1,148 +1,143 @@
-import { Button, Card, Col, ConfigProvider, Row } from "antd";
-import React from "react";
+import { Button, Card, Col, ConfigProvider, message, Row } from "antd";
+import React, { useEffect, useState } from "react";
 import "./Booking.scss";
+import Logo from "../../assets/logo2.png";
+import api from "../../config/axios";
 
 function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
+  const [comboServices, setComboServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]); // Track selected services
+
   const handleChange = (e) => {
     setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
   };
 
-  const salons = [
-    {
-      title: "Combo 1",
-      subtitle:
-        "Combo gội massage thư giãn, Massage bấm huyệt cổ vai gáy giảm căng thẳng",
-      image:
-        "https://images.squarespace-cdn.com/content/v1/5b4818cdd274cba3ecbed6f9/1556647673075-QP3E1VHA2Y9388XA8RV9/20190317_ASalon_Interior_001.JPG",
-    },
-    {
-      title: "Combo 2",
-      subtitle:
-        "Combo chăm sóc da chuyên sâu sáng đều màu da bằng thiết bị công nghệ cao",
-      image:
-        "https://clayhairsalon.com/wp-content/uploads/2022/06/The-Clay-Way-scaled-1-1536x1025.jpg",
-    },
-    {
-      title: "Combo 1",
-      subtitle:
-        "Combo gội massage thư giãn, Massage bấm huyệt cổ vai gáy giảm căng thẳng",
-      image:
-        "https://images.squarespace-cdn.com/content/v1/5b4818cdd274cba3ecbed6f9/1556647673075-QP3E1VHA2Y9388XA8RV9/20190317_ASalon_Interior_001.JPG",
-    },
-    {
-      title: "Combo 2",
-      subtitle:
-        "Combo chăm sóc da chuyên sâu sáng đều màu da bằng thiết bị công nghệ cao",
-      image:
-        "https://clayhairsalon.com/wp-content/uploads/2022/06/The-Clay-Way-scaled-1-1536x1025.jpg",
-    },
-    {
-      title: "Combo 3",
-      subtitle:
-        "Tẩy da chết nhẹ nhàng bằng gel sủi bọt giúp da căng mịn, tươi mới",
-      image:
-        "https://e7nmeemxs8h.exactdn.com/wp-content/uploads/2023/12/kings-road-home-24.jpg?lossy=1&ssl=1",
-    },
-    {
-      title: "Combo 4",
-      subtitle:
-        "Tẩy da chết nhẹ nhàng bằng gel sủi bọt giúp da căng mịn, tươi mới",
-      image:
-        "https://avenuemspa.com/wp-content/uploads/2016/09/main-page-hair-services-link-and-also-photo-on-hair-services-page.jpg",
-    },
-    {
-      title: "Combo 3",
-      subtitle:
-        "Tẩy da chết nhẹ nhàng bằng gel sủi bọt giúp da căng mịn, tươi mới",
-      image:
-        "https://e7nmeemxs8h.exactdn.com/wp-content/uploads/2023/12/kings-road-home-24.jpg?lossy=1&ssl=1",
-    },
-    {
-      title: "Combo 4",
-      subtitle:
-        "Tẩy da chết nhẹ nhàng bằng gel sủi bọt giúp da căng mịn, tươi mới",
-      image:
-        "https://avenuemspa.com/wp-content/uploads/2016/09/main-page-hair-services-link-and-also-photo-on-hair-services-page.jpg",
-    },
-  ];
+  const getComboServices = async () => {
+    try {
+      const response = await api.get("Combo/getAll-comboServices");
+      const data = response.data.data;
+      setComboServices(data);
+    } catch (error) {
+      message.error("Failed to fetch combo services");
+    }
+  };
+
+  useEffect(() => {
+    getComboServices();
+  }, []);
+
+  // Handle service selection
+  const handleSelectService = (service) => {
+    const isAlreadySelected = selectedServices.find(
+      (selected) => selected.id === service.id
+    );
+
+    if (isAlreadySelected) {
+      // If service is already selected, remove it
+      setSelectedServices((prev) =>
+        prev.filter((selected) => selected.id !== service.id)
+      );
+    } else {
+      // Otherwise, add it to the selected services
+      setSelectedServices((prev) => [...prev, service]);
+    }
+  };
 
   return (
     <div className="service-container">
       <p className="service-container__title">
         Hair Salon Service &nbsp;
         <span style={{ color: "grey", fontStyle: "italic" }}>
-          (Number of service(s): 2)
+          (Number of service(s): {comboServices.length})
         </span>
       </p>
       <div className="service-container__scroll">
         <Row gutter={[16, 16]}>
-          {salons.map((salon, index) => (
-            <Col span={6} key={index}>
-              <Card
-                cover={
-                  <img
-                    alt={salon.title}
-                    src={salon.image}
-                    style={{ borderRadius: "0px", height: "20vh" }}
-                  />
-                }
-                className="service-container__card"
-              >
-                <div className="service-container__card__content">
-                  <p className="service-container__card__content__title">
-                    {salon.title}
-                  </p>
-                  <p className="service-container__card__content__subtitle">
-                    {salon.subtitle}
-                  </p>
-                </div>
-                <div className="service-container__card__buttons">
-                  <ConfigProvider
-                    theme={{
-                      components: {
-                        Button: {
-                          defaultColor: "black",
-                          defaultBg: "none",
-                          defaultBorderColor: "#FAA300",
-                          defaultHoverBorderColor: "black",
-                          defaultHoverColor: "white",
-                          defaultHoverBg: "black",
-                          defaultActiveBg: "#FAA300",
-                          defaultActiveBorderColor: "#FAA300",
-                          defaultActiveColor: "black",
+          {comboServices.length > 0 ? (
+            comboServices.map((service) => (
+              <Col span={6} key={service.id}>
+                <Card
+                  cover={
+                    <img
+                      alt={service.comboServiceName}
+                      src={service.image || Logo}
+                      style={{ borderRadius: "0px", height: "20vh" }}
+                    />
+                  }
+                  className="service-container__card"
+                >
+                  <div className="service-container__card__content">
+                    <p className="service-container__card__content__title">
+                      {service.comboServiceName}
+                    </p>
+                    <p className="service-container__card__content__subtitle">
+                      Price: {service.price}$
+                    </p>
+                  </div>
+                  <div className="service-container__card__buttons">
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Button: {
+                            defaultColor: "black",
+                            defaultBg: "none",
+                            defaultBorderColor: "#FAA300",
+                            defaultHoverBorderColor: "black",
+                            defaultHoverColor: "white",
+                            defaultHoverBg: "black",
+                            defaultActiveBg: "#FAA300",
+                            defaultActiveBorderColor: "#FAA300",
+                            defaultActiveColor: "black",
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <Button className="service-container__card__buttons__left">
-                      200,000
-                    </Button>
-                  </ConfigProvider>
-                  <ConfigProvider
-                    theme={{
-                      components: {
-                        Button: {
-                          defaultColor: "black",
-                          defaultBg: "#FAA300",
-                          defaultBorderColor: "#FAA300",
-                          defaultHoverBorderColor: "black",
-                          defaultHoverColor: "white",
-                          defaultHoverBg: "black",
-                          defaultActiveBg: "#FAA300",
-                          defaultActiveBorderColor: "#FAA300",
-                          defaultActiveColor: "black",
+                      }}
+                    >
+                      <Button className="service-container__card__buttons__left">
+                        {service.price}$
+                      </Button>
+                    </ConfigProvider>
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Button: {
+                            defaultColor: "black",
+                            defaultBg: selectedServices.some(
+                              (s) => s.id === service.id
+                            )
+                              ? "#000"
+                              : "#FAA300", // Change button color based on selection
+                            defaultBorderColor: "#FAA300",
+                            defaultHoverBorderColor: "black",
+                            defaultHoverColor: "white",
+                            defaultHoverBg: "black",
+                            defaultActiveBg: "#FAA300",
+                            defaultActiveBorderColor: "#FAA300",
+                            defaultActiveColor: "black",
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <Button className="service-container__card__buttons__right">
-                      ✓
-                    </Button>
-                  </ConfigProvider>
-                </div>
-              </Card>
-            </Col>
-          ))}
+                      }}
+                    >
+                      <Button
+                        className="service-container__card__buttons__right"
+                        style={{
+                          backgroundColor: selectedServices.some(
+                            (s) => s.id === service.id
+                          )
+                            ? "#20ec0e"
+                            : "#FAA300"
+                        }}
+                        onClick={() => handleSelectService(service)}
+                      >
+                        ✓
+                      </Button>
+                    </ConfigProvider>
+                  </div>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <p>No services available</p>
+          )}
         </Row>
       </div>
     </div>

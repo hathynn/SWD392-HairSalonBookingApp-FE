@@ -107,7 +107,7 @@ function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
                               ? "#000"
                               : "#FAA300", // Change button color based on selection
                             defaultBorderColor: "#FAA300",
-                            defaultHoverBorderColor: "black",
+                            defaultHoverBorderColor: "#FAA300",
                             defaultHoverColor: "white",
                             defaultHoverBg: "black",
                             defaultActiveBg: "#FAA300",
@@ -123,8 +123,18 @@ function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
                           backgroundColor: selectedServices.some(
                             (s) => s.id === service.id
                           )
-                            ? "#20ec0e"
-                            : "#FAA300"
+                            ? "black"
+                            : "#FAA300",
+                          color: selectedServices.some(
+                            (s) => s.id === service.id
+                          )
+                            ? "white"
+                            : "black",
+                          borrderColor: selectedServices.some(
+                            (s) => s.id === service.id
+                          )
+                            ? "black"
+                            : "#FAA300",
                         }}
                         onClick={() => handleSelectService(service)}
                       >

@@ -25,6 +25,24 @@ export const navDashboardConfig = [
     label: "Revenue",
   },
 ];
+export const navDashboardConfigCustomer = [
+  {
+    key: "1",
+    icon: <CalendarOutlined />,
+    label: "Request Bookings",
+  },
+  {
+    key: "2",
+    icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
+    label: "Stylist",
+  },
+  
+  {
+    key: "3",
+    icon: <DollarCircleOutlined style={{ fontSize: "1.4em" }} />,
+    label: "Services",
+  },
+];
 
 export const navDashboardConfigAdmin = [
 

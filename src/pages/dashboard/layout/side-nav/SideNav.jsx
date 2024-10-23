@@ -5,11 +5,13 @@ import { logout, selectUser } from "../../../../redux/features/counterSlice";
 import { AiOutlineLogout } from "react-icons/ai";
 import navDashboardConfig, {
   navDashboardConfigAdmin,
+  navDashboardConfigCustomer,
   navDashboardConfigStaff,
   navDashboardConfigStylist,
   navpath,
 } from "../../../../components/nav-dashboard/config";
 import { useDispatch, useSelector } from "react-redux";
+import { LogoutOutlined } from "@ant-design/icons";
 
 function SideNav({}) {
   const { pathname } = useLocation();
@@ -43,14 +45,27 @@ function SideNav({}) {
             ? navDashboardConfigStaff
             : user.Role == "Stylist"
             ? navDashboardConfigStylist
+            : user.Role == "Customer"
+            ? navDashboardConfigCustomer
             : null
         }
         className="menu-sidenav"
       />
-      <div className="logout-container" onClick={handleLogout}>
-        <AiOutlineLogout style={{ fontSize: "1em", marginTop:'0.15em' }} />
-        <span style={{ paddingLeft: "0.3em", fontSize:'0.9em'} }>Logout</span>
-      </div>
+      <Menu
+        onClick={onClick}
+        defaultOpenKeys={["sub1"]}
+        mode="inline"
+        theme="dark"
+        items={[
+          {
+            key: "1",
+            icon: <LogoutOutlined />,
+            label: "Logout",
+          },
+        ]}
+        className="menu-sidenav"
+      />
+     
     </div>
   );
 }

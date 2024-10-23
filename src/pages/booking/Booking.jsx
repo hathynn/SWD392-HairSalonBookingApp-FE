@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Row, Steps, Button, ConfigProvider } from "antd";
+import { Col, Row, Steps, Button, ConfigProvider, Modal, message } from "antd";
 import "./Booking.scss";
 import PersonalInfo from "./PersonalInfo";
 import ServiceCategory from "./ServiceCategory";
@@ -13,14 +13,26 @@ function Booking() {
     phone: "",
     address: "",
   });
-  const [service, setService] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
   const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentTime, setAppointmentTime] = useState(null);
   const [stylist, setStylist] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    handleSubmit();
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const steps = [
     {
       title: "Confirm Info",
-      description: "Xác nhận thông tin cá nhân",
+      description: "Confirm personal information",
       component: (
         <PersonalInfo
           personalInfo={personalInfo}
@@ -31,18 +43,20 @@ function Booking() {
     },
     {
       title: "Choose Service",
-      description: "Chọn dịch vụ làm tóc",
+      description: "Choose hair service",
       component: (
         <ServiceCategory
-          service={service}
-          setService={setService}
+          personalInfo={personalInfo}
+          setPersonalInfo={setPersonalInfo}
+          selectedServices={selectedServices}
+          setSelectedServices={setSelectedServices}
           onNext={() => setCurrentStep(2)}
         />
       ),
     },
     {
       title: "Select Date, Time & Stylist",
-      description: "Chọn ngày giờ và stylist",
+      description: "Choose date, time and stylist",
       component: (
         <AppointmentSelector
           setAppointmentDate={setAppointmentDate}
@@ -53,11 +67,11 @@ function Booking() {
     },
     {
       title: "Confirm Appointment",
-      description: "Xác nhận thông tin cuộc hẹn",
+      description: "Confirm appointment information",
       component: (
         <ConfirmPage
           personalInfo={personalInfo}
-          service={service}
+          selectedServices={selectedServices}
           appointmentDate={appointmentDate}
           appointmentTime={appointmentTime}
           stylist={stylist}
@@ -70,7 +84,7 @@ function Booking() {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prevStep) => prevStep + 1);
     } else {
-      handleSubmit();
+      showModal();
     }
   };
 
@@ -83,21 +97,21 @@ function Booking() {
   const handleSubmit = async () => {
     const bookingData = {
       ...personalInfo,
-      service,
+      selectedServices,
       appointmentDate,
       appointmentTime,
-      stylist,
     };
+
     try {
-      // Gửi dữ liệu đặt lịch qua API
-      alert("Đặt lịch thành công!");
+      messageApi.success("Booking successfully!");
     } catch (error) {
-      alert("Đặt lịch thất bại!");
+      messageApi.error("Booking failed.");
     }
   };
 
   return (
     <div className="booking">
+      {contextHolder}
       <img
         src="https://knockouts.com/bellevue-ne/wp-content/uploads/sites/68/2020/03/knockouts-franchise-locations-header-2020.jpg"
         alt="maverick barber"
@@ -111,8 +125,8 @@ function Booking() {
               theme={{
                 components: {
                   Steps: {
-                    processIconColor: "black", // Màu của chấm bước hiện tại
-                    processTitleColor: "black", // Màu của tiêu đề bước hiện tại
+                    processIconColor: "black",
+                    processTitleColor: "black",
                   },
                 },
               }}
@@ -157,17 +171,25 @@ function Booking() {
                     },
                   }}
                 >
-                  <Button onClick={handlePrevious} style={{ marginRight: 8 }}>
+                  <Button
+                    onClick={handlePrevious}
+                    style={{
+                      marginRight: 8,
+                      fontFamily: "Gantari",
+                      fontWeight: "500",
+                    }}
+                  >
                     Previous
                   </Button>
                 </ConfigProvider>
               )}
+              {/* Cấu hình riêng cho nút Submit */}
               <ConfigProvider
                 theme={{
                   components: {
                     Button: {
                       defaultColor: "black",
-                      defaultBg: "none",
+                      defaultBg: "#FAA300",
                       defaultBorderColor: "#FAA300",
                       defaultHoverBorderColor: "black",
                       defaultHoverColor: "white",
@@ -179,11 +201,29 @@ function Booking() {
                   },
                 }}
               >
-                <Button onClick={handleNext}>
+                <Button
+                  onClick={handleNext}
+                  style={{ fontFamily: "Gantari", fontWeight: "500" }}
+                >
                   {currentStep === steps.length - 1 ? "Submit" : "Next"}
                 </Button>
               </ConfigProvider>
             </div>
+            <Modal
+              title="Confirm Booking"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okText="Confirm"
+              okButtonProps={{ className: "confirm-button" }}
+              cancelButtonProps={{ className: "cancel-button" }}
+              className="modal-confirm"
+            >
+              <p>
+                Are you sure you want to book this appointment? Please check all
+                details before confirming this appointment!
+              </p>
+            </Modal>
           </Col>
         </Row>
       </div>

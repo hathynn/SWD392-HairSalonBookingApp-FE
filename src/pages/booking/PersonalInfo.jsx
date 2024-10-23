@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Card, ConfigProvider, Flex, Input, message, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import "./Booking.scss";
 import Slider from "react-slick/lib/slider";
 import api from "../../config/axios";
 import { useSelector } from "react-redux";
@@ -36,15 +35,29 @@ function SamplePrevArrow(props) {
   );
 }
 
-function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
+function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
   const [salons, setSalons] = useState([]);
-  const [userData, setUserData] = useState([]);
+  const [selectedSalonId, setSelectedSalonId] = useState(null); 
+  const [selectedSalonAddress, setSelectedSalonAddress] = useState(""); 
   const userId = localStorage.getItem("userId");
   const user = useSelector(selectUser);
-  const [loading, setLoading] = useState(true); 
+
+
   const handleChange = (e) => {
-    setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "phone") {
+      const isNumber = /^[0-9]*$/.test(value);
+      if (!isNumber) {
+        return;
+      }
+    }
+
+    // Cập nhật giá trị của input vào personalInfo
+    setPersonalInfo({ ...personalInfo, [name]: value });
+    console.log(personalInfo.salonAddress)
   };
+
   const userProfileById = async () => {
     try {
       const response = await api.get(`/User/GetUserById?id=${user.Id}`);
@@ -52,7 +65,6 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
       setPersonalInfo(data);
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      setError("Failed to load user data");
     }
   };
 
@@ -60,16 +72,23 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
     try {
       const response = await api.get("/Salon/PrintAllSalon");
       const data = response.data.data;
-      console.log(data);
       setSalons(data);
     } catch (error) {
       message.error(response.data.message);
     }
-  }
+  };
+
   useEffect(() => {
     userProfileById(userId);
     getHairSalon();
   }, [userId]);
+
+  const handleSalonSelect = (salonId, salonAddress) => {
+    setSelectedSalonId(salonId); 
+    setSelectedSalonAddress(salonAddress); 
+    setPersonalInfo({ ...personalInfo, salonAddress });
+
+  };
 
   const settings = {
     infinite: salons.length > 1,
@@ -84,32 +103,34 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
     centerPadding: "0",
   };
 
-
   return (
     <div className="personalInfo">
       <p>Customer Information</p>
       <div className="personalInfo__input">
         <Input
           size="middle"
-          placeholder="Customer name"
+          placeholder="Customer Name"
           prefix={<UserOutlined />}
-          name="customerName"
-          value={personalInfo.fullName }
-          onChange={handleChange}
+          name="fullName" 
+          value={personalInfo.fullName}
+          onChange={handleChange} 
         />
         <Input
           size="middle"
-          placeholder="Customer phone number"
+          placeholder="Phone Number"
+          name="phone"
           value={personalInfo.phone}
           prefix={<PhoneOutlined />}
+          onChange={handleChange} 
         />
       </div>
       <div>
-        <p style={{ marginTop: "1em" }}>Salon Location</p>
+        <p style={{ marginTop: "1em" }}>Hair Salon Address</p>
         <Input
           size="middle"
           placeholder="Hair Salon Address"
           prefix={<GlobalOutlined />}
+          value={selectedSalonAddress} 
         />
         <div className="slider-container">
           {salons.length > 0 ? (
@@ -117,16 +138,15 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
               {salons.map((salon) => (
                 <div key={salon.salonId}>
                   <Card
-                    cover={
-                      <img
-                        alt={salon.salonName}
-                        src={salon.image}
-                      />
-                    }
+                    cover={<img alt={salon.salonName} src={salon.image} />}
                     className="personalInfo__card"
                   >
-                    <p className="personalInfo__card__title">{salon.salonName}</p>
-                    <p className="personalInfo__card__subtitle">Location: {salon.address}</p>
+                    <p className="personalInfo__card__title">
+                      {salon.salonName}
+                    </p>
+                    <p className="personalInfo__card__subtitle">
+                      Location: {salon.address}
+                    </p>
                     <ConfigProvider
                       theme={{
                         components: {
@@ -144,7 +164,11 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
                         },
                       }}
                     >
-                      <Button onClick={() => onNext(salon.salonId)}>
+                      <Button
+                        onClick={() => {
+                          handleSalonSelect(salon.salonId, salon.address);
+                        }}
+                      >
                         Choose this place
                       </Button>
                     </ConfigProvider>
@@ -154,27 +178,25 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
             </Slider>
           ) : (
             <Flex
-            align="center"
-            gap="middle"
-            justify="center"
-            style={{ width: "100%",
-              margin:'5em 0' }}
-          >
-            <Spin
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                marginTop:'10em'
-              }}
-              indicator={<LoadingOutlined spin />}
-              size="large"
-            />
-          </Flex>
+              align="center"
+              gap="middle"
+              justify="center"
+              style={{ width: "100%", margin: "5em 0" }}
+            >
+              <Spin
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  marginTop: "10em",
+                }}
+                indicator={<LoadingOutlined spin />}
+                size="large"
+              />
+            </Flex>
           )}
         </div>
       </div>
-
     </div>
   );
 }

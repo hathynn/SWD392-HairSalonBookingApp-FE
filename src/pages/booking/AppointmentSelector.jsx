@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DatePicker, Select } from "antd";
 import api from "../../config/axios";
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
-const AppointmentSelector = ({ setAppointmentDate, setAppointmentTime, setStylist }) => {
+const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTime ,setAppointmentTime, setStylist }) => {
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
@@ -24,8 +25,8 @@ const AppointmentSelector = ({ setAppointmentDate, setAppointmentTime, setStylis
 
   const disabledDate = (current) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set today's time to midnight
-    return current && current.valueOf() < today.getTime(); // Disable dates before today
+    today.setHours(0, 0, 0, 0); 
+    return current && current.valueOf() < today.getTime(); 
   };
   
   useEffect(() => {
@@ -33,9 +34,14 @@ const AppointmentSelector = ({ setAppointmentDate, setAppointmentTime, setStylis
   }, [])
   return (
     <div>
-      <DatePicker
-        onChange={(date) => setAppointmentDate(date)}
-        disabledDate={disabledDate} 
+        <DatePicker
+        onChange={(date) => {
+          const selectedDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
+          console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
+          setAppointmentDate(selectedDate);
+        }}
+        
+        disabledDate={disabledDate}
         style={{ marginBottom: "1em" }}
       />
       <Select

@@ -27,39 +27,59 @@
 
   &__container {
     position: absolute;
-    top: 62%;
+    top: 60%;
     left: 50%;
-    height: 70vh;
+    height: 72vh;
     transform: translate(-50%, -50%);
     width: 90%;
     background-color: white;
     padding: 2em;
     border-radius: 20px;
-    // &__left {
-    //   &__steps {
-    //     .ant-steps-item-process .ant-steps-item-icon .ant-steps-icon-dot::after {
-    //       background-color: red !important; /* Màu mà bạn muốn */
-    //       border-color: red !important; /* Đổi màu viền */
-    //     }
-    //   }
-    // }
-
-    // &__right {
-    // }
+    
   }
 }
+
+.confirm-button {
+  background-color: $primary-color; 
+  color:black;
+  font-family: $font-secondary;
+  font-weight: 500;
+  border-color: $primary-color;
+}
+
+.cancel-button {
+  background-color: white; 
+  color: rgb(117, 115, 115);
+  font-weight: 500;
+}
+
+.confirm-button:hover {
+  background-color: black !important; 
+  border-color: black;
+  
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f; 
+  border-color: rgb(0, 0, 0) !important;
+  color:black !important;
+}
+
+.modal-confirm p {
+font-family: $font-secondary;
+}
+
 
 // .booking_container__left__steps {
 
 //   .ant-steps-item-process .ant-steps-icon-dot::after {
-//     background-color: $primary-color !important; 
+//     background-color: $primary-color !important;
 //   }
 
 //   .ant-steps-item-process .ant-steps-item-title {
 //    font-family: $font-secondary;
 //   }
 // }
-
 
 .personalInfo {
   p {
@@ -123,11 +143,11 @@
   &__card {
     display: flex;
     width: 96%;
-    height: 24vh;
+    height: 27vh;
     border-radius: 0px;
-    margin-top: 1em;
+    margin-top: 1.2em;
     img {
-      height: 24vh;
+      height: 27vh;
       object-fit: cover;
     }
 
@@ -140,7 +160,10 @@
     }
   }
 }
-
+.booking-confirm {
+  height: 390px;
+    overflow-y: scroll;
+}
 .service-container {
   &__title {
     font-family: $font-secondary;
@@ -148,47 +171,47 @@
     margin-bottom: 1em;
   }
   .service-container__scroll {
-    height: 350px;
+    height: 370px;
     overflow-y: scroll;
   }
 
   &__card {
     border-radius: 0px;
-  
+
     &__content {
-     padding-bottom:1.5em;
+      padding-bottom: 1.5em;
       &__title {
         font-size: 1.2em;
         font-weight: 600;
-       padding-bottom:0.5em;
+        padding-bottom: 0.5em;
       }
       &__subtitle {
-        color:$secondary-text-color;
+        color: $secondary-text-color;
         font-size: 0.8em;
       }
     }
 
     &__buttons {
-      width:100%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       &__left {
-        width:69%;
+        width: 69%;
       }
       &__right {
-        width:29%;
+        width: 29%;
       }
     }
   }
 }
 
 .date-container {
-  display:flex;
+  display: flex;
   gap: 2em;
   p {
     font-family: $font-secondary;
-    padding-top:0.3em;
-    font-size:1.2em;
+    padding-top: 0.3em;
+    font-size: 1.2em;
   }
 }
 
@@ -205,13 +228,13 @@
 
 //   &__card {
 //     border-radius: 0px;
-  
+
 //     &__content {
 //    line-height: 2em;
 //       &__title {
 //         font-size: 1.2em;
 //         font-weight: 600;
-    
+
 //       }
 //       &__subtitle {
 //         color:$secondary-text-color;

@@ -8,7 +8,7 @@ import {
   Space,
   Menu,
 } from "antd";
-import { AlignLeftOutlined } from "@ant-design/icons";
+import { AlignLeftOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { useMediaQuery } from "react-responsive";
@@ -17,9 +17,7 @@ import { logout, selectUser } from "../../../../redux/features/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineLogout } from "react-icons/ai";
 
-
 function Header({ name, subName, onPress }) {
-
   const isDesktop = useMediaQuery({ minWidth: 991 });
   const isMobile = useMediaQuery({ maxWidth: 630 });
   const user = useSelector(selectUser);
@@ -32,17 +30,6 @@ function Header({ name, subName, onPress }) {
     navigate("/");
   };
 
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a style={{ display: "flex", gap: "0.2em", fontSize:'1.2em' }} onClick={handleLogout}>
-          <AiOutlineLogout style={{ fontSize: "1.4em", paddingTop: "0.2em" }} />{" "}
-          Logout
-        </a>
-      ),
-    },
-  ];
 
   return (
     <Row className="header-dashboard">
@@ -72,9 +59,12 @@ function Header({ name, subName, onPress }) {
         xs={23}
         className="header-dashboard__header-control dash-info"
       >
-            <Space>
-              <AdminAccount />
-            </Space>
+    
+        <p className="header-dashboard__title" style={{color:'white'}}>
+          Hi {user.Role}! Welcome to Dashboard
+        </p>
+        
+  
       </Col>
     </Row>
   );

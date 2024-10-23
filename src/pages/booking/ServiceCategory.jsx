@@ -1,8 +1,9 @@
-import { Button, Card, Col, ConfigProvider, message, Row } from "antd";
+import { Button, Card, Col, ConfigProvider, Flex, message, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Booking.scss";
 import Logo from "../../assets/logo2.png";
 import api from "../../config/axios";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
   const [comboServices, setComboServices] = useState([]);
@@ -48,7 +49,7 @@ function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
       <p className="service-container__title">
         Hair Salon Service &nbsp;
         <span style={{ color: "grey", fontStyle: "italic" }}>
-          (Number of service(s): {comboServices.length})
+          (Number of service(s): {selectedServices.length})
         </span>
       </p>
       <div className="service-container__scroll">
@@ -146,7 +147,24 @@ function ServiceCategory({ personalInfo, setPersonalInfo, onNext }) {
               </Col>
             ))
           ) : (
-            <p>No services available</p>
+            <Flex
+            align="center"
+            gap="middle"
+            justify="center"
+            style={{ width: "100%",
+              margin:'5em 0' }}
+          >
+            <Spin
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+                marginTop:'10em'
+              }}
+              indicator={<LoadingOutlined spin />}
+              size="large"
+            />
+          </Flex>
           )}
         </Row>
       </div>

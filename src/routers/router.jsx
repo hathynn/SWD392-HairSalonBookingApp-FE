@@ -11,6 +11,7 @@ import Sidebar from "../pages/profile/layout/Sidebar";
 import Booking from "../pages/booking/Booking";
 import Main from "../pages/dashboard/layout/main-dashboard/Main";
 import HistoryBooking from "../pages/profile/pages/historyBooking/HistoryBooking";
+import BookingManager from "../pages/dashboard/pages/manager/bookingManager/BookingManager";
 
 export const router = createBrowserRouter([
   {
@@ -65,7 +66,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/manager",
-        element: <div></div>,
+        element: <BookingManager/>,
+      },
+      {
+        path: "/dashboard/manager/bookings",
+        element: <BookingManager/>,
       },
     ],
   },

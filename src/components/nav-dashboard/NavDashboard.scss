@@ -7,20 +7,21 @@
   align-items: center;
   &__nav {
     padding: 1em 1.7em;
-    color: white;
+    color: rgb(255, 254, 254);
     font-family: "BookCereal";
     font-size: 1.1em;
     border-radius: 100px;
   }
+
   &__nav.active {
-    border: 1px solid rgba(180, 180, 180, 0.539);
-    font-family: "BoldCereal";
+    border: 1px solid rgba(255, 255, 255, 0.539);
+    font-family: "Gantari";
   }
   &__nav.active::before {
     content: "";
     height: 0.5em;
     width: 0.5em;
-    background-color: rgb(178, 30, 99);
+    background-color: rgb(231, 20, 118);
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;

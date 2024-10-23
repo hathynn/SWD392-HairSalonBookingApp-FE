@@ -1,11 +1,12 @@
 import {
   GlobalOutlined,
   LeftOutlined,
+  LoadingOutlined,
   PhoneOutlined,
   RightOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Card, ConfigProvider, Input, message } from "antd";
+import { Button, Card, ConfigProvider, Flex, Input, message, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Booking.scss";
 import Slider from "react-slick/lib/slider";
@@ -40,6 +41,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
   const [userData, setUserData] = useState([]);
   const userId = localStorage.getItem("userId");
   const user = useSelector(selectUser);
+  const [loading, setLoading] = useState(true); 
   const handleChange = (e) => {
     setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
   };
@@ -151,7 +153,24 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
               ))}
             </Slider>
           ) : (
-            <p>Loading salons...</p>
+            <Flex
+            align="center"
+            gap="middle"
+            justify="center"
+            style={{ width: "100%",
+              margin:'5em 0' }}
+          >
+            <Spin
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+                marginTop:'10em'
+              }}
+              indicator={<LoadingOutlined spin />}
+              size="large"
+            />
+          </Flex>
           )}
         </div>
       </div>

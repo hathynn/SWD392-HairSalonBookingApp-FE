@@ -59,7 +59,16 @@ function Register() {
         <>
             <div className="register-container">
                 <div className="register-form-container">
-                    <img src={Logo} alt="Logo" />
+                <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <img
+            onClick={() => nav("/")}
+            src={Logo}
+            alt="Logo"
+            style={{ width: "18vw", height: "9.5vh", marginBottom: "1em", cursor:'pointer' }}
+          />
+        </div>
                     <Formik
                         initialValues={{
                             fullName: '',

@@ -2,34 +2,33 @@ import React, { useState } from "react";
 import {
   CalendarOutlined,
   LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu } from "antd";
-import "./Sidebar.scss"; // Import the SCSS file
-import BookingCustomer from "../pages/bookingCustomer/BookingCustomer";
-import HistoryBooking from "../pages/historyBooking/HistoryBooking";
-import Profile from "../pages/profile/Profile";
+import { Layout, Menu } from "antd";
+import { Outlet, useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux"; 
+import "./Sidebar.scss"; 
+import { logout } from "../../../redux/features/counterSlice";
 
 const { Sider, Content } = Layout;
 
 function Sidebar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); 
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedKey, setSelectedKey] = useState("1");
 
-  const renderContent = () => {
-    switch (selectedKey) {
-      case "1":
-        return <Profile />;
-      case "2":
-        return <BookingCustomer />;
-      case "3":
-        return <HistoryBooking />;
-      default:
-        return <Profile />;
+  const handleMenuClick = (e) => {
+    console.log("Clicked menu key:", e.key);
+    if (e.key === "logout") {
+      console.log("Logging out...");
+      localStorage.removeItem("token");
+      dispatch(logout());
+      navigate("/");
+    } else {
+      navigate(`/user-profile/${e.key}`);
     }
   };
+  
 
   return (
     <div className="profile-page">
@@ -39,12 +38,7 @@ function Sidebar() {
         className="profile-page__header-img"
       />
       <div className="profile-page__header-text">Profile.</div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Layout style={{ backgroundColor: "white", padding: "10vh 10vw" }}>
           <Sider
             trigger={null}
@@ -55,22 +49,21 @@ function Sidebar() {
             <div className="demo-logo-vertical" />
             <Menu
               mode="inline"
-              defaultSelectedKeys={["1"]}
               className="menu-sidebar"
-              onClick={(e) => setSelectedKey(e.key)}
+              onClick={handleMenuClick}
               items={[
                 {
-                  key: "1",
+                  key: "profile",
                   icon: <UserOutlined />,
                   label: "Profile",
                 },
                 {
-                  key: "2",
+                  key: "track-booking",
                   icon: <CalendarOutlined />,
                   label: "Bookings",
                 },
                 {
-                  key: "3",
+                  key: "history-bookings",
                   icon: <CalendarOutlined />,
                   label: "History",
                 },
@@ -78,11 +71,11 @@ function Sidebar() {
             />
             <Menu
               mode="inline"
-              defaultSelectedKeys={["1"]}
               className="menu2-sidebar"
+              onClick={handleMenuClick}
               items={[
                 {
-                  key: "1",
+                  key: "logout", // Cập nhật key là "logout"
                   icon: <LogoutOutlined />,
                   label: "Logout",
                 },
@@ -91,7 +84,7 @@ function Sidebar() {
           </Sider>
           <Layout style={{ backgroundColor: "white" }}>
             <Content className="custom-content">
-              {renderContent()}
+              <Outlet /> 
             </Content>
           </Layout>
         </Layout>

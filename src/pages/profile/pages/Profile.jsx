@@ -27,26 +27,14 @@ function Profile() {
   };
 
   const handleOk = async () => {
-    const formData = new FormData();
-  
-    // Append fields to FormData
-    formData.append("Id", user.Id); // Assuming userId is the ID of the user
-    formData.append("FullName", profile.fullName);
-    formData.append("Phone", profile.phone);
-    formData.append("Email", profile.email);
-    formData.append("Address", profile.address);
-  
     try {
-      const response = await api.post("/User/UpdateProfile/update-profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      const response = await api.post("User/UpdateProfile/update-profile", profile);
+      const data = response.data.data;
       if (response.data.error === 0) {
         message.success("Profile updated successfully!");
         setIsModalOpen(false);
-        userProfileById(userId); // Reload the updated profile
+        setProfile(data);
+        userProfileById(userId);
       } else {
         message.error(response.data.message || "Failed to update profile.");
       }
@@ -55,7 +43,7 @@ function Profile() {
       message.error("Failed to update profile.");
     }
   };
-  
+
 
   const handleCancel = () => {
     setIsModalOpen(false);

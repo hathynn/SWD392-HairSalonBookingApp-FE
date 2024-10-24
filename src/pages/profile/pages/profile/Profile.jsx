@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
-import api from "../../../config/axios";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../redux/features/counterSlice";
-import { Flex, Modal, Spin } from "antd";
+import { Flex, message, Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import api from "../../../../config/axios";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../redux/features/counterSlice";
 
 function Profile() {
+  const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({
+    id: "",
     fullName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     address: "",
-    password: "",
   });
-  const [loading, setLoading] = useState(true); // Thêm trạng thái loading
-  const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
-  const [error, setError] = useState(null);
-  const user = useSelector(selectUser);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+  const userId = localStorage.getItem("userId");
+  const user = useSelector(selectUser);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -28,35 +27,52 @@ function Profile() {
 
   const handleOk = async () => {
     try {
-      const response = await api.post("User/UpdateProfile/update-profile", profile);
-      const data = response.data.data;
+      const formData = new FormData();
+      formData.append("id", user.Id);
+      formData.append("FullName", profile.fullName);
+      formData.append("PhoneNumber", profile.phoneNumber);
+      formData.append("Email", profile.email);
+      formData.append("Address", profile.address);
+
+      const response = await api.post(
+        "/User/UpdateProfile/udpate-profile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.data.error === 0) {
-        message.success("Profile updated successfully!");
+        messageApi.success("Profile updated successfully!");
         setIsModalOpen(false);
-        setProfile(data);
+        setProfile(response.data.data);
         userProfileById(userId);
       } else {
-        message.error(response.data.message || "Failed to update profile.");
+        messageApi.error("Failed to update profile.");
       }
     } catch (error) {
-      console.error("Error updating user profile:", error);
-      message.error("Failed to update profile.");
+      console.error(
+        "Error updating user profile:",
+        error.response?.data || error.message
+      );
+      messageApi.error("Failed to update profile.");
     }
   };
-
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const userProfileById = async () => {
+  const userProfileById = async (userId) => {
     try {
       const response = await api.get(`/User/GetUserById?id=${user.Id}`);
-      setProfile(response.data.data);
+      const { id, fullName, phone, email, address } = response.data.data;
+      setProfile({ id, fullName, phone, email, address });
       setLoading(false);
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      setError("Failed to load user data");
     }
   };
 
@@ -66,6 +82,7 @@ function Profile() {
 
   return (
     <div>
+      {contextHolder}
       <div className="profile-container">
         <div className="profile-form">
           {loading ? (
@@ -137,10 +154,10 @@ function Profile() {
                 <label>Phone Number</label>
                 <input
                   type="tel"
-                  name="phone"
-                  value={profile.phone}
+                  name="phoneNumber"
+                  value={profile.phoneNumber}
                   onChange={(e) =>
-                    setProfile({ ...profile, phone: e.target.value })
+                    setProfile({ ...profile, phoneNumber: e.target.value })
                   }
                 />
               </div>

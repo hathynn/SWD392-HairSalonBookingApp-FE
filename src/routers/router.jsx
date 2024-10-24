@@ -12,6 +12,7 @@ import Booking from "../pages/booking/Booking";
 import Main from "../pages/dashboard/layout/main-dashboard/Main";
 import HistoryBooking from "../pages/profile/pages/historyBooking/HistoryBooking";
 import BookingManager from "../pages/dashboard/pages/manager/bookingManager/BookingManager";
+import Page404 from "../pages/page404/Page404";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
   {
     path: "/pin-code",
     element: <Pincode />,
+  },
+  {
+    path: "*",
+    element: <Page404 />,
   },
 
   //dashboard

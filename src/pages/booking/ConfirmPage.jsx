@@ -3,7 +3,7 @@ import { Card, Descriptions } from "antd";
 
 function ConfirmPage({
   personalInfo,
-  selectedServices,
+  selectedServices = [],  // Default to an empty array if no services are selected
   appointmentDate,
   appointmentTime,
   stylist,
@@ -42,34 +42,29 @@ function ConfirmPage({
             ? personalInfo.salonAddress
             : "Address not entered"}
         </Descriptions.Item>
-        
       </Descriptions>
 
       <Descriptions title="Services" bordered>
-      <Descriptions.Item label="Stylist Name">
-          {stylist || "(Optional)"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Salon Address">
-          {personalInfo.salonAddress
-            ? personalInfo.salonAddress
-            : "Address not entered"}
-        </Descriptions.Item>
-        {selectedServices.map((service, index) => (
-          <Descriptions.Item
-            label={`Service ${index + 1}`}
-            key={service.id}
-            span={2}
-          >
-            {service.comboServiceName
-              ? service.comboServiceName
-              : "No service selected"}
-          </Descriptions.Item>
-        ))}
-        {selectedServices.map((service, index) => (
-          <Descriptions.Item label="Price" key={service.id} span={2}>
-            ${service.price}
-          </Descriptions.Item>
-        ))}
+        {selectedServices.length > 0 ? (
+          selectedServices.map((service, index) => (
+            <React.Fragment key={service.id}>
+              <Descriptions.Item
+                label={`Service ${index + 1}`}
+                span={2}
+              >
+                {service.comboServiceName
+                  ? service.comboServiceName
+                  : "No service selected"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Price" span={2}>
+                ${service.price}
+              </Descriptions.Item>
+              
+            </React.Fragment>
+          ))
+        ) : (
+          <Descriptions.Item label="Services Name" span={2}>No services selected</Descriptions.Item>
+        )}
       </Descriptions>
     </div>
   );

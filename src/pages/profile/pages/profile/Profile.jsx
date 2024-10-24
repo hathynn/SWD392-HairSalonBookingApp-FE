@@ -6,6 +6,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import api from "../../../../config/axios";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../redux/features/counterSlice";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 function Profile() {
   const [loading, setLoading] = useState(true);
@@ -17,12 +19,24 @@ function Profile() {
     address: "",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const userId = localStorage.getItem("userId");
   const user = useSelector(selectUser);
+  const validationSchema = Yup.object({
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
+  });
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const showModal2 = () => {
+    setIsModalOpen2(true);
   };
 
   const handleOk = async () => {
@@ -30,7 +44,7 @@ function Profile() {
       const formData = new FormData();
       formData.append("id", user.Id);
       formData.append("FullName", profile.fullName);
-      formData.append("PhoneNumber", profile.phoneNumber);
+      formData.append("PhoneNumber", profile.phone);
       formData.append("Email", profile.email);
       formData.append("Address", profile.address);
 
@@ -61,8 +75,31 @@ function Profile() {
     }
   };
 
+  const handleSubmit = async (values) => {
+    const payload = {
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+    };
+
+    try {
+      const response = await api.post("/User/Register/register", values);
+      const data = response.data;
+      if (data.error === 0) {
+        message.success(data.message);
+        sessionStorage.setItem("registrationData", JSON.stringify(payload));
+        console.log("registrationData");
+        nav("/pin-code");
+      } else {
+        message.error(data.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalOpen2(false);
   };
 
   const userProfileById = async (userId) => {
@@ -123,9 +160,12 @@ function Profile() {
             </>
           )}
         </div>
-        <Flex justify="center">
+        <Flex gap={"1em"}>
           <button className="update-btn" onClick={showModal}>
             Update Profile
+          </button>
+          <button className="update-btn2" onClick={showModal2}>
+            Reset Password
           </button>
         </Flex>
       </div>
@@ -155,9 +195,9 @@ function Profile() {
                 <input
                   type="tel"
                   name="phoneNumber"
-                  value={profile.phoneNumber}
+                  value={profile.phone}
                   onChange={(e) =>
-                    setProfile({ ...profile, phoneNumber: e.target.value })
+                    setProfile({ ...profile, phone: e.target.value })
                   }
                 />
               </div>
@@ -184,6 +224,50 @@ function Profile() {
                 />
               </div>
             </div>
+          </div>
+        </Modal>
+      </div>
+      <div className="reset-password">
+        <Modal
+          title="Reset Password"
+          open={isModalOpen2}
+          onOk={handleSubmit}
+          onCancel={handleCancel}
+          className="reset-password__modal"
+          okText="Confirm"
+        >
+          <div className="reset-password__modal__container">
+            <Formik
+              initialValues={{
+                password: "",
+                confirmPassword: "",
+              }}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {() => (
+                <Form>
+                  <div className="reset-password__modal__container__form">
+                    <label htmlFor="password">Password</label>
+                    <Field className='reset-password__modal__container__form__input' name="password" />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+                  <div className="reset-password__modal__container__form">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <Field className='reset-password__modal__container__form__input' name="confirmPassword" />
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
         </Modal>
       </div>

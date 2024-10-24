@@ -31,11 +31,10 @@ function Header() {
             <Flex className="header__item__menu">
               <p onClick={() => nav("/")}>Home</p>
               <p onClick={() => nav("/booking")}>Booking</p>
-              <p>Service</p>
               <p onClick={() => nav("/about-us")}>About us</p>
             </Flex>
             <Flex className="header__item__profile">
-              <p onClick={() => nav("/user-profile")}>Profile</p>
+              <p onClick={() => nav("/user-profile/profile")}>Profile</p>
               <p
                 onClick={() => {
                   localStorage.removeItem("token");

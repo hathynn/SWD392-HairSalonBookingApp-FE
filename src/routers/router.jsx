@@ -12,6 +12,10 @@ import Main from "../pages/dashboard/layout/main-dashboard/Main";
 import HistoryBooking from "../pages/profile/pages/historyBooking/HistoryBooking";
 import BookingManager from "../pages/dashboard/pages/manager/bookingManager/BookingManager";
 import Page404 from "../pages/page404/Page404";
+import ThanksCard from "../components/thanksCard/ThanksCard";
+import BookingCustomer from "../pages/profile/pages/bookingCustomer/BookingCustomer";
+import Profile from "../pages/profile/pages/profile/Profile";
+import ResetPassword from "../pages/resetPassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -33,17 +37,28 @@ export const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "/user-profile",
-        element: <Sidebar />,
+        path: "/user-profile/",
+        element: <Sidebar />, 
+        children: [
+          {
+            path: "profile",
+            element: <Profile />, 
+          },
+          {
+            path: "track-booking",
+            element: <BookingCustomer />, 
+          },
+          {
+            path: "history-bookings",
+            element: <HistoryBooking />, 
+          },
+        ],
       },
       {
-        path: "/booking",
-        element: <Booking />,
+        path: "/thank-you",
+        element: <ThanksCard />,
       },
-      {
-        path: "/history-bookings",
-        element: <HistoryBooking />,
-      },
+    
     ],
   },
   {
@@ -59,10 +74,14 @@ export const router = createBrowserRouter([
     element: <Pincode />,
   },
   {
+    path: "/recovery-password",
+    element: <ResetPassword />,
+  },
+  {
     path: "*",
     element: <Page404 />,
   },
-
+  
   //dashboard
   {
     path: "/dashboard",

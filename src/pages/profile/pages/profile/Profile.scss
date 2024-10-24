@@ -3,8 +3,8 @@
 .profile-container {
   margin: 0 auto;
   background-color: #fff;
-  width:100%;
-  margin-top:2em;
+  width: 100%;
+  margin-top: 2em;
 }
 
 .custom-content {
@@ -50,12 +50,29 @@
   cursor: pointer;
   margin-top: 7vh;
   font-weight: bold;
-
 }
 
 .update-btn:hover {
   color: white;
   background-color: $secondary-color;
+}
+
+.update-btn2 {
+  font-family: $font-secondary;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 7vh;
+  font-weight: bold;
+}
+
+.update-btn2:hover {
+  color: black;
+  background-color: $primary-color;
 }
 
 .form-detail {
@@ -65,36 +82,80 @@
 
 .update-profile {
   &__modal {
-    width:950px !important;
+    width: 950px !important;
     height: 70vh !important;
 
     .ant-modal-content {
-      height: 40vh;
 
       .ant-btn-variant-outlined {
-        color:black;
-        margin-top:1.6em;
+        color: black;
+        margin-top: 1.6em;
         font-family: $font-secondary;
       }
       .ant-btn-variant-outlined:hover {
-        color:black;
+        color: black;
         border-color: black;
       }
 
       .ant-btn-variant-solid {
         background-color: $primary-color;
         font-family: $font-secondary;
-        color:black;
+        color: black;
         font-weight: 400;
       }
       .ant-btn-variant-solid:hover {
         background-color: black;
-        color:white;
+        color: white;
         font-weight: 400;
       }
     }
   }
- 
-  
+}
 
+.reset-password {
+  &__modal {
+    &__container {
+      line-height: 2.5em;
+      label {
+        font-family: $font-secondary;
+        font-weight: 600;
+      }
+      &__form {
+        &__input {
+          border-radius: 5px;
+          height: 5vh;
+          width: 100%;
+          padding-left: 0.6em;
+          font-family: $font-secondary;
+        }
+      }
+    }
+    .ant-modal-content {
+      .ant-btn-variant-outlined {
+        color: black;
+        font-family: $font-secondary;
+      }
+      .ant-btn-variant-outlined:hover {
+        color: black;
+        border-color: black;
+      }
+
+      .ant-btn-variant-solid {
+        background-color: $primary-color;
+        font-family: $font-secondary;
+        color: black;
+        font-weight: 400;
+      }
+      .ant-btn-variant-solid:hover {
+        background-color: black;
+        color: white;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-family: $font-secondary;
 }

@@ -6,7 +6,6 @@ import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import Pincode from "../pages/pinCode/Pincode";
 import AboutUs from "../pages/aboutUs/AboutUs";
-import Profile from "../pages/profile/pages/Profile";
 import Sidebar from "../pages/profile/layout/Sidebar";
 import Booking from "../pages/booking/Booking";
 import Main from "../pages/dashboard/layout/main-dashboard/Main";

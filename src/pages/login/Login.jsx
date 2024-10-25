@@ -101,7 +101,7 @@ function Login() {
               <input type="checkbox" id="rememberMe" />
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
-            <a href="/recovery-password" className="recovery-link">
+            <a href="/verify-mail" className="recovery-link">
               Recovery Password
             </a>
           </div>

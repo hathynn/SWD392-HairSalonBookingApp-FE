@@ -16,6 +16,7 @@ import BookingCustomer from "../pages/profile/pages/bookingCustomer/BookingCusto
 import Profile from "../pages/profile/pages/profile/Profile";
 import ResetPassword from "../pages/resetPassword/ResetPassword";
 import Booking from "../pages/booking/Booking";
+import VerifyMail from "../pages/resetPassword/VerifyMail";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
   {
     path: "/recovery-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/verify-mail",
+    element: <VerifyMail />,
   },
   {
     path: "*",

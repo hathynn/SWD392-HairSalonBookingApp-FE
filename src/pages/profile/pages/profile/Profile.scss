@@ -116,11 +116,14 @@
   &__modal {
     &__container {
       line-height: 2.5em;
-      label {
-        font-family: $font-secondary;
-        font-weight: 600;
-      }
+     
       &__form {
+        
+        line-height: 2em;
+        label {
+          font-family: $font-secondary;
+          font-weight: 600;
+        }
         &__input {
           border-radius: 5px;
           height: 5vh;
@@ -128,6 +131,42 @@
           padding-left: 0.6em;
           font-family: $font-secondary;
         }
+      }
+
+      &__button {
+       border-radius: 6px;
+       height: 4vh;
+       width:5vw;
+       margin-top:1em;
+       font-weight: 600;
+       cursor:pointer;
+       font-family: $font-secondary;
+       background-color:  $primary-color;
+       border-color: $primary-color;
+      }
+
+      &__button:hover {
+        color:white;
+        background-color: black;
+        border-color:black;
+      }
+
+      &__button2 {
+       border-radius: 6px;
+       height: 4vh;
+       width:6vw;
+       margin-top:1.4em;
+       font-weight: 600;
+       cursor:pointer;
+       font-family: $font-secondary;
+       background-color:  $primary-color;
+       border-color: $primary-color;
+      }
+
+      &__button2:hover {
+        color:white;
+        background-color: black;
+        border-color:black;
       }
     }
     .ant-modal-content {

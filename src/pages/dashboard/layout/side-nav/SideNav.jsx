@@ -19,7 +19,11 @@ function SideNav({}) {
   const page = pathname.replace("/", "");
   const dispatch = useDispatch();
   const onClick = (e) => {
-    navigate(navpath[e.key].path);
+    if (e.key === "logout") {
+      handleLogout(); 
+    } else {
+      navigate(navpath[e.key].path);
+    }
   };
   const user = useSelector(selectUser);
   const handleLogout = async () => {
@@ -27,6 +31,8 @@ function SideNav({}) {
     await dispatch(logout())
     navigate('/')
 }
+
+
   return (
     
 
@@ -49,6 +55,7 @@ function SideNav({}) {
             ? navDashboardConfigCustomer
             : null
         }
+        
         className="menu-sidenav"
       />
       <Menu
@@ -58,12 +65,12 @@ function SideNav({}) {
         theme="dark"
         items={[
           {
-            key: "1",
+            key: "logout",
             icon: <LogoutOutlined />,
             label: "Logout",
           },
         ]}
-        className="menu-sidenav"
+        className="menu-sidenav2"
       />
      
     </div>

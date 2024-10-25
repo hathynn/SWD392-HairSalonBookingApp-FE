@@ -4,6 +4,7 @@
   padding: 3em 4em 0 0;
   .ant-table-wrapper {
     .ant-table-thead {
+     
       tr {
         th {
         
@@ -17,7 +18,7 @@
           }
         }
         .ant-table-cell::before {
-          background-color: transparent !important;
+          background-color: black !important;
         }
       }
     }

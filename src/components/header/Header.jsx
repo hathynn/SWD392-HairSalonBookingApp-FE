@@ -39,7 +39,7 @@ function Header() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(logout());
-                  nav("/login");
+                  nav("/");
                 }}
               >
                 Logout

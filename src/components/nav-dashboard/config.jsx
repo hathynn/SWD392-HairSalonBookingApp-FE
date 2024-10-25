@@ -5,8 +5,8 @@ import {
   DollarCircleOutlined,
   UserOutlined,
   CalendarOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-
 
 export const navDashboardConfig = [
   {
@@ -29,23 +29,23 @@ export const navDashboardConfigCustomer = [
   {
     key: "1",
     icon: <CalendarOutlined />,
-    label: "Request Bookings",
+    label: "Booking Request",
   },
   {
     key: "2",
     icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
     label: "Stylist",
   },
-  
+
   {
     key: "3",
     icon: <DollarCircleOutlined style={{ fontSize: "1.4em" }} />,
     label: "Services",
   },
+ 
 ];
 
 export const navDashboardConfigAdmin = [
-
   {
     key: "5",
     icon: <SolutionOutlined />,
@@ -61,7 +61,6 @@ export const navDashboardConfigAdmin = [
     icon: <ShoppingCartOutlined />,
     label: "Services",
   },
-  
 ];
 
 export const navDashboardConfigStaff = [

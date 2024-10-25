@@ -70,7 +70,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
 
   const getHairSalon = async () => {
     try {
-      const response = await api.get("/Salon/PrintAllSalon");
+      const response = await api.get("/Admin/PrintAllSalon");
       const data = response.data.data;
       setSalons(data);
     } catch (error) {

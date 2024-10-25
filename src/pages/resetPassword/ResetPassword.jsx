@@ -14,6 +14,9 @@ function ResetPassword() {
   const [isChecked, setIsChecked] = useState(false);
 
   const validationSchema = Yup.object({
+    token: Yup.string()
+      .min(6, "OTP must be at least 6 numbers")
+      .required("OTP is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
@@ -23,19 +26,22 @@ function ResetPassword() {
   });
 
   const handleSubmit = async (values) => {
-    const payload = {
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-    };
-
+    const formData = new FormData();
+    formData.append('Token', values.token);
+    formData.append('Password', values.password);
+    formData.append('ConfirmPassword', values.confirmPassword);
+  
+    console.log([...formData]); 
     try {
-      const response = await api.post("/User/Register/register", values);
+      const response = await api.post("/User/ResetPassword", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       const data = response.data;
       if (data.error === 0) {
         message.success(data.message);
-        sessionStorage.setItem("registrationData", JSON.stringify(payload));
-        console.log("registrationData");
-        nav("/pin-code");
+        nav("/login");
       } else {
         message.error(data.message);
       }
@@ -43,7 +49,7 @@ function ResetPassword() {
       setError(error.message);
     }
   };
-
+  
   return (
     <>
       <div className="register-container">
@@ -65,7 +71,7 @@ function ResetPassword() {
           </div>
           <Formik
             initialValues={{
-             
+              token: "",
               password: "",
               confirmPassword: "",
             }}
@@ -74,7 +80,15 @@ function ResetPassword() {
           >
             {() => (
               <Form className="register-form">
-               
+                <div className="form-group">
+                  <label htmlFor="token">OTP</label>
+                  <Field name="token" type="text" />
+                  <ErrorMessage
+                    name="token"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <Field name="password" type="password" />
@@ -93,12 +107,8 @@ function ResetPassword() {
                     className="error-message"
                   />
                 </div>
-               
-                <button
-                  type="submit"
-                  className="register-btn"
-                  disabled={!isChecked}
-                >
+
+                <button type="submit" className="register-btn">
                   Recovery Password
                 </button>
                 {error && <p className="error-message">{error}</p>}

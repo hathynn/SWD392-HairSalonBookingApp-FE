@@ -126,8 +126,8 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
                           borderColor: selectedServices.some(
                             (s) => s.id === service.id
                           )
-                            ? "white"
-                            : "black",
+                            ? "black"
+                            : "#FAA300",
                         }}
                         onClick={() => handleSelectService(service)}
                       >

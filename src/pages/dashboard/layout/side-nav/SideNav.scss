@@ -46,32 +46,43 @@
   margin: 1em;
   border-radius: 20px;
   .ant-menu-item,
-  .ant-menu-submenu,
+  .ant-menu-submenu-title .ant-menu-submenu,
   .ant-menu-sub {
     font-family: "Gantari";
     color: black;
     background-color: white !important;
+
     border-radius: 0;
-    span {
-      font-size: 1.1em;
-    }
+
     .anticon {
       font-size: 1.5em !important;
     }
   }
-
   .ant-menu-item,
   .ant-menu-submenu-title {
+    font-size: 1em;
+    color: black !important;
+    font-family: $font-secondary !important;
     margin-top: 1em;
-    margin-bottom: 1em;
   }
   .ant-menu-item-selected {
-    color: rgb(0, 0, 0);
-    border-left: 3px solid rgb(0, 0, 0);
+    color: white;
+    border-left: 3px solid white;
     background-color: transparent;
   }
-}
 
+  .ant-menu-item-only-child {
+    background-color: rgba(222, 217, 217, 0.148) !important;
+    border-radius: 10px;
+    width: 12vw;
+    margin: 0 2em;
+    padding-left: 2em !important;
+    margin-bottom:0.5em;
+  }
+  .ant-menu-item-only-child:hover {
+    background-color: rgb(233, 233, 233) !important;
+  }
+}
 .menu-sidenav2 {
   width: 15vw;
   background-color: white !important;
@@ -99,7 +110,7 @@
   }
   .ant-menu-item-selected {
     color: rgb(0, 0, 0);
-   
+
     background-color: transparent;
   }
 }

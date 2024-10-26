@@ -33,14 +33,14 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
     getStylist();
   }, [])
   return (
-    <div>
+    <div className="dateSelector">
         <DatePicker
         onChange={(date) => {
           const selectedDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
           console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
           setAppointmentDate(selectedDate);
         }}
-        
+        className="dateSelector__date"
         disabledDate={disabledDate}
         style={{ marginBottom: "1em" }}
       />
@@ -48,6 +48,7 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
         placeholder="Select time"
         onChange={(value) => setAppointmentTime(value)}
         style={{ width: "100%", marginBottom: "1em" }}
+         className="dateSelector__time"
       >
         <Option value="10:00">10:00 AM</Option>
         <Option value="11:00">11:00 AM</Option>
@@ -59,6 +60,7 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
         placeholder="Choose stylist (Optional)"
         onChange={(value) => setStylist(value)} 
         style={{ width: "100%" }}
+         className="dateSelector__stylist"
       >
         {stylists && stylists.length > 0 ? (
           stylists.map((stylist) => (

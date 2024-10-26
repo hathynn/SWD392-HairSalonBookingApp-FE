@@ -35,13 +35,12 @@ function SamplePrevArrow(props) {
   );
 }
 
-function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
+function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
   const [salons, setSalons] = useState([]);
-  const [selectedSalonId, setSelectedSalonId] = useState(null); 
-  const [selectedSalonAddress, setSelectedSalonAddress] = useState(""); 
+  const [selectedSalonId, setSelectedSalonId] = useState(null);
+  const [selectedSalonAddress, setSelectedSalonAddress] = useState("");
   const userId = localStorage.getItem("userId");
   const user = useSelector(selectUser);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +54,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
 
     // Cập nhật giá trị của input vào personalInfo
     setPersonalInfo({ ...personalInfo, [name]: value });
-    console.log(personalInfo.salonAddress)
+    console.log(personalInfo.salonAddress);
   };
 
   const userProfileById = async () => {
@@ -84,10 +83,9 @@ function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
   }, [userId]);
 
   const handleSalonSelect = (salonId, salonAddress) => {
-    setSelectedSalonId(salonId); 
-    setSelectedSalonAddress(salonAddress); 
+    setSelectedSalonId(salonId);
+    setSelectedSalonAddress(salonAddress);
     setPersonalInfo({ ...personalInfo, salonAddress });
-
   };
 
   const settings = {
@@ -111,26 +109,29 @@ function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
           size="middle"
           placeholder="Customer Name"
           prefix={<UserOutlined />}
-          name="fullName" 
+          name="fullName"
           value={personalInfo.fullName}
-          onChange={handleChange} 
+          onChange={handleChange}
+          className="personalInfo__input__inside"
         />
         <Input
           size="middle"
           placeholder="Phone Number"
           name="phone"
+          className="personalInfo__input__inside"
           value={personalInfo.phone}
           prefix={<PhoneOutlined />}
-          onChange={handleChange} 
+          onChange={handleChange}
         />
       </div>
-      <div>
+      <div >
         <p style={{ marginTop: "1em" }}>Hair Salon Address</p>
         <Input
           size="middle"
           placeholder="Hair Salon Address"
           prefix={<GlobalOutlined />}
-          value={selectedSalonAddress} 
+          value={selectedSalonAddress}
+          className="personalInfo__input__inside"
         />
         <div className="slider-container">
           {salons.length > 0 ? (
@@ -165,6 +166,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo,  onNext }) {
                       }}
                     >
                       <Button
+                        style={{ fontFamily: "Gantari" }}
                         onClick={() => {
                           handleSalonSelect(salon.salonId, salon.address);
                         }}

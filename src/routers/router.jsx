@@ -17,6 +17,8 @@ import Profile from "../pages/profile/pages/profile/Profile";
 import ResetPassword from "../pages/resetPassword/ResetPassword";
 import Booking from "../pages/booking/Booking";
 import VerifyMail from "../pages/resetPassword/VerifyMail";
+import AddService from "../pages/dashboard/pages/manager/serviceManager/addService/AddService";
+import ViewService from "../pages/dashboard/pages/manager/serviceManager/viewService/ViewService";
 
 export const router = createBrowserRouter([
   {
@@ -103,6 +105,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manager/bookings",
         element: <BookingManager/>,
+      },
+      {
+        path: "/dashboard/manager/add-service",
+        element: <AddService/>,
+      },
+      {
+        path: "/dashboard/manager/view-service",
+        element: <ViewService/>,
       },
     ],
   },

@@ -1,0 +1,39 @@
+@import "../../../../../styles/variables.scss";
+.stylist-manage {
+  padding: 3em 3em 0 0;
+  
+  .ant-table-wrapper {
+    p {
+      font-family: $font-secondary;
+    }
+    .ant-table-thead {
+      tr {
+        th {
+          color: rgb(0, 0, 0);
+          font-family: $font-secondary;
+        }
+
+        .ant-table-filter-column {
+          span {
+            color: white;
+          }
+        }
+        .ant-table-cell::before {
+          background-color: black !important;
+        }
+      }
+    }
+
+    .ant-pagination .ant-pagination-item-active {
+      font-weight: 600;
+      background-color: #ffffff !important;
+      border-color: #ffffff !important;
+      color: #ffffff;
+      font-family: $font-secondary;
+    }
+
+    .ant-pagination .ant-pagination-item a {
+      color: black !important;
+    }
+  }
+}

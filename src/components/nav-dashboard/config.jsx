@@ -59,17 +59,6 @@ export const navDashboardConfigCustomer = [
     key: "3",
     icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
     label: "Service",
-    children: [
-      {
-        key: "31",
-        label: "View all service",
-      },
-      {
-        key: "32",
-        label: "Create a service",
-      },
-     
-    ],
   },
   
  
@@ -139,13 +128,10 @@ export const navpath = {
     path: "/dashboard/manager/bookings",
   },
   2: {
-    path: "/dashboard/manager/stylists",
+    path: "/dashboard/manager/stylist-manage",
   },
-  31: {
-    path: "/dashboard/manager/view-service",
-  },
-  32: {
-    path: "/dashboard/manager/add-service",
+  3: {
+    path: "/dashboard/manager/service",
   },
   41: {
     path: "/dashboard/manager/view-combo",

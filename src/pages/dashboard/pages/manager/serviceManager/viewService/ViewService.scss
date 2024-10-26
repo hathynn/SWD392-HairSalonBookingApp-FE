@@ -1,0 +1,125 @@
+@import "../../../../../../styles/variables.scss";
+
+.service-manager {
+  padding: 3em 3em 0 0;
+
+  .add-service {
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    height: 23vh;
+    padding: 2em;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+    p {
+      color: black;
+      font-family: $font-secondary;
+      font-weight: 600;
+    }
+    .ant-input-affix-wrapper,
+    .ant-input {
+      font-family: $font-secondary;
+      border-radius: 10px;
+      border-color: rgb(193, 190, 190);
+    }
+
+    &__input {
+      height: 6vh;
+      margin: 1em 0;
+    }
+
+    &__button {
+      font-family: $font-secondary;
+      font-weight: 600;
+      width: 100%;
+    }
+  }
+
+  .view-service {
+    .ant-table-wrapper {
+      width: 96%;
+      p {
+        font-family: $font-secondary;
+      }
+      .ant-table-thead {
+        tr {
+          th {
+            color: rgb(0, 0, 0);
+            font-family: $font-secondary;
+          }
+
+          .ant-table-filter-column {
+            span {
+              color: white;
+            }
+          }
+          .ant-table-cell::before {
+            background-color: black !important;
+          }
+        }
+      }
+
+      .ant-pagination .ant-pagination-item-active {
+        font-weight: 600;
+        background-color: #ffffff !important;
+        border-color: #ffffff !important;
+        color: #ffffff;
+        font-family: $font-secondary;
+      }
+
+      .ant-pagination .ant-pagination-item a {
+        color: black !important;
+      }
+    }
+
+    &__button {
+      font-family: $font-secondary;
+      font-weight: 600;
+      margin-right: 1em;
+    }
+  }
+
+  .update-service {
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    height: 23vh;
+    padding: 2em;
+    display: flex;
+    margin-top: 2em;
+    flex-direction: column;
+    width: 100%;
+    p {
+      color: black;
+      font-family: $font-secondary;
+      font-weight: 600;
+    }
+    .ant-input-affix-wrapper,
+    .ant-input {
+      font-family: $font-secondary;
+      border-radius: 10px;
+      border-color: rgb(193, 190, 190);
+    }
+
+    &__input {
+      height: 6vh;
+      margin: 1em 0;
+    }
+
+    &__button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      &__left {
+        width: 49%;
+        font-family: $font-secondary;
+        font-weight: 600;
+      }
+      &__right {
+        width: 49%;
+        font-family: $font-secondary;
+        font-weight: 600;
+      }
+    }
+  }
+}

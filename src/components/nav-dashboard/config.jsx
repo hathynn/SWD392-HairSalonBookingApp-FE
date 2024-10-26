@@ -6,6 +6,7 @@ import {
   UserOutlined,
   CalendarOutlined,
   LogoutOutlined,
+  ScissorOutlined,
 } from "@ant-design/icons";
 
 export const navDashboardConfig = [
@@ -36,12 +37,23 @@ export const navDashboardConfigCustomer = [
     icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
     label: "Stylist",
   },
-
   {
     key: "3",
-    icon: <DollarCircleOutlined style={{ fontSize: "1.4em" }} />,
-    label: "Services",
+    icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
+    label: "Service",
+    children: [
+      {
+        key: "31",
+        label: "View Service",
+      },
+      {
+        key: "32",
+        label: "Create Service",
+      },
+     
+    ],
   },
+  
  
 ];
 
@@ -111,11 +123,11 @@ export const navpath = {
   2: {
     path: "/dashboard/manager/stylists",
   },
-  3: {
-    path: "/dashboard/manager/revenue",
+  31: {
+    path: "/dashboard/manager/view-service",
   },
-  4: {
-    path: "/dashboard/admin/users",
+  32: {
+    path: "/dashboard/manager/add-service",
   },
   5: {
     path: "/dashboard/admin/summary",

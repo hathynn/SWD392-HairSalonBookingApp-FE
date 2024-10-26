@@ -1,0 +1,53 @@
+@import "../../../../../../styles/variables.scss";
+.create-combo {
+  margin-top: 2.7em;
+  display: flex;
+  flex-direction: column;
+  height: 83%; 
+  background-color: rgb(255, 255, 255);
+  width: 96%;
+  border-radius: 20px;
+  padding: 3em 3em 2em 3em;
+
+  label {
+    color: black;
+    font-family: $font-secondary;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  &__input {
+    line-height: 6vh;
+    margin-bottom: 1em;
+    .ant-input-affix-wrapper,
+    .ant-input {
+      border-radius: 10px;
+      border-color: rgb(193, 190, 190);
+      box-shadow: rgb(193, 190, 190);
+    }
+   
+    &__inside {
+      font-family: $font-secondary;
+    }
+  }
+
+  &__image {
+    padding-top: 0.6em;
+    &__dragger {
+      font-family: $font-secondary;
+    }
+  }
+
+  &__button {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+   &__buttons {
+    border-radius: 20px;
+    width:6em;
+    height: 3em;
+    font-family: $font-secondary;
+    font-weight: 600;
+   }
+  }
+}

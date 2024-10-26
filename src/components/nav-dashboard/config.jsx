@@ -7,6 +7,8 @@ import {
   CalendarOutlined,
   LogoutOutlined,
   ScissorOutlined,
+  ProductOutlined,
+  PullRequestOutlined,
 } from "@ant-design/icons";
 
 export const navDashboardConfig = [
@@ -29,7 +31,7 @@ export const navDashboardConfig = [
 export const navDashboardConfigCustomer = [
   {
     key: "1",
-    icon: <CalendarOutlined />,
+    icon: <PullRequestOutlined />,
     label: "Booking Request",
   },
   {
@@ -38,17 +40,33 @@ export const navDashboardConfigCustomer = [
     label: "Stylist",
   },
   {
+    key: "4",
+    icon: <ProductOutlined  style={{ fontSize: "1.4em" }} />,
+    label: "Combo",
+    children: [
+      {
+        key: "41",
+        label: "View all combo",
+      },
+      {
+        key: "42",
+        label: "Create a service",
+      },
+     
+    ],
+  },
+  {
     key: "3",
     icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
     label: "Service",
     children: [
       {
         key: "31",
-        label: "View Service",
+        label: "View all service",
       },
       {
         key: "32",
-        label: "Create Service",
+        label: "Create a service",
       },
      
     ],
@@ -71,7 +89,7 @@ export const navDashboardConfigAdmin = [
   {
     key: "13",
     icon: <ShoppingCartOutlined />,
-    label: "Services",
+    label: "Service",
   },
 ];
 
@@ -128,6 +146,12 @@ export const navpath = {
   },
   32: {
     path: "/dashboard/manager/add-service",
+  },
+  41: {
+    path: "/dashboard/manager/view-combo",
+  },
+  42: {
+    path: "/dashboard/manager/add-combo",
   },
   5: {
     path: "/dashboard/admin/summary",

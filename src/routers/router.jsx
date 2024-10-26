@@ -19,6 +19,8 @@ import Booking from "../pages/booking/Booking";
 import VerifyMail from "../pages/resetPassword/VerifyMail";
 import AddService from "../pages/dashboard/pages/manager/serviceManager/addService/AddService";
 import ViewService from "../pages/dashboard/pages/manager/serviceManager/viewService/ViewService";
+import AddCombo from "../pages/dashboard/pages/manager/comboManager/addCombo/AddCombo";
+import ViewCombo from "../pages/dashboard/pages/manager/comboManager/viewCombo/ViewCombo";
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +115,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manager/view-service",
         element: <ViewService/>,
+      },
+      {
+        path: "/dashboard/manager/add-combo",
+        element: <AddCombo/>,
+      },
+      {
+        path: "/dashboard/manager/view-combo",
+        element: <ViewCombo/>,
       },
     ],
   },

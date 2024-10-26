@@ -1,0 +1,40 @@
+@import "../../../../../styles/variables.scss";
+
+.salon-manage {
+  margin-top: 2.7em;
+  margin-right: 2em;
+  margin-left: 3em;
+  &__card {
+    width: 95%;
+    border-radius: 20px;
+
+    img {
+      border-top-left-radius: 20px !important;
+      border-top-right-radius: 20px !important;
+      height: 20vh;
+      object-fit: cover;
+    }
+
+    &__upper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        &__title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3em !important;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-family: $font-secondary;
+      }
+      &__subtitle {
+        font-size: 1em !important;
+        color: $secondary-text-color;
+        font-family: $font-secondary;
+      }
+    }
+   
+  }
+}

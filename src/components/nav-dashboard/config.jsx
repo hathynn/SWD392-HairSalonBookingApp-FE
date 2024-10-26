@@ -9,6 +9,7 @@ import {
   ScissorOutlined,
   ProductOutlined,
   PullRequestOutlined,
+  ShopOutlined,
 } from "@ant-design/icons";
 
 export const navDashboardConfig = [
@@ -28,40 +29,49 @@ export const navDashboardConfig = [
     label: "Revenue",
   },
 ];
-export const navDashboardConfigCustomer = [
-  {
-    key: "1",
-    icon: <PullRequestOutlined />,
-    label: "Booking Request",
-  },
-  {
-    key: "2",
-    icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
-    label: "Stylist",
-  },
-  {
-    key: "4",
-    icon: <ProductOutlined  style={{ fontSize: "1.4em" }} />,
-    label: "Combo",
-    children: [
-      {
-        key: "41",
-        label: "View all combo",
-      },
-      {
-        key: "42",
-        label: "Create a service",
-      },
+
+// export const navDashboardConfigCustomer = [
+//   {
+//     key: "1",
+//     icon: <PullRequestOutlined />,
+//     label: "Booking Request",
+//   },
+//   {
+//     key: "2",
+//     icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
+//     label: "Stylist",
+//   },
+//   {
+//     key: "4",
+//     icon: <ProductOutlined  style={{ fontSize: "1.4em" }} />,
+//     label: "Combo",
+//     children: [
+//       {
+//         key: "41",
+//         label: "View all combo",
+//       },
+//       {
+//         key: "42",
+//         label: "Create a service",
+//       },
      
-    ],
-  },
-  {
-    key: "3",
-    icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
-    label: "Service",
-  },
+//     ],
+//   },
+//   {
+//     key: "3",
+//     icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
+//     label: "Service",
+//   },
   
  
+// ];
+export const navDashboardConfigCustomer = [
+  {
+    key: "5",
+    icon: <ShopOutlined />,
+    label: "Salon System",
+  },
+  
 ];
 
 export const navDashboardConfigAdmin = [
@@ -140,7 +150,7 @@ export const navpath = {
     path: "/dashboard/manager/add-combo",
   },
   5: {
-    path: "/dashboard/admin/summary",
+    path: "/dashboard/admin/salon-manage",
   },
   6: {
     path: "/dashboard/admin/services",

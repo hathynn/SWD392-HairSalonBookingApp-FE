@@ -21,6 +21,7 @@ import ViewService from "../pages/dashboard/pages/manager/serviceManager/viewSer
 import AddCombo from "../pages/dashboard/pages/manager/comboManager/addCombo/AddCombo";
 import ViewCombo from "../pages/dashboard/pages/manager/comboManager/viewCombo/ViewCombo";
 import StylistManager from "../pages/dashboard/pages/manager/stylistManager/StylistManager";
+import SalonAdmin from "../pages/dashboard/pages/admin/salonAdmin/SalonAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +101,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <Main />,
     children: [
+      //manager
       {
         path: "/dashboard/manager",
         element: <BookingManager/>,
@@ -124,6 +126,12 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manager/stylist-manage",
         element: <StylistManager/>,
+      },
+
+      //admin
+      {
+        path: "/dashboard/admin/salon-manage",
+        element: <SalonAdmin/>,
       },
     ],
   },

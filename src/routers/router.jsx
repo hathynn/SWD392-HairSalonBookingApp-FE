@@ -17,10 +17,10 @@ import Profile from "../pages/profile/pages/profile/Profile";
 import ResetPassword from "../pages/resetPassword/ResetPassword";
 import Booking from "../pages/booking/Booking";
 import VerifyMail from "../pages/resetPassword/VerifyMail";
-import AddService from "../pages/dashboard/pages/manager/serviceManager/addService/AddService";
 import ViewService from "../pages/dashboard/pages/manager/serviceManager/viewService/ViewService";
 import AddCombo from "../pages/dashboard/pages/manager/comboManager/addCombo/AddCombo";
 import ViewCombo from "../pages/dashboard/pages/manager/comboManager/viewCombo/ViewCombo";
+import StylistManager from "../pages/dashboard/pages/manager/stylistManager/StylistManager";
 
 export const router = createBrowserRouter([
   {
@@ -108,12 +108,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/manager/bookings",
         element: <BookingManager/>,
       },
+      
       {
-        path: "/dashboard/manager/add-service",
-        element: <AddService/>,
-      },
-      {
-        path: "/dashboard/manager/view-service",
+        path: "/dashboard/manager/service",
         element: <ViewService/>,
       },
       {
@@ -123,6 +120,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manager/view-combo",
         element: <ViewCombo/>,
+      },
+      {
+        path: "/dashboard/manager/stylist-manage",
+        element: <StylistManager/>,
       },
     ],
   },

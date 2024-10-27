@@ -1,0 +1,50 @@
+@import '../../../../../styles/variables.scss';
+
+.register-workshifts {
+    padding: 20px;
+    max-width: 500px;
+    margin: 30px auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    // margin-top: 10px;
+
+    h2 {
+        text-align: center;
+        color: black;
+        font-family: $font-secondary;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        color: $secondary-color;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    fieldset {
+        margin-bottom: 10px;
+        border: none;
+
+        label {
+            margin-top: 15px;
+            margin-right: 10px;
+            font-weight: bold;
+            color: $secondary-color;
+        }
+
+        .ant-checkbox-wrapper {
+            margin-right: 10px;
+        }
+    }
+
+    .ant-btn-primary {
+        width: 100%;
+        background-color: $primary-color;
+        color: $secondary-color;
+    }
+}

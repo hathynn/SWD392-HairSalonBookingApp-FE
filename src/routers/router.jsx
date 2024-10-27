@@ -22,6 +22,8 @@ import AddCombo from "../pages/dashboard/pages/manager/comboManager/addCombo/Add
 import ViewCombo from "../pages/dashboard/pages/manager/comboManager/viewCombo/ViewCombo";
 import StylistManager from "../pages/dashboard/pages/manager/stylistManager/StylistManager";
 import SalonAdmin from "../pages/dashboard/pages/admin/salonAdmin/SalonAdmin";
+import RegisterWorkshifts from "../pages/dashboard/pages/stylist/register-workshift/RegisterWorkshifts";
+import BookingApplied from "../pages/dashboard/pages/stylist/booking-applied/BookingApplied";
 
 export const router = createBrowserRouter([
   {
@@ -132,6 +134,16 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/admin/salon-manage",
         element: <SalonAdmin/>,
+      },
+
+      //stylist
+      {
+        path: "/dashboard/stylist",
+        element: <BookingApplied/>,
+      },
+      {
+        path: "/dashboard/stylist/register-workshifts",
+        element: <RegisterWorkshifts/>,
       },
     ],
   },

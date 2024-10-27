@@ -27,7 +27,6 @@ function Login() {
     };
     try {
       const response = await api.post("/User/Login/login", payload);
-
       // Lưu token vào localStorage
       const token = response.data.data;
       localStorage.setItem("token", token);
@@ -47,9 +46,12 @@ function Login() {
       if (user.Role === "Salon Staff") {
         nav("/dashboard/staff");
       }
+      if (user.Role === "Stylist") {
+        nav("/dashboard/stylist");
+      }
     } catch (error) {
       console.error("Error:", error.message);
-      messageApi.error("Login Failed.");
+      messageApi.error("Login Failed." + response.data.message);
     }
   };
 

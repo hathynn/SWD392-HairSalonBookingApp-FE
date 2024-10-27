@@ -10,6 +10,7 @@ import {
   ProductOutlined,
   PullRequestOutlined,
   ShopOutlined,
+  CarryOutOutlined,
 } from "@ant-design/icons";
 
 export const navDashboardConfig = [
@@ -131,6 +132,11 @@ export const navDashboardConfigStylist = [
     icon: <DollarCircleOutlined />,
     label: "Feedbacks",
   },
+  {
+    key: "13",
+    icon: <CarryOutOutlined />,
+    label: "Schedule",
+  },
 ];
 
 export const navpath = {
@@ -165,13 +171,19 @@ export const navpath = {
     path: "/dashboard/salonstaff/send-request",
   },
   9: {
-    path: "/dashboard/stylist/bookings",
+    path: "/dashboard/stylist",
   },
   10: {
     path: "/dashboard/stylist/salary",
   },
   11: {
     path: "/dashboard/stylist/feedbacks",
+  },
+  12: {
+    path: "/dashboard/stylist/schedule",
+  },
+  13: {
+    path: "/dashboard/stylist/register-workshifts",
   },
 };
 

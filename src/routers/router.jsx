@@ -23,7 +23,7 @@ import ViewCombo from "../pages/dashboard/pages/manager/comboManager/viewCombo/V
 import StylistManager from "../pages/dashboard/pages/manager/stylistManager/StylistManager";
 import SalonAdmin from "../pages/dashboard/pages/admin/salonAdmin/SalonAdmin";
 import RegisterWorkshifts from "../pages/dashboard/pages/stylist/register-workshift/RegisterWorkshifts";
-import BookingApplied from "../pages/dashboard/pages/stylist/booking-applied/BookingApplied";
+import BookingAssigned from "../pages/dashboard/pages/stylist/booking-applied/BookingApplied";
 
 export const router = createBrowserRouter([
   {
@@ -139,7 +139,7 @@ export const router = createBrowserRouter([
       //stylist
       {
         path: "/dashboard/stylist",
-        element: <BookingApplied/>,
+        element: <BookingAssigned/>,
       },
       {
         path: "/dashboard/stylist/register-workshifts",

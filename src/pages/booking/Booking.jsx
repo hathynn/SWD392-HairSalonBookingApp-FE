@@ -5,6 +5,8 @@ import PersonalInfo from "./PersonalInfo";
 import ServiceCategory from "./ServiceCategory";
 import ConfirmPage from "./ConfirmPage";
 import AppointmentSelector from "./AppointmentSelector";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/counterSlice";
 
 function Booking() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -19,6 +21,8 @@ function Booking() {
   const [stylist, setStylist] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = useSelector(selectUser);
+    const userId = user.Id;
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -95,14 +99,19 @@ function Booking() {
   };
 
   const handleSubmit = async () => {
-    const bookingData = {
-      ...personalInfo,
-      selectedServices,
-      appointmentDate,
-      appointmentTime,
-    };
-
+    // const bookingData = {
+    //   ...personalInfo,
+    //   selectedServices,
+    //   appointmentDate,
+    //   appointmentTime,
+    // };
+    console.log(stylist.id);
+    const [hour, minute] = appointmentTime.split(":");
+    console.log(selectedServices.id);
+    
     try {
+      const response = await api.post(`/Booking/AddBooking/AddBooking?salonId=${personalInfo.salonId}&SalonMemberId=${stylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedServices}`, userId);
+      console.log(response.data.data);
       messageApi.success("Booking successfully!");
     } catch (error) {
       messageApi.error("Booking failed.");

@@ -9,7 +9,7 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
-      const response = await api.get("/User/PrintAllSalonMember");
+      const response = await api.get("/Admin/PrintAllSalonMember");
       if (response.data.error === 0) {
         const data = response.data.data;
         setStylists(data);

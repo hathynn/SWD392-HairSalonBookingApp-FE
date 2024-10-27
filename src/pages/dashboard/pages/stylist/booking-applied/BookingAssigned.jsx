@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import './BookingApplied.scss';
+import './BookingAssigned.scss';
 
 function BookingAssigned() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate a fetch delay for mock data
         setTimeout(() => {
             const mockBookings = [
                 {
@@ -35,7 +34,7 @@ function BookingAssigned() {
 
             setBookings(mockBookings);
             setLoading(false);
-        }, 1000); // Simulate loading delay
+        }, 1000);
     }, []);
 
     // Define table columns

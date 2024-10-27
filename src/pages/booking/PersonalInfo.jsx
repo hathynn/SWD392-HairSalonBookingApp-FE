@@ -85,7 +85,7 @@ function PersonalInfo({ personalInfo, setPersonalInfo, onNext }) {
   const handleSalonSelect = (salonId, salonAddress) => {
     setSelectedSalonId(salonId);
     setSelectedSalonAddress(salonAddress);
-    setPersonalInfo({ ...personalInfo, salonAddress });
+    setPersonalInfo({ ...personalInfo, salonId, salonAddress });
   };
 
   const settings = {

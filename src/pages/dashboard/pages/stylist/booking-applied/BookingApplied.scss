@@ -1,0 +1,24 @@
+@import '../../../../../styles/variables.scss';
+
+.booking-applied {
+    h2 {
+        color: $secondary-color;
+        text-align: center;
+        margin-top: 20px;
+        font-family: $font-secondary;
+        font-size: 30px;
+    }
+
+    :where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>th,
+    :where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>td {
+        background-color: $primary-color;
+    }
+
+    :where(.css-dev-only-do-not-override-ccdg5a).ant-pagination .ant-pagination-item-active a {
+        color: $primary-color;
+    }
+
+    :where(.css-dev-only-do-not-override-ccdg5a).ant-pagination .ant-pagination-item-active {
+        border-color: $primary-color;
+    }
+}

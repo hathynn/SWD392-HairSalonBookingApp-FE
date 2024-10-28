@@ -7,6 +7,7 @@ import ConfirmPage from "./ConfirmPage";
 import AppointmentSelector from "./AppointmentSelector";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/counterSlice";
+import api from "../../config/axios";
 
 function Booking() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -15,14 +16,21 @@ function Booking() {
     phone: "",
     address: "",
   });
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedService, setSelectedService] = useState({
+    id: null,
+    comboServiceName: "",
+  });
   const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentTime, setAppointmentTime] = useState(null);
   const [stylist, setStylist] = useState("");
+  const [selectedStylist, setSelectedStylist] = useState({
+    id: null,
+    fullName: "",
+  });
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector(selectUser);
-    const userId = user.Id;
+  const userId = user.Id;
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -52,8 +60,8 @@ function Booking() {
         <ServiceCategory
           personalInfo={personalInfo}
           setPersonalInfo={setPersonalInfo}
-          selectedServices={selectedServices}
-          setSelectedServices={setSelectedServices}
+          selectedService={selectedService}
+          setSelectedService={setSelectedService}
           onNext={() => setCurrentStep(2)}
         />
       ),
@@ -65,7 +73,7 @@ function Booking() {
         <AppointmentSelector
           setAppointmentDate={setAppointmentDate}
           setAppointmentTime={setAppointmentTime}
-          setStylist={setStylist}
+          setStylist={(stylist) => setSelectedStylist(stylist)}
         />
       ),
     },
@@ -75,10 +83,10 @@ function Booking() {
       component: (
         <ConfirmPage
           personalInfo={personalInfo}
-          selectedServices={selectedServices}
+          selectedService={selectedService}
           appointmentDate={appointmentDate}
           appointmentTime={appointmentTime}
-          stylist={stylist}
+          stylist={selectedStylist}
         />
       ),
     },
@@ -105,15 +113,14 @@ function Booking() {
     //   appointmentDate,
     //   appointmentTime,
     // };
-    console.log(stylist.id);
     const [hour, minute] = appointmentTime.split(":");
-    console.log(selectedServices.id);
-    
+    console.log(selectedService.id);
     try {
-      const response = await api.post(`/Booking/AddBooking/AddBooking?salonId=${personalInfo.salonId}&SalonMemberId=${stylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedServices}`, userId);
+      const response = await api.post(`/Booking/AddBooking/AddBooking?salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}`, userId);
       console.log(response.data.data);
       messageApi.success("Booking successfully!");
     } catch (error) {
+      console.log(error);
       messageApi.error("Booking failed.");
     }
   };

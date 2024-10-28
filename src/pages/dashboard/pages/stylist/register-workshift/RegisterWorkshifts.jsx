@@ -72,7 +72,6 @@ function RegisterWorkshifts() {
                         </Checkbox>
                     ))}
                 </fieldset>
-
                 <Button type="primary" htmlType="submit">
                     Register
                 </Button>

@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const baseUrl = "https://swd-web-deploy.azurewebsites.net/api";
 const config = {
   baseURL: baseUrl,

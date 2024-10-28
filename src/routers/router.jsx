@@ -24,6 +24,7 @@ import StylistManager from "../pages/dashboard/pages/manager/stylistManager/Styl
 import SalonAdmin from "../pages/dashboard/pages/admin/salonAdmin/SalonAdmin";
 import RegisterWorkshifts from "../pages/dashboard/pages/stylist/register-workshift/RegisterWorkshifts";
 import BookingAssigned from "../pages/dashboard/pages/stylist/booking-applied/BookingAssigned";
+import BookingStaff from "../pages/dashboard/pages/staff/bookingStaff/BookingStaff";
 
 export const router = createBrowserRouter([
   {
@@ -144,6 +145,12 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/stylist/register-workshifts",
         element: <RegisterWorkshifts/>,
+      },
+
+      //staff
+      {
+        path: "/dashboard/staff",
+        element: <BookingStaff/>,
       },
     ],
   },

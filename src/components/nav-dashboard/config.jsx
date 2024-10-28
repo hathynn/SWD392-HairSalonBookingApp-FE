@@ -162,7 +162,7 @@ export const navpath = {
     path: "/dashboard/admin/services",
   },
   7: {
-    path: "/dashboard/salonstaff/bookings",
+    path: "/dashboard/staff",
   },
   81: {
     path: "/dashboard/salonstaff/view-request",

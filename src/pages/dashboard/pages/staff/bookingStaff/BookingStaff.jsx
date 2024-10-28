@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Table, Tag, message } from "antd";
+import { Space, Table, Tag, Button, message } from "antd";
 import dayjs from "dayjs";
-import "./BookingManager.scss";
+import "./BookingStaff.scss";
 import api from "../../../../../config/axios";
 
-const BookingManager = () => {
+const BookingStaff = () => {
   const [uncheckedBookings, setUncheckedBookings] = useState([]);
   const [checkedBookings, setCheckedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +29,20 @@ const BookingManager = () => {
 
     fetchBookings();
   }, []);
+
+  const handleCheckBooking = async (bookingId) => {
+    try {
+      await api.post(`/Booking/CheckBooking/CheckBooking?bookingId=${bookingId}&Check=true`);
+      message.success("Booking marked as checked.");
+
+      setUncheckedBookings((prev) =>
+        prev.filter((booking) => booking.bookingId !== bookingId)
+      );
+    } catch (error) {
+      console.error("Failed to check booking:", error);
+      message.error("Failed to mark booking as checked.");
+    }
+  };
 
   const columns = [
     {
@@ -63,7 +77,20 @@ const BookingManager = () => {
       dataIndex: "paymentStatus",
       key: "paymentStatus",
       render: (status) => (status ? status : "NONE"),
-    }
+    },    
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) =>
+        record.status === "unchecked" ? (
+          <Button
+            type="primary"
+            onClick={() => handleCheckBooking(record.bookingId)}
+          >
+            Confirm
+          </Button>
+        ) : null,
+    },
   ];
 
   const tableData = [
@@ -78,7 +105,7 @@ const BookingManager = () => {
   ];
 
   return (
-    <div className="booking-table">
+    <div className="booking-table-staff">
       <h1>Bookings</h1>
       <Table
         columns={columns}
@@ -92,4 +119,4 @@ const BookingManager = () => {
   );
 };
 
-export default BookingManager;
+export default BookingStaff;

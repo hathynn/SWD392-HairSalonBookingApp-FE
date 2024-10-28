@@ -43,9 +43,8 @@ function StylistManager() {
 
   const getStylist = async () => {
     try {
-      const response = await api.get("/User/PrintAllSalonMember");
-      console.log(response);
-      const data = response.data.data;
+      const response = await api.get("/SalonManager/print-all-Stylists");
+      const data = response.data;
       setStylist(data);
     } catch (e) {
       message.error("Can not loading stylist data");
@@ -58,6 +57,7 @@ function StylistManager() {
 
   return (
     <div className="stylist-manage">
+      <h1>Stylists</h1>
       <Table columns={columns} dataSource={stylist} />
     </div>
   );

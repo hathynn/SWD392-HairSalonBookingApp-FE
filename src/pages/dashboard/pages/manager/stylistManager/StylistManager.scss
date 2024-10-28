@@ -1,16 +1,27 @@
 @import "../../../../../styles/variables.scss";
+
 .stylist-manage {
   padding: 3em 3em 0 0;
-  
+
+  h1 {
+    color: $secondary-color;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
   .ant-table-wrapper {
+    width: 95%;
+    margin: auto auto;
     p {
       font-family: $font-secondary;
     }
+
     .ant-table-thead {
       tr {
         th {
           color: rgb(0, 0, 0);
           font-family: $font-secondary;
+          background-color: $primary-color;
         }
 
         .ant-table-filter-column {
@@ -18,6 +29,7 @@
             color: white;
           }
         }
+
         .ant-table-cell::before {
           background-color: black !important;
         }

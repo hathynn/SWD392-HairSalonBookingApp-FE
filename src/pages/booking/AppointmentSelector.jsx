@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 const { Option } = Select;
 
-const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTime ,setAppointmentTime, setStylist }) => {
+const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentTime, setAppointmentTime, setStylist }) => {
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
@@ -13,7 +13,7 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
       if (response.data.error === 0) {
         const data = response.data.data;
         setStylists(data);
-        // console.log(data);
+        console.log(data);
       } else {
         message.error(response.data.message);
 
@@ -25,16 +25,16 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
 
   const disabledDate = (current) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-    return current && current.valueOf() < today.getTime(); 
+    today.setHours(0, 0, 0, 0);
+    return current && current.valueOf() < today.getTime();
   };
-  
+
   useEffect(() => {
     getStylist();
   }, [])
   return (
     <div className="dateSelector">
-        <DatePicker
+      <DatePicker
         onChange={(date) => {
           const selectedDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
           console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
@@ -48,7 +48,7 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
         placeholder="Select time"
         onChange={(value) => setAppointmentTime(value)}
         style={{ width: "100%", marginBottom: "1em" }}
-         className="dateSelector__time"
+        className="dateSelector__time"
       >
         <Option value="10:00">10:00 AM</Option>
         <Option value="11:00">11:00 AM</Option>
@@ -58,9 +58,14 @@ const AppointmentSelector = ({ appointmentDate,setAppointmentDate,appointmentTim
       </Select>
       <Select
         placeholder="Choose stylist (Optional)"
-        onChange={(value) => setStylist(value)} 
+        onChange={(value) => {
+          const selectedStylist = stylists.find(stylist => stylist.fullName === value);
+          if (selectedStylist) {
+            setStylist({ id: selectedStylist.id, fullName: selectedStylist.fullName });
+          }
+        }}
         style={{ width: "100%" }}
-         className="dateSelector__stylist"
+        className="dateSelector__stylist"
       >
         {stylists && stylists.length > 0 ? (
           stylists.map((stylist) => (

@@ -1,11 +1,11 @@
-import { Button, Card, Col, ConfigProvider, Flex, message, Row, Spin } from "antd";
+import { Button, Card, Col, ConfigProvider, message, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Booking.scss";
 import Logo from "../../assets/logo2.png";
 import api from "../../config/axios";
 import { LoadingOutlined } from "@ant-design/icons";
 
-function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
+function ServiceCategory({ selectedService, setSelectedService, onNext }) {
   const [comboServices, setComboServices] = useState([]);
 
   const getComboServices = async () => {
@@ -23,17 +23,7 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
   }, []);
 
   const handleSelectService = (service) => {
-    const isAlreadySelected = selectedServices.find(
-      (selected) => selected.id === service.id
-    );
-
-    if (isAlreadySelected) {
-      setSelectedServices((prev) =>
-        prev.filter((selected) => selected.id !== service.id)
-      );
-    } else {
-      setSelectedServices((prev) => [...prev, service]);
-    }
+    setSelectedService(service); // Only allow one service to be selected
   };
 
   return (
@@ -41,7 +31,7 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
       <p className="service-container__title">
         Hair Salon Service &nbsp;
         <span style={{ color: "grey", fontStyle: "italic" }}>
-          (Number of service(s): {selectedServices.length})
+          (Selected service: {selectedService ? selectedService.comboServiceName : "None"})
         </span>
       </p>
       <div className="service-container__scroll">
@@ -64,7 +54,7 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
                       {service.comboServiceName}
                     </p>
                     <p className="service-container__card__content__subtitle">
-                      Price: {service.price}$
+                      Price: ${service.price}
                     </p>
                   </div>
                   <div className="service-container__card__buttons">
@@ -94,9 +84,7 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
                         components: {
                           Button: {
                             defaultColor: "black",
-                            defaultBg: selectedServices.some(
-                              (s) => s.id === service.id
-                            )
+                            defaultBg: selectedService && selectedService.id === service.id
                               ? "#000"
                               : "#FAA300",
                             defaultBorderColor: "#FAA300",
@@ -113,19 +101,13 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
                       <Button
                         className="service-container__card__buttons__right"
                         style={{
-                          backgroundColor: selectedServices.some(
-                            (s) => s.id === service.id
-                          )
+                          backgroundColor: selectedService && selectedService.id === service.id
                             ? "black"
                             : "#FAA300",
-                          color: selectedServices.some(
-                            (s) => s.id === service.id
-                          )
+                          color: selectedService && selectedService.id === service.id
                             ? "white"
                             : "black",
-                          borderColor: selectedServices.some(
-                            (s) => s.id === service.id
-                          )
+                          borderColor: selectedService && selectedService.id === service.id
                             ? "black"
                             : "#FAA300",
                         }}
@@ -139,28 +121,24 @@ function ServiceCategory({ selectedServices, setSelectedServices, onNext }) {
               </Col>
             ))
           ) : (
-            <Flex
-              align="center"
-              gap="middle"
-              justify="center"
-              style={{ width: "100%", margin: '5em 0' }}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                margin: "5em 0",
+              }}
             >
               <Spin
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  marginTop: '10em'
-                }}
+                style={{ marginTop: "10em" }}
                 indicator={<LoadingOutlined spin />}
                 size="large"
               />
-            </Flex>
+            </div>
           )}
         </Row>
       </div>
-
-      
     </div>
   );
 }

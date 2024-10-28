@@ -9,17 +9,14 @@ const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentT
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
-      const response = await api.get("/Admin/PrintAllSalonMember");
-      if (response.data.error === 0) {
-        const data = response.data.data;
-        setStylists(data);
-        console.log(data);
+      const response = await api.get("/SalonManager/print-all-Stylists"); 
+      if (response.status === 200) {
+        setStylists(response.data);
       } else {
-        message.error(response.data.message);
-
+        message.error(error);
       }
     } catch (error) {
-      message.error(response.data.message);
+      message.error(error);
     }
   }
 

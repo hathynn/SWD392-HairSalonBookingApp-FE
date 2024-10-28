@@ -46,5 +46,10 @@
         width: 100%;
         background-color: $primary-color;
         color: $secondary-color;
+
+        :where(.css-dev-only-do-not-override-ccdg5a).ant-btn-variant-solid {
+            color: #fff;
+            background: $secondary-color;
+        }
     }
 }

@@ -32,7 +32,7 @@ function Login() {
       localStorage.setItem("token", token);
       const user = jwtDecode(token);
       const responseUser = await api.get(`/User/GetUserById?id=${user.Id}`);
-      console.log("Login: ", responseUser);
+  
       dispatch(login(user));
       if (user.Role === "Customer") {
         nav("/");

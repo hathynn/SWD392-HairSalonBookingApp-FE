@@ -13,11 +13,12 @@ import {
   CarryOutOutlined,
 } from "@ant-design/icons";
 
+
 export const navDashboardConfig = [
   {
     key: "1",
-    icon: <CalendarOutlined />,
-    label: "Bookings",
+    icon: <PullRequestOutlined />,
+    label: "Booking Request",
   },
   {
     key: "2",
@@ -25,53 +26,31 @@ export const navDashboardConfig = [
     label: "Stylist",
   },
   {
-    key: "11",
-    icon: <DollarCircleOutlined style={{ fontSize: "1.4em" }} />,
-    label: "Revenue",
-  },
-];
-
-// export const navDashboardConfigCustomer = [
-//   {
-//     key: "1",
-//     icon: <PullRequestOutlined />,
-//     label: "Booking Request",
-//   },
-//   {
-//     key: "2",
-//     icon: <UserOutlined style={{ fontSize: "1.4em" }} />,
-//     label: "Stylist",
-//   },
-//   {
-//     key: "4",
-//     icon: <ProductOutlined  style={{ fontSize: "1.4em" }} />,
-//     label: "Combo",
-//     children: [
-//       {
-//         key: "41",
-//         label: "View all combo",
-//       },
-//       {
-//         key: "42",
-//         label: "Create a service",
-//       },
+    key: "4",
+    icon: <ProductOutlined  style={{ fontSize: "1.4em" }} />,
+    label: "Combo",
+    children: [
+      {
+        key: "41",
+        label: "View all combo",
+      },
+      {
+        key: "42",
+        label: "Create a combo",
+      },
      
-//     ],
-//   },
-//   {
-//     key: "3",
-//     icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
-//     label: "Service",
-//   },
+    ],
+  },
+  {
+    key: "3",
+    icon: <ScissorOutlined  style={{ fontSize: "1.4em" }} />,
+    label: "Service",
+  },
   
  
-// ];
+];
 export const navDashboardConfigCustomer = [
-  {
-    key: "5",
-    icon: <ShopOutlined />,
-    label: "Salon System",
-  },
+ 
   
 ];
 
@@ -87,6 +66,11 @@ export const navDashboardConfigAdmin = [
     label: "Users",
   },
   {
+    key: "5",
+    icon: <ShopOutlined />,
+    label: "Salon System",
+  },
+  {
     key: "13",
     icon: <ShoppingCartOutlined />,
     label: "Service",
@@ -97,22 +81,7 @@ export const navDashboardConfigStaff = [
   {
     key: "7",
     icon: <CalendarOutlined />,
-    label: "Bookings",
-  },
-  {
-    key: "8",
-    icon: <SolutionOutlined />,
-    label: "Requests",
-    children: [
-      {
-        key: "81",
-        label: "View request status",
-      },
-      {
-        key: "83",
-        label: "Send a request",
-      },
-    ],
+    label: "Booking Request",
   },
 ];
 
@@ -120,7 +89,7 @@ export const navDashboardConfigStylist = [
   {
     key: "9",
     icon: <CalendarOutlined />,
-    label: "Bookings",
+    label: "Booking",
   },
   {
     key: "10",
@@ -130,7 +99,7 @@ export const navDashboardConfigStylist = [
   {
     key: "11",
     icon: <DollarCircleOutlined />,
-    label: "Feedbacks",
+    label: "Feedback",
   },
   {
     key: "13",

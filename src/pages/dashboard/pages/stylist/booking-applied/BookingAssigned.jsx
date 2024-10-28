@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import './BookingAssigned.scss';
 
 function BookingAssigned() {
@@ -43,7 +43,7 @@ function BookingAssigned() {
             title: 'Booking Date',
             dataIndex: 'bookingDate',
             key: 'bookingDate',
-            render: (text) => new Date(text).toLocaleDateString(), // Format date
+            render: (text) => new Date(text).toLocaleDateString(), 
         },
         {
             title: 'Client Name',
@@ -59,7 +59,14 @@ function BookingAssigned() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-        },
+            render: (_, record) =>
+              record.status.toLowerCase() === 'confirmed' ? (
+                <Tag color="geekblue">Confirmed</Tag>
+              ) : record.status.toLowerCase() === 'completed' ? (
+                <Tag color="green">Completed</Tag>
+              ) : <Tag color="gold">Pending</Tag>,
+          },
+          
     ];
 
     return (

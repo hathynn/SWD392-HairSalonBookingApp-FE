@@ -1,0 +1,59 @@
+@import "../../styles/variables.scss";
+
+.cancel-card {
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.363);
+
+  &__header-img {
+    width: 100%;
+    height: 30vh;
+    object-fit: cover;
+  }
+
+  &__detail {
+   
+height: 70vh;
+    padding: 2em;
+    text-align: center;
+
+    &__img {
+        margin-top:1em;
+     font-size: 3em;
+     color: $secondary-color;
+    }
+
+    &__details {
+      margin-top: 2em;
+
+      &__content {
+        margin: 1em 0;
+        &__upper {
+            font-size:1em;
+          font-family: $font-secondary;
+          color: $secondary-text-color;
+        }
+        &__lower {
+          font-family: $font-secondary;
+          color: $secondary-text-color;
+        }
+      }
+
+      h1 {
+        font-family: 1em;
+        font-family: $font-secondary;
+        margin-top: 1em;
+      }
+
+      &__button {
+        margin-top: 3em;
+        border-radius: 50px;
+        width:13vw;
+        height: 6vh;
+        font-family: $font-secondary;
+        font-weight: 600;
+        font-size:1em;
+      }
+    }
+  }
+}

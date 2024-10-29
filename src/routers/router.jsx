@@ -29,6 +29,7 @@ import { selectUser } from "../redux/features/counterSlice";
 import { useSelector } from "react-redux";
 import ScrollToTop from "../components/ScrollToTop";
 import { message } from "antd";
+import CancelCard from "../components/cancelCard/CancelCard";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
@@ -166,6 +167,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteCustomer>
             <ThanksCard />
+          </ProtectedRouteCustomer>
+        ),
+      },
+      {
+        path: "/cancelled-payment",
+        element: (
+          <ProtectedRouteCustomer>
+            <CancelCard />
           </ProtectedRouteCustomer>
         ),
       },

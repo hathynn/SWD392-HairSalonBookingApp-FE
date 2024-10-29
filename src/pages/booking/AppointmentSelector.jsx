@@ -5,11 +5,17 @@ import dayjs from "dayjs";
 
 const { Option } = Select;
 
-const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentTime, setAppointmentTime, setStylist }) => {
+const AppointmentSelector = ({
+  appointmentDate,
+  setAppointmentDate,
+  appointmentTime,
+  setAppointmentTime,
+  setStylist,
+}) => {
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
-      const response = await api.get("/SalonManager/print-all-Stylists"); 
+      const response = await api.get("/SalonManager/print-all-Stylists");
       if (response.status === 200) {
         setStylists(response.data);
       } else {
@@ -18,7 +24,7 @@ const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentT
     } catch (error) {
       message.error(error);
     }
-  }
+  };
 
   const disabledDate = (current) => {
     const today = new Date();
@@ -28,12 +34,12 @@ const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentT
 
   useEffect(() => {
     getStylist();
-  }, [])
+  }, []);
   return (
     <div className="dateSelector">
       <DatePicker
         onChange={(date) => {
-          const selectedDate = date ? dayjs(date).format('YYYY-MM-DD') : null;
+          const selectedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
           console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
           setAppointmentDate(selectedDate);
         }}
@@ -41,24 +47,74 @@ const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentT
         disabledDate={disabledDate}
         style={{ marginBottom: "1em" }}
       />
+
       <Select
         placeholder="Select time"
-        onChange={(value) => setAppointmentTime(value)}
         style={{ width: "100%", marginBottom: "1em" }}
         className="dateSelector__time"
       >
-        <Option value="10:00">10:00 AM</Option>
-        <Option value="11:00">11:00 AM</Option>
-        <Option value="12:00">12:00 PM</Option>
-        <Option value="1:00">1:00 PM</Option>
-        <Option value="2:00">2:00 PM</Option>
+        <Option value="08:00">08:00</Option>
+        <Option value="08:15">08:15</Option>
+        <Option value="08:30">08:30</Option>
+        <Option value="08:45">08:45</Option>
+        <Option value="09:00">09:00</Option>
+        <Option value="09:15">09:15</Option>
+        <Option value="09:30">09:30</Option>
+        <Option value="09:45">09:45</Option>
+        <Option value="10:00">10:00</Option>
+        <Option value="10:15">10:15</Option>
+        <Option value="10:30">10:30</Option>
+        <Option value="10:45">10:45</Option>
+        <Option value="11:00">11:00</Option>
+        <Option value="11:15">11:15</Option>
+        <Option value="11:30">11:30</Option>
+        <Option value="11:45">11:45</Option>
+        <Option value="12:00">12:00</Option>
+        <Option value="12:15">12:15</Option>
+        <Option value="12:30">12:30</Option>
+        <Option value="12:45">12:45</Option>
+        <Option value="13:00">13:00</Option>
+        <Option value="13:15">13:15</Option>
+        <Option value="13:30">13:30</Option>
+        <Option value="13:45">13:45</Option>
+        <Option value="14:00">14:00</Option>
+        <Option value="14:15">14:15</Option>
+        <Option value="14:30">14:30</Option>
+        <Option value="14:45">14:45</Option>
+        <Option value="15:00">15:00</Option>
+        <Option value="15:15">15:15</Option>
+        <Option value="15:30">15:30</Option>
+        <Option value="15:45">15:45</Option>
+        <Option value="16:00">16:00</Option>
+        <Option value="16:15">16:15</Option>
+        <Option value="16:30">16:30</Option>
+        <Option value="16:45">16:45</Option>
+        <Option value="17:00">17:00</Option>
+        <Option value="17:15">17:15</Option>
+        <Option value="17:30">17:30</Option>
+        <Option value="17:45">17:45</Option>
+        <Option value="18:00">18:00</Option>
+        <Option value="18:15">18:15</Option>
+        <Option value="18:30">18:30</Option>
+        <Option value="18:45">18:45</Option>
+        <Option value="19:00">19:00</Option>
+        <Option value="19:15">19:15</Option>
+        <Option value="19:30">19:30</Option>
+        <Option value="19:45">19:45</Option>
+        <Option value="20:00">20:00</Option>
       </Select>
+
       <Select
         placeholder="Choose stylist (Optional)"
         onChange={(value) => {
-          const selectedStylist = stylists.find(stylist => stylist.fullName === value);
+          const selectedStylist = stylists.find(
+            (stylist) => stylist.fullName === value
+          );
           if (selectedStylist) {
-            setStylist({ id: selectedStylist.id, fullName: selectedStylist.fullName });
+            setStylist({
+              id: selectedStylist.id,
+              fullName: selectedStylist.fullName,
+            });
           }
         }}
         style={{ width: "100%" }}
@@ -79,7 +135,6 @@ const AppointmentSelector = ({ appointmentDate, setAppointmentDate, appointmentT
 };
 
 export default AppointmentSelector;
-
 
 /*
   <div className="stylist-container">

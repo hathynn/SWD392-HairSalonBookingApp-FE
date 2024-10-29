@@ -8,6 +8,7 @@ import AppointmentSelector from "./AppointmentSelector";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/counterSlice";
 import api from "../../config/axios";
+import { useNavigate } from "react-router-dom";
 
 function Booking() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,6 +31,7 @@ function Booking() {
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector(selectUser);
+  const nav = useNavigate();
   const userId = user.Id;
   const showModal = () => {
     setIsModalOpen(true);
@@ -107,16 +109,27 @@ function Booking() {
   };
 
   const handleSubmit = async () => {
-    // const bookingData = {
-    //   ...personalInfo,
-    //   selectedServices,
-    //   appointmentDate,
-    //   appointmentTime,
-    // };
     const [hour, minute] = appointmentTime.split(":");
     try {
-      const response = await api.post(`/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`);
-      messageApi.success("Booking successfully!");
+      const response = await api.post(
+        `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
+      );
+      if (response.status === 200) {
+        const bookingId = response.data.data.id;
+        messageApi.success("Booking successfully!");
+
+        const paymentResponse = await api.post(
+          `/Payments/create?bookingId=${bookingId}`
+        );
+        const paymentUrl = paymentResponse.data.data.checkoutUrl; 
+        if (paymentUrl) {
+          window.location.href = paymentUrl;
+        } else {
+          messageApi.error("Can not find any payment");
+        }
+
+       
+      }
     } catch (error) {
       console.log(error);
       messageApi.error("Booking failed.");

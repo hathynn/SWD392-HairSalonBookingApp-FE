@@ -113,11 +113,9 @@ function Booking() {
     //   appointmentDate,
     //   appointmentTime,
     // };
-    const bookingData = {userId}
     const [hour, minute] = appointmentTime.split(":");
     try {
-      const response = await api.post(`/Booking/AddBooking/AddBooking?salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`, bookingData);
-      console.log(response.data);
+      const response = await api.post(`/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`);
       messageApi.success("Booking successfully!");
     } catch (error) {
       console.log(error);

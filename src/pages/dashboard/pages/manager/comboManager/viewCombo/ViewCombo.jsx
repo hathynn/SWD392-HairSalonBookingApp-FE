@@ -27,7 +27,7 @@ function ViewCombo() {
 
       setCombos(comboDetails);
     } catch (error) {
-      message.error("Không thể tải danh sách và chi tiết combo");
+      message.error("Can not loading combo detail data");
     } finally {
       setLoading(false);
     }

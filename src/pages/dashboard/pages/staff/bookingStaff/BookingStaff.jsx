@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Tag, Button, message } from "antd";
+import { Space, Table, Tag, Button, message, ConfigProvider } from "antd";
 import dayjs from "dayjs";
 import "./BookingStaff.scss";
 import api from "../../../../../config/axios";
+import ButtonGroup from "antd/es/button/button-group";
 
 const BookingStaff = () => {
   const [uncheckedBookings, setUncheckedBookings] = useState([]);
@@ -32,7 +33,9 @@ const BookingStaff = () => {
 
   const handleCheckBooking = async (bookingId) => {
     try {
-      await api.post(`/Booking/CheckBooking/CheckBooking?bookingId=${bookingId}&Check=true`);
+      await api.post(
+        `/Booking/CheckBooking/CheckBooking?bookingId=${bookingId}&Check=true`
+      );
       message.success("Booking marked as checked.");
 
       setUncheckedBookings((prev) =>
@@ -77,18 +80,71 @@ const BookingStaff = () => {
       dataIndex: "paymentStatus",
       key: "paymentStatus",
       render: (status) => (status ? status : "NONE"),
-    },    
+    },
+
+    {
+      title: "Detail",
+      key: "action",
+      render: (_, record) =>
+       
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  defaultColor: "grey",
+                  defaultBg: "white",
+                  defaultBorderColor: "lightgrey",
+                  defaultHoverBorderColor: "grey",
+                  defaultHoverColor: "black",
+                  defaultHoverBg: "white",
+                  defaultActiveBg: "black",
+                  defaultActiveBorderColor: "black",
+                  defaultActiveColor: "white",
+                },
+              },
+            }}
+          >
+            <Button
+              className="view-service__button"
+              style={{ fontWeight: "600" }}
+            >
+              Detail
+            </Button>
+          </ConfigProvider>
+       ,
+    },
     {
       title: "Action",
       key: "action",
       render: (_, record) =>
-        record.status === "unchecked" ? (
-          <Button
-            type="primary"
-            onClick={() => handleCheckBooking(record.bookingId)}
+        record.status.toLowerCase() === "checked" ? (
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  defaultColor: "white",
+                  defaultBg: "black",
+                  defaultBorderColor: "black",
+                  defaultHoverBorderColor: "#FAA300",
+                  defaultHoverColor: "black",
+                  defaultHoverBg: "#FAA300",
+                  defaultActiveBg: "black",
+                  defaultActiveBorderColor: "black",
+                  defaultActiveColor: "white",
+                },
+              },
+            }}
           >
-            Confirm
-          </Button>
+            <Button
+              className="view-service__button"
+              onClick={() => handleCheckBooking(record.bookingId)}
+              style={{ fontWeight: "600" }}
+            >
+              Confirm
+            </Button>
+          </ConfigProvider>
+        ) : record.status.toLowerCase() === "unchecked" ? (
+          <Button disabled>Confirm</Button>
         ) : null,
     },
   ];
@@ -106,7 +162,6 @@ const BookingStaff = () => {
 
   return (
     <div className="booking-table-staff">
-      <h1>Bookings</h1>
       <Table
         columns={columns}
         dataSource={tableData}

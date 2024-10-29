@@ -79,7 +79,7 @@ const BookingManager = () => {
 
   return (
     <div className="booking-table">
-      <h1>Bookings</h1>
+      
       <Table
         columns={columns}
         dataSource={tableData}

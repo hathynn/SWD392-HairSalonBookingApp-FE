@@ -52,6 +52,7 @@ const AppointmentSelector = ({
         placeholder="Select time"
         style={{ width: "100%", marginBottom: "1em" }}
         className="dateSelector__time"
+        onChange={(value) => setAppointmentTime(value)}
       >
         <Option value="08:00">08:00</Option>
         <Option value="08:15">08:15</Option>

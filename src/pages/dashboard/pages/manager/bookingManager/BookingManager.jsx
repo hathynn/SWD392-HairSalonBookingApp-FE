@@ -41,7 +41,7 @@ const BookingManager = () => {
       title: "Total",
       dataIndex: "total",
       key: "total",
-      render: (total) => `$${total}`,
+      render: (total) => `${total} VND`,
     },
     {
       title: "Status",

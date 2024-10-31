@@ -43,7 +43,7 @@ function ConfirmPage({
               {selectedService.comboServiceName}
             </Descriptions.Item>
             <Descriptions.Item label="Price" span={2}>
-              ${selectedService.price}
+              {selectedService.price} VND
             </Descriptions.Item>
           </>
         ) : (

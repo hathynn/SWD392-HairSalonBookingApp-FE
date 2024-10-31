@@ -31,7 +31,8 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
       <p className="service-container__title">
         Hair Salon Service &nbsp;
         <span style={{ color: "grey", fontStyle: "italic" }}>
-          (Selected service: {selectedService ? selectedService.comboServiceName : "None"})
+          (Selected service:{" "}
+          {selectedService ? selectedService.comboServiceName : "None"})
         </span>
       </p>
       <div className="service-container__scroll">
@@ -44,7 +45,11 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
                     <img
                       alt={service.comboServiceName}
                       src={service.image || Logo}
-                      style={{ borderRadius: "0px", height: "20vh", objectFit: 'cover' }}
+                      style={{
+                        borderRadius: "0px",
+                        height: "20vh",
+                        objectFit: "cover",
+                      }}
                     />
                   }
                   className="service-container__card"
@@ -54,9 +59,12 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
                       {service.comboServiceName}
                     </p>
                     <p className="service-container__card__content__subtitle">
-                      Price: ${service.price}
+                      {service.comboDetails
+                        .map((detail) => detail.content)
+                        .join(" - ")}
                     </p>
                   </div>
+
                   <div className="service-container__card__buttons">
                     <ConfigProvider
                       theme={{
@@ -76,7 +84,7 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
                       }}
                     >
                       <Button className="service-container__card__buttons__left">
-                        ${service.price}
+                        {service.price} VND
                       </Button>
                     </ConfigProvider>
                     <ConfigProvider
@@ -84,9 +92,11 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
                         components: {
                           Button: {
                             defaultColor: "black",
-                            defaultBg: selectedService && selectedService.id === service.id
-                              ? "#000"
-                              : "#FAA300",
+                            defaultBg:
+                              selectedService &&
+                              selectedService.id === service.id
+                                ? "#000"
+                                : "#FAA300",
                             defaultBorderColor: "#FAA300",
                             defaultHoverBorderColor: "#FAA300",
                             defaultHoverColor: "white",
@@ -101,15 +111,18 @@ function ServiceCategory({ selectedService, setSelectedService, onNext }) {
                       <Button
                         className="service-container__card__buttons__right"
                         style={{
-                          backgroundColor: selectedService && selectedService.id === service.id
-                            ? "black"
-                            : "#FAA300",
-                          color: selectedService && selectedService.id === service.id
-                            ? "white"
-                            : "black",
-                          borderColor: selectedService && selectedService.id === service.id
-                            ? "black"
-                            : "#FAA300",
+                          backgroundColor:
+                            selectedService && selectedService.id === service.id
+                              ? "black"
+                              : "#FAA300",
+                          color:
+                            selectedService && selectedService.id === service.id
+                              ? "white"
+                              : "black",
+                          borderColor:
+                            selectedService && selectedService.id === service.id
+                              ? "black"
+                              : "#FAA300",
                         }}
                         onClick={() => handleSelectService(service)}
                       >

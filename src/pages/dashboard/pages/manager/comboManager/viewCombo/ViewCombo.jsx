@@ -58,7 +58,7 @@ function ViewCombo() {
                     {combo.comboServiceName}
                   </p>
                   <p className="view-combo__card__upper__subtitle">
-                    Price: ${combo.price}
+                    Price: {combo.price} VND
                   </p>
                 </div>
                 <div className="view-combo__card__lower">
@@ -76,7 +76,7 @@ function ViewCombo() {
                     ))
                   ) : (
                     <p className="view-combo__card__lower__subtitle">
-                      Không có mô tả
+                      No description
                     </p>
                   )}
                 </div>

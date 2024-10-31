@@ -113,7 +113,10 @@ function Booking() {
     try {
       const response = await api.post(
         `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
+     
       );
+
+      console.log(response)
       if (response.status === 200) {
         const bookingId = response.data.data.id;
         messageApi.success("Booking successfully!");

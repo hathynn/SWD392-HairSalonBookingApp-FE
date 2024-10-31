@@ -117,7 +117,7 @@ const BookingStaff = () => {
       title: "Action",
       key: "action",
       render: (_, record) =>
-        record.status.toLowerCase() === "checked" ? (
+        record.status.toLowerCase() === "unchecked" ? (
           <ConfigProvider
             theme={{
               components: {
@@ -143,7 +143,7 @@ const BookingStaff = () => {
               Confirm
             </Button>
           </ConfigProvider>
-        ) : record.status.toLowerCase() === "unchecked" ? (
+        ) : record.status.toLowerCase() === "checked" ? (
           <Button disabled>Confirm</Button>
         ) : null,
     },

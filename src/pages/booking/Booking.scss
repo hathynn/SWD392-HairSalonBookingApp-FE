@@ -14,7 +14,7 @@
 
   &__text {
     position: absolute;
-    top: 20%;
+    top: 18%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: $text-color;
@@ -191,6 +191,7 @@
         padding-bottom: 0.5em;
       }
       &__subtitle {
+        display:flex;
         color: $secondary-text-color;
         font-size: 0.8em;
       }

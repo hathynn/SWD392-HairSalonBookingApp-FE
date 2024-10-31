@@ -1,83 +1,63 @@
-import './HistoryBooking.scss'
-import { Space, Table, Tag } from 'antd';
+import { useState } from "react";
+import "./HistoryBooking.scss";
+import { Space, Table, Tag } from "antd";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../redux/features/counterSlice";
+import api from "../../../../config/axios";
 
 function HistoryBooking() {
-    const columns = [
-        {
-            title: 'Date',
-            dataIndex: 'date',
-            key: 'date',
-        },
-        {
-            title: 'Time',
-            dataIndex: 'time',
-            key: 'time',
-        },
-        {
-            title: 'Service',
-            dataIndex: 'service',
-            key: 'service',
-        },
-        {
-            title: 'Stylist',
-            key: 'stylist',
-            dataIndex: 'stylist',
-        },
-        {
-            title: 'Salon',
-            key: 'salon',
-            dataIndex: 'salon',
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <a>View</a>
-                </Space>
-            ),
-        },
-    ];
-    const data = [
-        {
-            key: '1',
-            date: '20/01/2024',
-            time: "15:00",
-            service: "Haircut",
-            stylist: "Stylist 1",
-            salon: 'Maverick Vinhomes',
-        },
-        {
-            key: '2',
-            date: '20/03/2024',
-            time: "15:00",
-            service: "Haircut",
-            stylist: "Stylist 1",
-            salon: 'Maverick Vinhomes',
-        },
-        {
-            key: '3',
-            date: '20/06/2024',
-            time: "15:00",
-            service: "Haircut",
-            stylist: "Stylist 1",
-            salon: 'Maverick Vinhomes',
-        },
-        {
-            key: '4',
-            date: '20/10/2024',
-            time: "15:00",
-            service: "Haircut",
-            stylist: "Stylist 1",
-            salon: 'Maverick Vinhomes',
-        },
-        
-    ];
-    return (
-        <>
-            <Table columns={columns} dataSource={data} />;
-        </>
-    )
+  const [history, setHistory] = useState([]);
+  const user = useSelector(selectUser);
+  const getHistory = async () => {
+    try {
+        console.log(user.Id)
+        const response = api.get(`/User/HistoryBookingForUser?userId=${user.Id}`)
+    } catch (e) {
+
+    }
+  };
+  const columns = [
+    {
+      title: "Booking Date",
+      dataIndex: "bookingDate",
+      key: "bookingDate",
+    },
+    {
+      title: "Price",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Service",
+      dataIndex: "service",
+      key: "service",
+    },
+    {
+      title: "Stylist",
+      key: "stylist",
+      dataIndex: "stylist",
+    },
+    {
+      title: "Salon",
+      key: "salon",
+      dataIndex: "salon",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <a>View</a>
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <Table columns={columns} />;
+    </>
+  );
 }
 
-export default HistoryBooking
+export default HistoryBooking;

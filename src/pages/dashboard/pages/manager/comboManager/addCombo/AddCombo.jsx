@@ -37,7 +37,7 @@ function AddCombo() {
         <Input
           placeholder="Combo Price"
           className="create-combo__input__inside"
-          prefix="$"
+          suffix="VND"
         />
       </div>
       <label>Combo Image</label>

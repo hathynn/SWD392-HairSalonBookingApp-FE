@@ -171,7 +171,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/cancelled-payment",
+        path: "/payment-cancelled",
         element: (
           <ProtectedRouteCustomer>
             <CancelCard />

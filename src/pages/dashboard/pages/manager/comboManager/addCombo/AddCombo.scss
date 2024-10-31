@@ -3,12 +3,18 @@
   margin-top: 2.7em;
   display: flex;
   flex-direction: column;
-  height: 83%; 
+  height: 90%;
   background-color: rgb(255, 255, 255);
   width: 96%;
   border-radius: 20px;
   padding: 3em 3em 2em 3em;
-
+  .ant-upload-wrapper
+    .ant-upload-list
+    .ant-upload-list-item
+    .ant-upload-list-item-name {
+      width:30vw;
+    margin-bottom: auto;
+  }
   label {
     color: black;
     font-family: $font-secondary;
@@ -21,19 +27,37 @@
     margin-bottom: 1em;
     .ant-input-affix-wrapper,
     .ant-input {
-        font-family: $font-secondary;
+      font-family: $font-secondary;
       border-radius: 10px;
       border-color: rgb(193, 190, 190);
       box-shadow: rgb(193, 190, 190);
     }
-   
+
     &__inside {
       font-family: $font-secondary;
     }
   }
 
+  &__service {
+    margin-bottom:1em;
+    span {
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner {
+      background-color: $primary-color !important;
+      border-color: $primary-color !important; 
+    }
+    
+  
+    .ant-checkbox-inner::after {
+      border-color: black !important; 
+    }
+  }
+
   &__image {
-    padding-top: 0.6em;
+    
     &__dragger {
       font-family: $font-secondary;
     }
@@ -43,12 +67,12 @@
     margin-top: auto;
     display: flex;
     justify-content: flex-end;
-   &__buttons {
-    border-radius: 20px;
-    width:6em;
-    height: 3em;
-    font-family: $font-secondary;
-    font-weight: 600;
-   }
+    &__buttons {
+      border-radius: 20px;
+      width: 6em;
+      height: 3em;
+      font-family: $font-secondary;
+      font-weight: 600;
+    }
   }
 }

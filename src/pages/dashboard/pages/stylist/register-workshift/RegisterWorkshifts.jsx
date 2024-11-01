@@ -12,6 +12,7 @@ function RegisterWorkshifts() {
   const shifts = ["Morning", "Afternoon", "Evening"];
   const user = useSelector(selectUser);
   const userId = user.Id;
+  const stylistId = userId;
 
   // Handle shift checkbox change
   const handleShiftChange = (shift) => {
@@ -28,7 +29,7 @@ function RegisterWorkshifts() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      userId,
+      stylistId,
       scheduleDate: scheduleDate
         ? dayjs(scheduleDate).format("YYYY-MM-DD")
         : null,

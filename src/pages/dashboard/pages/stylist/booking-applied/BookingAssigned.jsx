@@ -1,41 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag } from 'antd';
+import { DatePicker, Table, Tag, message } from 'antd';
 import './BookingAssigned.scss';
+import api from '../../../../../config/axios';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../../../redux/features/counterSlice';
+import dayjs from 'dayjs';
 
 function BookingAssigned() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
+    const user = useSelector(selectUser);
+    const userId = user.Id;
+    const stylistId = userId;
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
 
     useEffect(() => {
-        setTimeout(() => {
-            const mockBookings = [
-                {
-                    id: '1',
-                    bookingDate: '2024-10-30T08:30:00Z',
-                    clientName: 'Alice Johnson',
-                    service: 'Haircut',
-                    status: 'Confirmed',
-                },
-                {
-                    id: '2',
-                    bookingDate: '2024-11-01T10:00:00Z',
-                    clientName: 'Bob Smith',
-                    service: 'Coloring',
-                    status: 'Pending',
-                },
-                {
-                    id: '3',
-                    bookingDate: '2024-11-02T15:00:00Z',
-                    clientName: 'Carol White',
-                    service: 'Styling',
-                    status: 'Completed',
-                },
-            ];
+        const fetchBookings = async () => {
+            // Only fetch if both fromDate and toDate are selected
+            if (!fromDate || !toDate) return;
 
-            setBookings(mockBookings);
-            setLoading(false);
-        }, 1000);
-    }, []);
+            setLoading(true);
+            try {
+                const response = await api.get(
+                    `/Stylist/ViewAppointments/view-appointments?stylistId=${stylistId}&fromDate=${fromDate}&toDate=${toDate}`
+                );
+
+                const data = await response.data; // Directly get JSON data from axios
+
+                // Map the API data to the format expected by the table
+                const formattedBookings = data.map(item => ({
+                    id: item.appointmentId,
+                    bookingDate: item.appointmentDate,
+                    clientName: item.customerName,
+                    service: item.serviceName,
+                    status: item.status,
+                }));
+
+                setBookings(formattedBookings);
+            } catch (error) {
+                message.error('Failed to fetch bookings.');
+                console.error("Fetch error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBookings();
+    }, [fromDate, toDate, stylistId]); // Add fromDate, toDate as dependencies
 
     // Define table columns
     const columns = [
@@ -43,7 +55,7 @@ function BookingAssigned() {
             title: 'Booking Date',
             dataIndex: 'bookingDate',
             key: 'bookingDate',
-            render: (text) => new Date(text).toLocaleDateString(), 
+            render: (text) => new Date(text).toLocaleDateString(),
         },
         {
             title: 'Client Name',
@@ -60,24 +72,39 @@ function BookingAssigned() {
             dataIndex: 'status',
             key: 'status',
             render: (_, record) =>
-              record.status.toLowerCase() === 'confirmed' ? (
-                <Tag color="geekblue">Confirmed</Tag>
-              ) : record.status.toLowerCase() === 'completed' ? (
-                <Tag color="green">Completed</Tag>
-              ) : <Tag color="gold">Pending</Tag>,
-          },
-          
+                record.status.toLowerCase() === 'confirmed' ? (
+                    <Tag color="geekblue">Confirmed</Tag>
+                ) : record.status.toLowerCase() === 'completed' ? (
+                    <Tag color="green">Completed</Tag>
+                ) : (
+                    <Tag color="gold">Pending</Tag>
+                ),
+        },
     ];
 
     return (
         <div className="booking-applied">
-            <h2>My Bookings</h2>
+            <h2>My Appointments</h2>
+            <DatePicker.RangePicker
+                format="YYYY-MM-DD"
+                value={fromDate && toDate ? [dayjs(fromDate), dayjs(toDate)] : null}
+                onChange={(dates) => {
+                    if (dates) {
+                        setFromDate(dates[0].format('YYYY-MM-DD'));
+                        setToDate(dates[1].format('YYYY-MM-DD'));
+                    } else {
+                        setFromDate(null);
+                        setToDate(null);
+                    }
+                }}
+                style={{ marginLeft: "80px" }}
+            />
             <Table
                 className='booking-table'
                 columns={columns}
                 dataSource={bookings}
                 loading={loading}
-                style={{ width: '90%', margin: 'auto auto'  }}
+                style={{ width: '90%', margin: 'auto auto' }}
                 rowKey="id"
             />
         </div>

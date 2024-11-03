@@ -30,6 +30,7 @@ import { useSelector } from "react-redux";
 import ScrollToTop from "../components/ScrollToTop";
 import { message } from "antd";
 import CancelCard from "../components/cancelCard/CancelCard";
+import Services from "../pages/services/Services";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
@@ -120,6 +121,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteCustomer>
             <Homepage />
+          </ProtectedRouteCustomer>
+        ),
+      },
+      {
+        path: "/services",
+        element: (
+          <ProtectedRouteCustomer>
+            <Services />
           </ProtectedRouteCustomer>
         ),
       },

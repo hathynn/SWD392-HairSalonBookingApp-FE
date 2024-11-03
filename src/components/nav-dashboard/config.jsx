@@ -89,18 +89,18 @@ export const navDashboardConfigStylist = [
   {
     key: "9",
     icon: <CalendarOutlined />,
-    label: "Booking",
+    label: "Appoinments",
   },
-  {
-    key: "10",
-    icon: <DollarCircleOutlined />,
-    label: "Salary",
-  },
-  {
-    key: "11",
-    icon: <DollarCircleOutlined />,
-    label: "Feedback",
-  },
+  // {
+  //   key: "10",
+  //   icon: <DollarCircleOutlined />,
+  //   label: "Salary",
+  // },
+  // {
+  //   key: "11",
+  //   icon: <DollarCircleOutlined />,
+  //   label: "Feedback",
+  // },
   {
     key: "13",
     icon: <CarryOutOutlined />,
@@ -142,12 +142,12 @@ export const navpath = {
   9: {
     path: "/dashboard/stylist",
   },
-  10: {
-    path: "/dashboard/stylist/salary",
-  },
-  11: {
-    path: "/dashboard/stylist/feedbacks",
-  },
+  // 10: {
+  //   path: "/dashboard/stylist/salary",
+  // },
+  // 11: {
+  //   path: "/dashboard/stylist/feedbacks",
+  // },
   12: {
     path: "/dashboard/stylist/schedule",
   },

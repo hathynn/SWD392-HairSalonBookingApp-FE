@@ -2,7 +2,8 @@
 
 .service-manager {
   padding: 3em 3em 0 0;
-
+  width: 95%;
+margin-left: 50px;
   .add-service {
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
@@ -17,6 +18,7 @@
       font-family: $font-secondary;
       font-weight: 600;
     }
+
     .ant-input-affix-wrapper,
     .ant-input {
       font-family: $font-secondary;
@@ -39,9 +41,11 @@
   .view-service {
     .ant-table-wrapper {
       width: 96%;
+
       p {
         font-family: $font-secondary;
       }
+
       .ant-table-thead {
         tr {
           th {
@@ -54,6 +58,7 @@
               color: white;
             }
           }
+
           .ant-table-cell::before {
             background-color: black !important;
           }
@@ -89,11 +94,13 @@
     margin-top: 2em;
     flex-direction: column;
     width: 100%;
+
     p {
       color: black;
       font-family: $font-secondary;
       font-weight: 600;
     }
+
     .ant-input-affix-wrapper,
     .ant-input {
       font-family: $font-secondary;
@@ -110,11 +117,13 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
+
       &__left {
         width: 49%;
         font-family: $font-secondary;
         font-weight: 600;
       }
+
       &__right {
         width: 49%;
         font-family: $font-secondary;

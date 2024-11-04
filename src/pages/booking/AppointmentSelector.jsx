@@ -15,7 +15,7 @@ const AppointmentSelector = ({
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
-      const response = await api.get("/SalonManager/print-all-Stylists");
+      const response = await api.get(`/Stylist/GetAvailableStylist/get-available-stylists?bookingDate=${appointmentDate}&bookingTime=${appointmentTime}`);
       if (response.status === 200) {
         setStylists(response.data);
       } else {
@@ -34,7 +34,7 @@ const AppointmentSelector = ({
 
   useEffect(() => {
     getStylist();
-  }, []);
+  }, [appointmentDate, appointmentTime]);
   return (
     <div className="dateSelector">
       <DatePicker

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Select } from "antd";
+import { Button, DatePicker, message, Select } from "antd";
 import api from "../../config/axios";
 import dayjs from "dayjs";
 
 const { Option } = Select;
 
 const AppointmentSelector = ({
+  personalInfo,
   appointmentDate,
   setAppointmentDate,
   appointmentTime,
@@ -15,11 +16,11 @@ const AppointmentSelector = ({
   const [stylists, setStylists] = useState();
   const getStylist = async () => {
     try {
-      const response = await api.get(`/Stylist/GetAvailableStylist/get-available-stylists?bookingDate=${appointmentDate}&bookingTime=${appointmentTime}`);
+      const [hour, minute] = appointmentTime.split(":");
+      const response = await api.get(`/Stylist/GetAvailableStylist/get-available-stylists?salonId=${personalInfo.salonId}&bookingDate=${appointmentDate}&bookingHour=${hour}&bookingMinute=${minute}`);
+      console.log(response.data);
       if (response.status === 200) {
         setStylists(response.data);
-      } else {
-        message.error(error);
       }
     } catch (error) {
       message.error(error);
@@ -34,7 +35,8 @@ const AppointmentSelector = ({
 
   useEffect(() => {
     getStylist();
-  }, [appointmentDate, appointmentTime]);
+  }, []);
+
   return (
     <div className="dateSelector">
       <DatePicker
@@ -45,14 +47,25 @@ const AppointmentSelector = ({
         }}
         className="dateSelector__date"
         disabledDate={disabledDate}
-        style={{ marginBottom: "1em" }}
+        style={{ marginBottom: "1em", marginRight: "1em" }}
       />
-
+      <Button type="primary"
+        style={{
+          backgroundColor: "#FAA300",
+          color: "black",
+          padding: "10px 20px",
+          borderRadius: "8px",
+        }} onClick={getStylist}>
+        Find Stylists
+      </Button>
       <Select
         placeholder="Select time"
         style={{ width: "100%", marginBottom: "1em" }}
         className="dateSelector__time"
-        onChange={(value) => setAppointmentTime(value)}
+        onChange={(value) => {
+          console.log("Selected Time:", value);
+          setAppointmentTime(value);
+        }}
       >
         <Option value="08:00">08:00</Option>
         <Option value="08:15">08:15</Option>

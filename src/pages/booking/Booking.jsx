@@ -73,6 +73,7 @@ function Booking() {
       description: "Choose date, time and stylist",
       component: (
         <AppointmentSelector
+          personalInfo={personalInfo}
           setAppointmentDate={setAppointmentDate}
           setAppointmentTime={setAppointmentTime}
           setStylist={(stylist) => setSelectedStylist(stylist)}
@@ -113,7 +114,7 @@ function Booking() {
     try {
       const response = await api.post(
         `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
-     
+
       );
 
       console.log(response)
@@ -124,14 +125,14 @@ function Booking() {
         const paymentResponse = await api.post(
           `/Payments/create?bookingId=${bookingId}`
         );
-        const paymentUrl = paymentResponse.data.data.checkoutUrl; 
+        const paymentUrl = paymentResponse.data.data.checkoutUrl;
         if (paymentUrl) {
           window.location.href = paymentUrl;
         } else {
           messageApi.error("Can not find any payment");
         }
 
-       
+
       }
     } catch (error) {
       console.log(error);

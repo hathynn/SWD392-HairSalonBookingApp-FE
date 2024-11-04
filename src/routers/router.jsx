@@ -151,7 +151,7 @@ export const router = createBrowserRouter([
                 <BookingCustomer />
               </ProtectedRouteCustomer>
             ),
-          },
+          }, 
           {
             path: "history-bookings",
             element: (

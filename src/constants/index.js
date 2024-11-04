@@ -1,1 +1,3 @@
-export const API_URL = ''
+REACT_APP_CLOUDINARY_CLOUD_NAME=dws57sxu6
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+

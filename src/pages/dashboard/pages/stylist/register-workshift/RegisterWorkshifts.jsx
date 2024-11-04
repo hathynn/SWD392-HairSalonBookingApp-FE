@@ -41,11 +41,11 @@ function RegisterWorkshifts() {
         "/Stylist/RegisterWorkSchedule/register-work-schedule",
         data
       );
-      const responseData = response.data.data;
+      const responseData = response.data;
       if (responseData.error === 0) {
         message.success("Work schedule registered successfully");
       } else {
-        message.error("Failed to register work schedule");
+        message.error(responseData.message);
       }
     } catch (error) {
       console.error("Error:", error);

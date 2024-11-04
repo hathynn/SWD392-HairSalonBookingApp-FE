@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Input, Checkbox, Button, message, ConfigProvider, Upload, Flex } from "antd";
+import {
+  Input,
+  Checkbox,
+  Button,
+  message,
+  ConfigProvider,
+  Upload,
+  Flex,
+} from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import axios from "axios";
 import api from "../../../../../../config/axios";
 import "./AddCombo.scss";
-
-const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+import { uploadImage } from "../../../../../../config/cloudinaryUpload";
 
 function AddCombo() {
   const [comboName, setComboName] = useState("");
   const [price, setPrice] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [comboServices, setComboServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [fileList, setFileList] = useState([]); // Quản lý file được chọn
+  const [imageFile, setImageFile] = useState(null); // Lưu file ảnh thực sự
 
   const getComboDetails = async () => {
     try {
@@ -33,8 +39,21 @@ function AddCombo() {
     );
   };
 
-  const handleFileChange = ({ file }) => {
-    setImageFile(file);
+  const handleFileChange = (info) => {
+    console.log("Info:", info); // Log thông tin của info để kiểm tra
+
+    const { fileList } = info;
+
+    setFileList(fileList); // Cập nhật danh sách file hiển thị trong Upload
+
+    // Nếu có file trong danh sách, lấy file gốc từ phần tử đầu tiên
+    if (fileList.length > 0) {
+      const file = fileList[0].originFileObj; // Lấy file thực tế
+      setImageFile(file); // Lưu file vào state
+      console.log("File gốc:", file); // Log file để kiểm tra
+    } else {
+      setImageFile(null); // Nếu không có file, đặt lại imageFile
+    }
   };
 
   const handleSubmit = async () => {
@@ -44,31 +63,27 @@ function AddCombo() {
     }
 
     try {
-      const cloudinaryFormData = new FormData();
-      cloudinaryFormData.append("file", imageFile);
-      cloudinaryFormData.append("upload_preset", uploadPreset);
-      const cloudinaryResponse = await axios.post(cloudinaryUrl, cloudinaryFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      if (cloudinaryResponse && cloudinaryResponse.data) {
-        console.log("Upload Successful:", cloudinaryResponse.data);
-      } else {
-        console.log("Unexpected response format:", cloudinaryResponse);
-      }
+      const uploadedImageUrl = await uploadImage(imageFile);
+      console.log("response ", uploadedImageUrl);
+      setImageUrl(uploadedImageUrl);
+      console.log("name", comboName);
+      console.log("Price", price);
+      console.log("ComboDetailId", selectedServices);
 
-      const imageUrl = cloudinaryResponse.data.secure_url;
-      console.log("Url:" + imageUrl)
       const formData = new FormData();
       formData.append("ComboServiceName", comboName);
       formData.append("Price", price);
       formData.append("ImageUrl", imageUrl);
-      formData.append("ComboDetailId", selectedServices.join(","));
+      selectedServices.forEach((serviceId) => {
+        formData.append("ComboDetailIds", serviceId);
+      });
+  
 
       await api.post("/Combo/add-comboServices", formData);
-      message.success("Create successful combo!");
+      message.success("Adding combo successfully!");
     } catch (error) {
-      console.error("Error uploading photo or sending combo:", error);
-      message.error("Error creating new combo or uploading image.");
+      console.error("Lỗi khi upload ảnh hoặc tạo combo:", error);
+      message.error("Lỗi khi tạo combo mới hoặc upload ảnh.");
     }
   };
 
@@ -82,20 +97,20 @@ function AddCombo() {
       <div className="create-combo__input">
         <Input
           className="create-combo__input__inside"
-          placeholder="Combo Name"
+          placeholder="Combo name"
           value={comboName}
           onChange={(e) => setComboName(e.target.value)}
         />
         <Input
           className="create-combo__input__inside"
-          placeholder="Combo Price"
+          placeholder="Combo price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           suffix="VND"
         />
       </div>
       <Flex gap="2em" className="create-combo__service">
-        <label>Combo Service</label>
+        <label>Combo service(s):</label>
         {comboServices && comboServices.length > 0 ? (
           comboServices.map((service) => (
             <ConfigProvider
@@ -117,7 +132,7 @@ function AddCombo() {
             </ConfigProvider>
           ))
         ) : (
-          <p>No services available</p>
+          <p>No service available</p>
         )}
       </Flex>
       <div className="create-combo__image">
@@ -127,6 +142,7 @@ function AddCombo() {
           multiple={false}
           beforeUpload={() => false}
           onChange={handleFileChange}
+          fileList={fileList}
           className="create-combo__image__dragger"
         >
           <p className="ant-upload-drag-icon">

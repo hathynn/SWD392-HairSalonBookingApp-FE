@@ -89,7 +89,7 @@ function ViewService() {
       title: "Service Name",
       dataIndex: "content",
       key: "content",
-      width: 420,
+      width: 380,
       render: (text) => <p>{text}</p>,
     },
     {

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  Input,
-  Checkbox,
-  Button,
-  message,
-  ConfigProvider,
-  Upload,
-  Flex,
-} from "antd";
+import { Input, Checkbox, Button, message, ConfigProvider, Upload, Flex } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import api from "../../../../../../config/axios";
 import "./AddCombo.scss";
+
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
 function AddCombo() {
   const [comboName, setComboName] = useState("");
@@ -23,9 +19,7 @@ function AddCombo() {
   const getComboDetails = async () => {
     try {
       const response = await api.get("/Combo/getAll-comboDetails");
-      console.log("Data", response.data.data);
       setComboServices(response.data.data);
-      console.log(comboServices);
     } catch (error) {
       message.error("Lỗi khi lấy danh sách combo service");
     }
@@ -39,26 +33,45 @@ function AddCombo() {
     );
   };
 
-  // Xử lý upload file
   const handleFileChange = ({ file }) => {
-    setImageFile(file.originFileObj);
+    setImageFile(file);
   };
 
-  // Gửi dữ liệu combo mới
   const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("ComboServiceName", comboName);
-    formData.append("Price", price);
-    formData.append("ImageUrl", imageFile);
-    formData.append("ComboDetailId", selectedServices.join(","));
+    if (!imageFile) {
+      message.error("Vui lòng chọn ảnh");
+      return;
+    }
 
     try {
-      const response = await api.post("/api/Combo/add-comboServices", formData);
-      message.success("Tạo combo thành công!");
+      const cloudinaryFormData = new FormData();
+      cloudinaryFormData.append("file", imageFile);
+      cloudinaryFormData.append("upload_preset", uploadPreset);
+      const cloudinaryResponse = await axios.post(cloudinaryUrl, cloudinaryFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      if (cloudinaryResponse && cloudinaryResponse.data) {
+        console.log("Upload Successful:", cloudinaryResponse.data);
+      } else {
+        console.log("Unexpected response format:", cloudinaryResponse);
+      }
+
+      const imageUrl = cloudinaryResponse.data.secure_url;
+      console.log("Url:" + imageUrl)
+      const formData = new FormData();
+      formData.append("ComboServiceName", comboName);
+      formData.append("Price", price);
+      formData.append("ImageUrl", imageUrl);
+      formData.append("ComboDetailId", selectedServices.join(","));
+
+      await api.post("/Combo/add-comboServices", formData);
+      message.success("Create successful combo!");
     } catch (error) {
-      message.error("Lỗi khi tạo combo mới");
+      console.error("Error uploading photo or sending combo:", error);
+      message.error("Error creating new combo or uploading image.");
     }
   };
+
   useEffect(() => {
     getComboDetails();
   }, []);
@@ -93,9 +106,9 @@ function AddCombo() {
                   },
                 },
               }}
+              key={service.id}
             >
               <Checkbox
-                key={service.id}
                 onChange={() => handleCheckboxChange(service.id)}
                 className="create-combo__service__checkbox"
               >
@@ -146,7 +159,7 @@ function AddCombo() {
             Submit
           </Button>
         </ConfigProvider>
-      </div>{" "}
+      </div>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import Statistic from "antd/es/statistic/Statistic";
 import { ArrowUpOutlined, DollarCircleFilled } from "@ant-design/icons";
 import { Column } from '@ant-design/charts';
 import api from "../../../../../config/axios";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const { Content } = Layout;
 
@@ -141,7 +143,7 @@ function AdminDashboard() {
           background: "#f0f2f5",
         }}
       >
-        <h2>Dashboard Overview</h2>
+        <h2 className="dashboard-title">Dashboard Overview</h2>
         <Row gutter={16}>
           <Col span={8}>
             <Card bordered={false}>

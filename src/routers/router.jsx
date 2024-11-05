@@ -32,6 +32,7 @@ import { message } from "antd";
 import CancelCard from "../components/cancelCard/CancelCard";
 import Services from "../pages/services/Services";
 import AdminDashboard from "../pages/dashboard/pages/admin/admin-dashboard/AdminDashboard";
+import UserAdmin from "../pages/dashboard/pages/admin/user-admin/UserAdmin";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
@@ -73,7 +74,7 @@ const ProtectedRouteAdmin = ({ children }) => {
   const user = useSelector(selectUser);
   if (user?.Role !== "Admin") {
     message.error("You do not have permission to access this page.");
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard/admin" replace />;
   }
   return children;
 };
@@ -297,6 +298,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteAdmin>
             <AdminDashboard />
+          </ProtectedRouteAdmin>
+        ),
+      },
+      {
+        path: "/dashboard/admin/user-manage",
+        element: (
+          <ProtectedRouteAdmin>
+            <UserAdmin />
           </ProtectedRouteAdmin>
         ),
       },

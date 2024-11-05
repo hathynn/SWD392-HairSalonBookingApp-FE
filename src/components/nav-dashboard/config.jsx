@@ -61,7 +61,7 @@ export const navDashboardConfigAdmin = [
     label: "Summary",
   },
   {
-    key: "4",
+    key: "8",
     icon: <TeamOutlined />,
     label: "Users",
   },
@@ -129,6 +129,9 @@ export const navpath = {
   },
   5: {
     path: "/dashboard/admin",
+  },
+  8: {
+    path: "/dashboard/admin/user-manage",
   },
   7: {
     path: "/dashboard/staff",

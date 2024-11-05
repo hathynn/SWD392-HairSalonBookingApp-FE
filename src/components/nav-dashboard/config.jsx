@@ -66,7 +66,7 @@ export const navDashboardConfigAdmin = [
     label: "Users",
   },
   {
-    key: "5",
+    key: "6",
     icon: <ShopOutlined />,
     label: "Salon System",
   },
@@ -124,11 +124,11 @@ export const navpath = {
   42: {
     path: "/dashboard/manager/add-combo",
   },
-  5: {
+  6: {
     path: "/dashboard/admin/salon-manage",
   },
-  6: {
-    path: "/dashboard/admin/services",
+  5: {
+    path: "/dashboard/admin",
   },
   7: {
     path: "/dashboard/staff",

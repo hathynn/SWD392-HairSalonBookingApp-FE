@@ -13,21 +13,9 @@ function ViewCombo() {
     try {
       const response = await api.get("/Combo/getAll-comboServices");
       const comboData = response.data.data;
-
-      // Lấy chi tiết cho từng combo
-      const comboDetails = await Promise.all(
-        comboData.map(async (combo) => {
-          const detailResponse = await api.get(
-            `/Combo/get-comboServices/${combo.id}`
-          );
-          console.log(detailResponse);
-          return { ...combo, details: detailResponse.data.data[0] };
-        })
-      );
-
-      setCombos(comboDetails);
+      setCombos(comboData); // Directly set the data without additional calls
     } catch (error) {
-      message.error("Can not loading combo detail data");
+      message.error("Cannot load combo data");
     } finally {
       setLoading(false);
     }
@@ -65,10 +53,10 @@ function ViewCombo() {
                   <p className="view-combo__card__lower__title">
                     Combo Detail:
                   </p>
-                  {combo.details?.comboDetails ? (
-                    combo.details?.comboDetails.map((detail) => (
+                  {combo.comboDetails && combo.comboDetails.length > 0 ? (
+                    combo.comboDetails.map((detail) => (
                       <p
-                        key={detail.comboDetailId}
+                        key={detail.id}
                         className="view-combo__card__lower__subtitle"
                       >
                         - {detail.content} 

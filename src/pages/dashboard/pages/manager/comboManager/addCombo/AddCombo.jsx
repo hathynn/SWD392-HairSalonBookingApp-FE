@@ -9,23 +9,23 @@ import {
   Flex,
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import axios from "axios";
 import api from "../../../../../../config/axios";
 import "./AddCombo.scss";
+import { uploadImage } from "../../../../../../config/cloudinaryUpload";
 
 function AddCombo() {
   const [comboName, setComboName] = useState("");
   const [price, setPrice] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [comboServices, setComboServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [fileList, setFileList] = useState([]); // Quản lý file được chọn
+  const [imageFile, setImageFile] = useState(null); // Lưu file ảnh thực sự
 
   const getComboDetails = async () => {
     try {
       const response = await api.get("/Combo/getAll-comboDetails");
-      console.log("Data", response.data.data);
       setComboServices(response.data.data);
-      console.log(comboServices);
     } catch (error) {
       message.error("Lỗi khi lấy danh sách combo service");
     }
@@ -39,26 +39,78 @@ function AddCombo() {
     );
   };
 
-  // Xử lý upload file
-  const handleFileChange = ({ file }) => {
-    setImageFile(file.originFileObj);
-  };
+  const handleFileChange = (info) => {
+    console.log("Info:", info); // Log thông tin của info để kiểm tra
 
-  // Gửi dữ liệu combo mới
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("ComboServiceName", comboName);
-    formData.append("Price", price);
-    formData.append("ImageUrl", imageFile);
-    formData.append("ComboDetailId", selectedServices.join(","));
+    const { fileList } = info;
 
-    try {
-      const response = await api.post("/api/Combo/add-comboServices", formData);
-      message.success("Tạo combo thành công!");
-    } catch (error) {
-      message.error("Lỗi khi tạo combo mới");
+    setFileList(fileList); // Cập nhật danh sách file hiển thị trong Upload
+
+    // Nếu có file trong danh sách, lấy file gốc từ phần tử đầu tiên
+    if (fileList.length > 0) {
+      const file = fileList[0].originFileObj; // Lấy file thực tế
+      setImageFile(file); // Lưu file vào state
+      console.log("File gốc:", file); // Log file để kiểm tra
+    } else {
+      setImageFile(null); // Nếu không có file, đặt lại imageFile
     }
   };
+
+  const handleSubmit = async () => {
+    if (!imageFile) {
+      message.error("Vui lòng chọn ảnh");
+      return;
+    }
+  
+    try {
+      const formData = new FormData();
+      formData.append("ComboServiceName", comboName);
+      formData.append("Price", price);
+      formData.append("ImageFile", imageFile); // Thêm file ảnh
+      selectedServices.forEach((serviceId) => {
+        formData.append("ComboDetailIds", serviceId);
+      });
+  
+      await api.post("/Combo/add-comboServices", formData);
+      message.success("Adding combo successfully!");
+    } catch (error) {
+      console.error("Lỗi khi tạo combo:", error);
+      message.error("Lỗi khi tạo combo mới.");
+    }
+  };
+  
+
+  // const handleSubmit = async () => {
+  //   if (!imageFile) {
+  //     message.error("Vui lòng chọn ảnh");
+  //     return;
+  //   }
+
+  //   try {
+  //     const uploadedImageUrl = await uploadImage(imageFile);
+  //     console.log("response ", uploadedImageUrl);
+  //     setImageUrl(uploadedImageUrl);
+  //     console.log("name", comboName);
+  //     console.log("Price", price);
+  //     console.log("ComboDetailId", selectedServices);
+
+  //     const formData = new FormData();
+  //     formData.append("ComboServiceName", comboName);
+  //     formData.append("Price", price);
+  //     formData.append("ImageUrl", uploadedImageUrl);
+  //     selectedServices.forEach((serviceId) => {
+  //       formData.append("ComboDetailIds", serviceId);
+  //     });
+
+  //     console.log(imageUrl);
+  //     await api.post("/Combo/add-comboServices", formData);
+  //     message.success("Adding combo successfully!");
+  //   } catch (error) {
+  //     console.error("Lỗi khi upload ảnh hoặc tạo combo:", error);
+  //     message.error("Lỗi khi tạo combo mới hoặc upload ảnh.");
+  //   }
+  // };
+
   useEffect(() => {
     getComboDetails();
   }, []);
@@ -69,20 +121,20 @@ function AddCombo() {
       <div className="create-combo__input">
         <Input
           className="create-combo__input__inside"
-          placeholder="Combo Name"
+          placeholder="Combo name"
           value={comboName}
           onChange={(e) => setComboName(e.target.value)}
         />
         <Input
           className="create-combo__input__inside"
-          placeholder="Combo Price"
+          placeholder="Combo price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           suffix="VND"
         />
       </div>
       <Flex gap="2em" className="create-combo__service">
-        <label>Combo Service</label>
+        <label>Combo service(s):</label>
         {comboServices && comboServices.length > 0 ? (
           comboServices.map((service) => (
             <ConfigProvider
@@ -93,9 +145,9 @@ function AddCombo() {
                   },
                 },
               }}
+              key={service.id}
             >
               <Checkbox
-                key={service.id}
                 onChange={() => handleCheckboxChange(service.id)}
                 className="create-combo__service__checkbox"
               >
@@ -104,7 +156,7 @@ function AddCombo() {
             </ConfigProvider>
           ))
         ) : (
-          <p>No services available</p>
+          <p>No service available</p>
         )}
       </Flex>
       <div className="create-combo__image">
@@ -114,6 +166,7 @@ function AddCombo() {
           multiple={false}
           beforeUpload={() => false}
           onChange={handleFileChange}
+          fileList={fileList}
           className="create-combo__image__dragger"
         >
           <p className="ant-upload-drag-icon">
@@ -146,7 +199,7 @@ function AddCombo() {
             Submit
           </Button>
         </ConfigProvider>
-      </div>{" "}
+      </div>
     </div>
   );
 }

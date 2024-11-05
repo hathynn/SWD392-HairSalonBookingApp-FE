@@ -31,11 +31,12 @@ import ScrollToTop from "../components/ScrollToTop";
 import { message } from "antd";
 import CancelCard from "../components/cancelCard/CancelCard";
 import Services from "../pages/services/Services";
+import AdminDashboard from "../pages/dashboard/pages/admin/admin-dashboard/AdminDashboard";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
   if (!user) {
-   message.error("You need to login first!!");
+    message.error("You need to login first!!");
     return <Navigate to="/login" replace />;
   }
   return children;
@@ -160,7 +161,7 @@ export const router = createBrowserRouter([
                 <BookingCustomer />
               </ProtectedRouteCustomer>
             ),
-          }, 
+          },
           {
             path: "history-bookings",
             element: (
@@ -288,6 +289,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteAdmin>
             <SalonAdmin />
+          </ProtectedRouteAdmin>
+        ),
+      },
+      {
+        path: "/dashboard/admin",
+        element: (
+          <ProtectedRouteAdmin>
+            <AdminDashboard />
           </ProtectedRouteAdmin>
         ),
       },

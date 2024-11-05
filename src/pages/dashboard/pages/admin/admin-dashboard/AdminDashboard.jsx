@@ -140,11 +140,12 @@ function AdminDashboard() {
           padding: "24px",
           margin: 0,
           minHeight: 280,
-          background: "#f0f2f5",
         }}
       >
-        <h2 className="dashboard-title">Dashboard Overview</h2>
-        <Row gutter={16}>
+        <Row gutter={16}
+          style={{
+            marginTop: "10px",
+          }}>
           <Col span={8}>
             <Card bordered={false}>
               <Statistic
@@ -181,7 +182,7 @@ function AdminDashboard() {
         </Row>
         <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
           <Col span={24}>
-            <Card title="Recent Bookings" bordered={false}>
+            <Card title="Bookings" bordered={false}>
               <Table columns={columns} dataSource={dashboardData.bookings} rowKey="id" />
             </Card>
           </Col>

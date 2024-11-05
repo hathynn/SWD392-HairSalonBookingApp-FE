@@ -61,31 +61,55 @@ function AddCombo() {
       message.error("Vui lòng chọn ảnh");
       return;
     }
-
+  
     try {
-      const uploadedImageUrl = await uploadImage(imageFile);
-      console.log("response ", uploadedImageUrl);
-      setImageUrl(uploadedImageUrl);
-      console.log("name", comboName);
-      console.log("Price", price);
-      console.log("ComboDetailId", selectedServices);
-
       const formData = new FormData();
       formData.append("ComboServiceName", comboName);
       formData.append("Price", price);
-      formData.append("ImageUrl", imageUrl);
+      formData.append("ImageFile", imageFile); // Thêm file ảnh
       selectedServices.forEach((serviceId) => {
         formData.append("ComboDetailIds", serviceId);
       });
   
-
       await api.post("/Combo/add-comboServices", formData);
       message.success("Adding combo successfully!");
     } catch (error) {
-      console.error("Lỗi khi upload ảnh hoặc tạo combo:", error);
-      message.error("Lỗi khi tạo combo mới hoặc upload ảnh.");
+      console.error("Lỗi khi tạo combo:", error);
+      message.error("Lỗi khi tạo combo mới.");
     }
   };
+  
+
+  // const handleSubmit = async () => {
+  //   if (!imageFile) {
+  //     message.error("Vui lòng chọn ảnh");
+  //     return;
+  //   }
+
+  //   try {
+  //     const uploadedImageUrl = await uploadImage(imageFile);
+  //     console.log("response ", uploadedImageUrl);
+  //     setImageUrl(uploadedImageUrl);
+  //     console.log("name", comboName);
+  //     console.log("Price", price);
+  //     console.log("ComboDetailId", selectedServices);
+
+  //     const formData = new FormData();
+  //     formData.append("ComboServiceName", comboName);
+  //     formData.append("Price", price);
+  //     formData.append("ImageUrl", uploadedImageUrl);
+  //     selectedServices.forEach((serviceId) => {
+  //       formData.append("ComboDetailIds", serviceId);
+  //     });
+
+  //     console.log(imageUrl);
+  //     await api.post("/Combo/add-comboServices", formData);
+  //     message.success("Adding combo successfully!");
+  //   } catch (error) {
+  //     console.error("Lỗi khi upload ảnh hoặc tạo combo:", error);
+  //     message.error("Lỗi khi tạo combo mới hoặc upload ảnh.");
+  //   }
+  // };
 
   useEffect(() => {
     getComboDetails();

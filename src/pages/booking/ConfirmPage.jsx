@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Descriptions } from "antd";
+import { useLocation } from "react-router-dom";
 
 function ConfirmPage({
   personalInfo,
@@ -7,7 +8,15 @@ function ConfirmPage({
   appointmentDate,
   appointmentTime,
   stylist,
-}) {
+})
+
+{
+  // const location = useLocation();
+  // const { appointmentDate, appointmentTime } = location.state || {};
+  useEffect(() => {
+    console.log("selectedDate has changed:", appointmentDate);
+    console.log("selectedTime has changed:", appointmentTime);
+  }, [appointmentDate, appointmentTime]);
   return (
     <div className="booking-confirm">
       <Descriptions

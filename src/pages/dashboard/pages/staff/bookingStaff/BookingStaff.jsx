@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Tag, Button, message, ConfigProvider } from "antd";
+import {
+  Space,
+  Table,
+  Tag,
+  Button,
+  message,
+  ConfigProvider,
+  Modal,
+  Badge,
+  Descriptions,
+} from "antd";
 import dayjs from "dayjs";
 import "./BookingStaff.scss";
 import api from "../../../../../config/axios";
@@ -9,115 +19,170 @@ const BookingStaff = () => {
   const [uncheckedBookings, setUncheckedBookings] = useState([]);
   const [checkedBookings, setCheckedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detail, setDetail] = useState([]);
+  const [booking, setBooking] = useState([]);
 
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const [uncheckedRes, checkedRes] = await Promise.all([
-          api.get("/SalonManager/bookings/unchecked"),
-          api.get("/SalonManager/bookings/checked"),
-        ]);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
-        setUncheckedBookings(uncheckedRes.data);
-        setCheckedBookings(checkedRes.data);
-      } catch (error) {
-        console.error("Failed to fetch bookings:", error);
-        message.error("Failed to load bookings.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBookings = async () => {
+  //     try {
+  //       const [uncheckedRes, checkedRes] = await Promise.all([
+  //         api.get("/SalonManager/bookings/unchecked"),
+  //         api.get("/SalonManager/bookings/checked"),
+  //       ]);
 
-    fetchBookings();
-  }, []);
+  //       setUncheckedBookings(uncheckedRes.data);
+  //       setCheckedBookings(checkedRes.data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch bookings:", error);
+  //       message.error("Failed to load bookings.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  const handleCheckBooking = async (bookingId) => {
+  //   fetchBookings();
+  // }, []);
+
+  // const handleCheckBooking = async (bookingId) => {
+  //   console.log("bookign", bookingId);
+
+  //   try {
+  //     await api.post(
+  //       `/Booking/CheckBooking/CheckBooking?bookingId=${bookingId}&Check=true`
+  //     );
+  //     message.success("Booking marked as checked.");
+
+  //     setUncheckedBookings((prev) =>
+  //       prev.filter((booking) => booking.bookingId !== bookingId)
+  //     );
+  //   } catch (error) {
+  //     console.error("Failed to check booking:", error);
+  //     message.error("Failed to mark booking as checked.");
+  //   }
+  // };
+
+  const getBooking = async () => {
     try {
-      await api.post(
-        `/Booking/CheckBooking/CheckBooking?bookingId=${bookingId}&Check=true`
-      );
-      message.success("Booking marked as checked.");
+      const response = await api.get("/Booking/ViewAllBookingWithAllStatus");
+      const data = response.data.data;
+      console.log(data);
+      setBooking(data);
+    } catch (e) {
+      message.error("Can not get booking detail");
+    }
+  };
 
-      setUncheckedBookings((prev) =>
-        prev.filter((booking) => booking.bookingId !== bookingId)
+  const getDetailBooking = async (bookingId) => {
+    try {
+      const response = await api.get(
+        `/Booking/ViewBookingDetail?bookingId=${bookingId}`
       );
+      setDetail(response.data.data);
     } catch (error) {
-      console.error("Failed to check booking:", error);
-      message.error("Failed to mark booking as checked.");
+      console.error("Failed to fetch booking details:", error);
+      message.error("Failed to load booking details.");
     }
   };
 
   const columns = [
     {
+      title: "Booking ID",
+      dataIndex: "bookingId",
+      key: "bookingId",
+      width:180,
+      render: (text) => <p>{text}</p>,
+    },
+    {
       title: "Booking Date",
       dataIndex: "bookingDate",
       key: "bookingDate",
-      render: (date) => dayjs(date).format("YYYY-MM-DD HH:mm"),
+      render: (date) => dayjs(date).format("YYYY-MM-DD"),
     },
     {
       title: "Total",
-      dataIndex: "total",
-      key: "total",
-      render: (total) => `$${total}`,
+      dataIndex: "paymentAmount",
+      key: "paymentAmount",
+      render: (paymentAmount) => `${paymentAmount} VND`,
+    },
+    {
+      title: "Stylist",
+      dataIndex: "stylistName",
+      key: "stylistName",
+      render: (text) => <p>{text}</p>,
     },
     {
       title: "Status",
-      key: "status",
-      render: (_, record) => (
-        <Tag color={record.status === "unchecked" ? "volcano" : "green"}>
-          {record.status ? record.status.toUpperCase() : "UNKNOWN"}
-        </Tag>
-      ),
-    },
-    {
-      title: "Feedback",
-      dataIndex: "feedback",
-      key: "feedback",
-      render: (feedback) => (feedback ? feedback : "NONE"),
-    },
-    {
-      title: "Payment Status",
-      dataIndex: "paymentStatus",
-      key: "paymentStatus",
-      render: (status) => (status ? status : "NONE"),
+      key: "bookingStatus",
+      render: (_, record) =>
+        record.bookingStatus &&
+        record.bookingStatus.toLowerCase() === "pending" ? (
+          <Tag className="booking-table-staff__tag" color="volcano">
+            Pending
+          </Tag>
+        ) : record.bookingStatus &&
+          record.bookingStatus.toLowerCase() === "checked" ? (
+          <Tag className="booking-table-staff__tag" color="green">
+            Checked
+          </Tag>
+        ) : (
+          <Tag className="booking-table-staff__tag" color="default">
+            Unknown
+          </Tag>
+        ),
     },
 
     {
       title: "Detail",
       key: "action",
-      render: (_, record) =>
-       
-          <ConfigProvider
-            theme={{
-              components: {
-                Button: {
-                  defaultColor: "grey",
-                  defaultBg: "white",
-                  defaultBorderColor: "lightgrey",
-                  defaultHoverBorderColor: "grey",
-                  defaultHoverColor: "black",
-                  defaultHoverBg: "white",
-                  defaultActiveBg: "black",
-                  defaultActiveBorderColor: "black",
-                  defaultActiveColor: "white",
-                },
+      render: (_, record) => (
+        <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                defaultColor: "grey",
+                defaultBg: "white",
+                defaultBorderColor: "lightgrey",
+                defaultHoverBorderColor: "grey",
+                defaultHoverColor: "black",
+                defaultHoverBg: "white",
+                defaultActiveBg: "black",
+                defaultActiveBorderColor: "black",
+                defaultActiveColor: "white",
               },
+            },
+          }}
+        >
+          <Button
+            className="booking-table-staff__button"
+            style={{ fontWeight: "600" }}
+            onClick={() => {
+              showModal();
+              getDetailBooking(record.bookingId);
             }}
           >
-            <Button
-              className="view-service__button"
-              style={{ fontWeight: "600" }}
-            >
-              Detail
-            </Button>
-          </ConfigProvider>
-       ,
+            Detail
+          </Button>
+        </ConfigProvider>
+      ),
     },
+
     {
       title: "Action",
       key: "action",
       render: (_, record) =>
-        record.status.toLowerCase() === "unchecked" ? (
+        record.bookingStatus &&
+        record.bookingStatus.toLowerCase() === "pending" ? (
           <ConfigProvider
             theme={{
               components: {
@@ -136,40 +201,79 @@ const BookingStaff = () => {
             }}
           >
             <Button
-              className="view-service__button"
+              className="booking-table-staff__button"
               onClick={() => handleCheckBooking(record.bookingId)}
-              style={{ fontWeight: "600" }}
             >
               Confirm
             </Button>
           </ConfigProvider>
-        ) : record.status.toLowerCase() === "checked" ? (
+        ) : (
           <Button disabled>Confirm</Button>
-        ) : null,
+        ),
     },
   ];
 
-  const tableData = [
-    ...uncheckedBookings.map((booking) => ({
-      ...booking,
-      status: "unchecked",
-    })),
-    ...checkedBookings.map((booking) => ({
-      ...booking,
-      status: "checked",
-    })),
-  ];
+  useEffect(() => {
+    getBooking();
+  }, []);
 
   return (
     <div className="booking-table-staff">
       <Table
         columns={columns}
-        dataSource={tableData}
+        dataSource={booking}
         rowKey="bookingId"
-        loading={loading}
         className="booking-table__detail"
-        pagination={{ pageSize: 10 }}
+        pagination={{ pageSize: 7 }}
       />
+
+      <Modal
+        title="Booking detail"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={900}
+      >
+        {detail ? (
+          <Descriptions bordered>
+            <Descriptions.Item label="Customer Name">
+              {detail.customerName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Phone Number">
+              {detail.customerPhoneNumber}
+            </Descriptions.Item>
+            <Descriptions.Item label="Price">
+              {detail.paymentAmount} VND
+            </Descriptions.Item>
+            <Descriptions.Item label="Date">
+              {dayjs(detail.bookingDate).format("YYYY-MM-DD HH:mm")}
+            </Descriptions.Item>
+            <Descriptions.Item label="Stylist Name">
+              {detail.comboServiceName?.comboServiceName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Payment Status">
+              <Badge
+                status={detail.checked ? "success" : "processing"}
+                text={detail.checked ? "Checked" : "Waiting"}
+              />
+            </Descriptions.Item>
+            <Descriptions.Item label="Salon Address">
+              123 ABC, D1
+            </Descriptions.Item>
+            <Descriptions.Item label="Service">
+              {detail.comboServiceName?.length > 0 ? (
+                detail.comboServiceName.map((service) => (
+                  <div key={service.id}>{service.comboServiceName}</div>
+                ))
+              ) : (
+                <p>No services available</p>
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Modal>
     </div>
   );
 };

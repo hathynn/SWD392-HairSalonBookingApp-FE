@@ -1,4 +1,4 @@
-import { Button, Col, ConfigProvider, Input, message, Row, Table } from "antd";
+import { Badge, Button, Col, ConfigProvider, Input, message, Row, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import "./ViewService.scss";
 import api from "../../../../../../config/axios";
@@ -66,7 +66,7 @@ function ViewService() {
     try {
       await api.delete(`/Combo/delete-comboDetails/${id}`);
       message.success("Service deleted successfully!");
-      getServices(); 
+      getServices();
     } catch (e) {
       message.error("Fail to delete the service");
     }
@@ -89,8 +89,20 @@ function ViewService() {
       title: "Service Name",
       dataIndex: "content",
       key: "content",
-      width: 380,
+      width: 280,
       render: (text) => <p>{text}</p>,
+    },
+    {
+      title: "Status",
+      dataIndex: "isDeleted",
+      key: "isDeleted",
+      render: (isDeleted) => (
+        isDeleted ? (
+          <Badge color="red" text="Disabled" style={{fontFamily:'Gantari', color:'red'}} />
+        ) : (
+          <Badge color="green" text="Active" style={{fontFamily:'Gantari', color:'green'}}/>
+        )
+      ),
     },
     {
       title: "Action",
@@ -145,7 +157,6 @@ function ViewService() {
             >
               Delete
             </Button>
-           
           </ConfigProvider>
         </>
       ),
@@ -212,54 +223,54 @@ function ViewService() {
                   onChange={(e) => setUpdateServiceName(e.target.value)}
                 />
                 <div className="update-service__button">
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Button: {
-                        defaultColor: "white",
-                        defaultBg: "black",
-                        defaultBorderColor: "black",
-                        defaultHoverBorderColor: "#FAA300",
-                        defaultHoverColor: "black",
-                        defaultHoverBg: "#FAA300",
-                        defaultActiveBg: "black",
-                        defaultActiveBorderColor: "black",
-                        defaultActiveColor: "white",
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Button: {
+                          defaultColor: "white",
+                          defaultBg: "black",
+                          defaultBorderColor: "black",
+                          defaultHoverBorderColor: "#FAA300",
+                          defaultHoverColor: "black",
+                          defaultHoverBg: "#FAA300",
+                          defaultActiveBg: "black",
+                          defaultActiveBorderColor: "black",
+                          defaultActiveColor: "white",
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Button
-                    onClick={handleUpdateSubmit}
-                    className="update-service__button__left"
+                    }}
                   >
-                    Update
-                  </Button>
-                </ConfigProvider>
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Button: {
-                        defaultColor: "grey",
-                        defaultBg: "white",
-                        defaultBorderColor: "lightgrey",
-                        defaultHoverBorderColor: "grey",
-                        defaultHoverColor: "black",
-                        defaultHoverBg: "white",
-                        defaultActiveBg: "black",
-                        defaultActiveBorderColor: "black",
-                        defaultActiveColor: "white",
+                    <Button
+                      onClick={handleUpdateSubmit}
+                      className="update-service__button__left"
+                    >
+                      Update
+                    </Button>
+                  </ConfigProvider>
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Button: {
+                          defaultColor: "grey",
+                          defaultBg: "white",
+                          defaultBorderColor: "lightgrey",
+                          defaultHoverBorderColor: "grey",
+                          defaultHoverColor: "black",
+                          defaultHoverBg: "white",
+                          defaultActiveBg: "black",
+                          defaultActiveBorderColor: "black",
+                          defaultActiveColor: "white",
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Button
-                    onClick={handleCancelEdit}
-                    className="update-service__button__right"
+                    }}
                   >
-                    Cancel
-                  </Button>
-                </ConfigProvider>
+                    <Button
+                      onClick={handleCancelEdit}
+                      className="update-service__button__right"
+                    >
+                      Cancel
+                    </Button>
+                  </ConfigProvider>
                 </div>
               </Row>
             </div>

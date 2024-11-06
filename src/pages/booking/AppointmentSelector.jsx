@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, message, Select } from "antd";
+import { DatePicker, Select } from "antd";
 import api from "../../config/axios";
 import dayjs from "dayjs";
 
@@ -23,7 +23,7 @@ const AppointmentSelector = ({
         setStylists(response.data);
       }
     } catch (error) {
-      message.error(error);
+      console.log(error);
     }
   };
 
@@ -34,8 +34,11 @@ const AppointmentSelector = ({
   };
 
   useEffect(() => {
-    getStylist();
-  }, []);
+    if (appointmentDate && appointmentTime) {
+      console.log("Triggering getStylist with Date and Time set");
+      getStylist();
+    }
+  }, [appointmentDate, appointmentTime]);
 
   return (
     <div className="dateSelector">
@@ -49,15 +52,6 @@ const AppointmentSelector = ({
         disabledDate={disabledDate}
         style={{ marginBottom: "1em", marginRight: "1em" }}
       />
-      <Button type="primary"
-        style={{
-          backgroundColor: "#FAA300",
-          color: "black",
-          padding: "10px 20px",
-          borderRadius: "8px",
-        }} onClick={getStylist}>
-        Find Stylists
-      </Button>
       <Select
         placeholder="Select time"
         style={{ width: "100%", marginBottom: "1em" }}
@@ -117,7 +111,6 @@ const AppointmentSelector = ({
         <Option value="19:45">19:45</Option>
         <Option value="20:00">20:00</Option>
       </Select>
-
       <Select
         placeholder="Choose stylist (Optional)"
         onChange={(value) => {

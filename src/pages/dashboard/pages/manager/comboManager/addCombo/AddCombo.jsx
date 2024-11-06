@@ -25,15 +25,15 @@ function AddCombo() {
   const getComboDetails = async () => {
     try {
       const response = await api.get("/Combo/getAll-comboDetails");
-      const activeServices = response.data.filter(
-        (service) => service.isDeleted === 'false'
-      );
+      const activeServices = response.data.data.filter(
+        (service) => service.isDeleted === false
+      ); 
+      console.log(activeServices);
       setComboServices(activeServices);
     } catch (error) {
       message.error("Lỗi khi lấy danh sách combo service");
     }
   };
-  
 
   const handleCheckboxChange = (id) => {
     setSelectedServices((prevSelected) =>

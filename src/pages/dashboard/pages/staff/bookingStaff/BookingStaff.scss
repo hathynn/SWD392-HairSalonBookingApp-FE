@@ -2,11 +2,24 @@
 
 .booking-table-staff {
   padding: 3em 4em 0 0;
-
+  font-family: $font-secondary !important;
   h1 {
     color: $secondary-color;
     text-align: center;
     margin-bottom: 10px;
+  }
+
+  &__button {
+    font-family: $font-secondary;
+    font-weight: 600;
+  }
+
+  &__tag {
+    font-family: $font-secondary;
+  }
+
+  p {
+    font-family: $font-secondary !important;
   }
 
   .ant-table-wrapper {
@@ -19,7 +32,7 @@
         th {
           background-color: $primary-color;
           color: rgb(0, 0, 0);
-          font-family: $font-secondary;
+          font-family: $font-secondary !important;
         }
 
         .ant-table-filter-column {

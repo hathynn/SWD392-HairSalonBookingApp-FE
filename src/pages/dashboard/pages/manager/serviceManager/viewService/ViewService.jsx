@@ -1,4 +1,14 @@
-import { Badge, Button, Col, ConfigProvider, Input, message, Row, Table } from "antd";
+import {
+  Badge,
+  Button,
+  Checkbox,
+  Col,
+  ConfigProvider,
+  Input,
+  message,
+  Row,
+  Table,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import "./ViewService.scss";
 import api from "../../../../../../config/axios";
@@ -7,6 +17,8 @@ function ViewService() {
   const [service, setService] = useState([]);
   const [newServiceName, setNewServiceName] = useState("");
   const [updateServiceName, setUpdateServiceName] = useState("");
+  const [updateServiceStatus, setUpdateServiceStatus] = useState(false);
+  const [isStatusChanged, setIsStatusChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editingServiceId, setEditingServiceId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -48,9 +60,17 @@ function ViewService() {
       return;
     }
 
+    // Create a FormData object to handle multipart/form-data
+    const formData = new FormData();
+    formData.append("Id", editingServiceId);
+    formData.append("Content", updateServiceName);
+    formData.append("IsDeleted", true);
+
     try {
-      await api.put(`/Combo/update-comboDetails/${editingServiceId}`, {
-        content: updateServiceName,
+      await api.put("/Combo/update-comboDetails", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       message.success("Service updated successfully!");
       setUpdateServiceName("");
@@ -58,7 +78,29 @@ function ViewService() {
       setIsEditing(false);
       getServices();
     } catch (e) {
-      message.error("Fail to updating the service");
+      message.error("Failed to update the service");
+    }
+  };
+
+  const handleActive = async () => {
+    const formData = new FormData();
+    formData.append("Id", editingServiceId);
+    formData.append("Content", null);
+    formData.append("IsDeleted", false);
+
+    try {
+      await api.put("/Combo/update-comboDetails", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      message.success("Service updated successfully!");
+      setUpdateServiceName("");
+      setEditingServiceId(null);
+      setIsEditing(false);
+      getServices();
+    } catch (e) {
+      message.error("Failed to update the service");
     }
   };
 
@@ -72,9 +114,15 @@ function ViewService() {
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    setUpdateServiceStatus(e.target.checked);
+    setIsStatusChanged(true);
+  };
+
   const handleEdit = (record) => {
     setUpdateServiceName(record.content);
     setEditingServiceId(record.id);
+    setUpdateServiceStatus(record.isDeleted);
     setIsEditing(true);
   };
 
@@ -89,20 +137,27 @@ function ViewService() {
       title: "Service Name",
       dataIndex: "content",
       key: "content",
-      width: 280,
+      width: 200,
       render: (text) => <p>{text}</p>,
     },
     {
       title: "Status",
       dataIndex: "isDeleted",
       key: "isDeleted",
-      render: (isDeleted) => (
+      render: (isDeleted) =>
         isDeleted ? (
-          <Badge color="red" text="Disabled" style={{fontFamily:'Gantari', color:'red'}} />
+          <Badge
+            color="red"
+            text="Disabled"
+            style={{ fontFamily: "Gantari", color: "red" }}
+          />
         ) : (
-          <Badge color="green" text="Active" style={{fontFamily:'Gantari', color:'green'}}/>
-        )
-      ),
+          <Badge
+            color="green"
+            text="Active"
+            style={{ fontFamily: "Gantari", color: "green" }}
+          />
+        ),
     },
     {
       title: "Action",
@@ -138,6 +193,31 @@ function ViewService() {
             theme={{
               components: {
                 Button: {
+                  defaultColor: "#FEF3E2",
+                  defaultBg: "#181C14",
+                  defaultBorderColor: "#181C14",
+                  defaultHoverBorderColor: "black",
+                  defaultHoverColor: "white",
+                  defaultHoverBg: "black",
+                  defaultActiveBg:"black",
+                  defaultActiveBorderColor: "black",
+                  defaultActiveColor: "black",
+                },
+              },
+            }}
+          >
+            <Button
+              className="view-service__button"
+              onClick={() => handleActive(record)}
+              disabled={!record.isDeleted}
+            >
+              Active
+            </Button>
+          </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
                   defaultColor: "grey",
                   defaultBg: "white",
                   defaultBorderColor: "lightgrey",
@@ -154,6 +234,7 @@ function ViewService() {
             <Button
               className="view-service__button"
               onClick={() => handleDelete(record.id)}
+              disabled={record.isDeleted}
             >
               Delete
             </Button>
@@ -222,6 +303,7 @@ function ViewService() {
                   value={updateServiceName}
                   onChange={(e) => setUpdateServiceName(e.target.value)}
                 />
+            
                 <div className="update-service__button">
                   <ConfigProvider
                     theme={{

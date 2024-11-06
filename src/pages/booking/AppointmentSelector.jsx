@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Select } from "antd";
+import { Button, DatePicker, Select } from "antd";
 import api from "../../config/axios";
 import dayjs from "dayjs";
 
@@ -7,23 +7,42 @@ const { Option } = Select;
 
 const AppointmentSelector = ({
   personalInfo,
-  appointmentDate,
   setAppointmentDate,
-  appointmentTime,
   setAppointmentTime,
   setStylist,
 }) => {
-  const [stylists, setStylists] = useState();
-  const getStylist = async () => {
+  const [stylists, setStylists] = useState([]);
+  const [selectedStylist, setSelectedStylist] = useState(null); 
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  const getStylist = async (date, time) => {
+    if (!date || !time) {
+      console.log("Date or time not set");
+      return;
+    }
+
     try {
-      const [hour, minute] = appointmentTime.split(":");
-      const response = await api.get(`/Stylist/GetAvailableStylist/get-available-stylists?salonId=${personalInfo.salonId}&bookingDate=${appointmentDate}&bookingHour=${hour}&bookingMinute=${minute}`);
-      console.log(response.data);
+      const [hour, minute] = time.split(":");
+      const response = await api.get(
+        `/Stylist/GetAvailableStylist/get-available-stylists?salonId=${personalInfo.salonId}&bookingDate=${date}&bookingHour=${hour}&bookingMinute=${minute}`
+      );
+
       if (response.status === 200) {
-        setStylists(response.data);
+        const stylistsData = response.data;
+        setStylists(stylistsData);
+
+        if (stylistsData.length > 0) {
+          const defaultStylist = stylistsData[0]; //Get first stylist in the list
+          setSelectedStylist(defaultStylist.fullName);
+          setStylist({
+            id: defaultStylist.id,
+            fullName: defaultStylist.fullName,
+          });
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching stylists:", error);
     }
   };
 
@@ -33,95 +52,67 @@ const AppointmentSelector = ({
     return current && current.valueOf() < today.getTime();
   };
 
-  useEffect(() => {
-    if (appointmentDate && appointmentTime) {
-      console.log("Triggering getStylist with Date and Time set");
-      getStylist();
+  const handleFindStylistsClick = () => {
+    if (selectedDate && selectedTime) {
+      setAppointmentDate(selectedDate);
+      setAppointmentTime(selectedTime);
+      getStylist(selectedDate, selectedTime);
+    } else {
+      message.error("Please select both date and time");
     }
-  }, [appointmentDate, appointmentTime]);
+  };
 
   return (
     <div className="dateSelector">
       <DatePicker
         onChange={(date) => {
-          const selectedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
-          console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
-          setAppointmentDate(selectedDate);
+          const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
+          setSelectedDate(formattedDate);
         }}
         className="dateSelector__date"
         disabledDate={disabledDate}
         style={{ marginBottom: "1em", marginRight: "1em" }}
       />
+
+      <Button
+        type="primary"
+        style={{
+          backgroundColor: "#FAA300",
+          color: "black",
+          padding: "10px 20px",
+          borderRadius: "8px",
+        }}
+        onClick={handleFindStylistsClick}
+      >
+        Find Stylists
+      </Button>
+
       <Select
         placeholder="Select time"
         style={{ width: "100%", marginBottom: "1em" }}
         className="dateSelector__time"
-        onChange={(value) => {
-          console.log("Selected Time:", value);
-          setAppointmentTime(value);
-        }}
+        onChange={(value) => setSelectedTime(value)}
       >
-        <Option value="08:00">08:00</Option>
-        <Option value="08:15">08:15</Option>
-        <Option value="08:30">08:30</Option>
-        <Option value="08:45">08:45</Option>
-        <Option value="09:00">09:00</Option>
-        <Option value="09:15">09:15</Option>
-        <Option value="09:30">09:30</Option>
-        <Option value="09:45">09:45</Option>
-        <Option value="10:00">10:00</Option>
-        <Option value="10:15">10:15</Option>
-        <Option value="10:30">10:30</Option>
-        <Option value="10:45">10:45</Option>
-        <Option value="11:00">11:00</Option>
-        <Option value="11:15">11:15</Option>
-        <Option value="11:30">11:30</Option>
-        <Option value="11:45">11:45</Option>
-        <Option value="12:00">12:00</Option>
-        <Option value="12:15">12:15</Option>
-        <Option value="12:30">12:30</Option>
-        <Option value="12:45">12:45</Option>
-        <Option value="13:00">13:00</Option>
-        <Option value="13:15">13:15</Option>
-        <Option value="13:30">13:30</Option>
-        <Option value="13:45">13:45</Option>
-        <Option value="14:00">14:00</Option>
-        <Option value="14:15">14:15</Option>
-        <Option value="14:30">14:30</Option>
-        <Option value="14:45">14:45</Option>
-        <Option value="15:00">15:00</Option>
-        <Option value="15:15">15:15</Option>
-        <Option value="15:30">15:30</Option>
-        <Option value="15:45">15:45</Option>
-        <Option value="16:00">16:00</Option>
-        <Option value="16:15">16:15</Option>
-        <Option value="16:30">16:30</Option>
-        <Option value="16:45">16:45</Option>
-        <Option value="17:00">17:00</Option>
-        <Option value="17:15">17:15</Option>
-        <Option value="17:30">17:30</Option>
-        <Option value="17:45">17:45</Option>
-        <Option value="18:00">18:00</Option>
-        <Option value="18:15">18:15</Option>
-        <Option value="18:30">18:30</Option>
-        <Option value="18:45">18:45</Option>
-        <Option value="19:00">19:00</Option>
-        <Option value="19:15">19:15</Option>
-        <Option value="19:30">19:30</Option>
-        <Option value="19:45">19:45</Option>
-        <Option value="20:00">20:00</Option>
+        {[ "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45",
+          "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45",
+          "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45",
+          "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45",
+          "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45",
+          "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45",
+          "20:00"
+        ].map(time => (
+          <Option key={time} value={time}>{time}</Option>
+        ))}
       </Select>
+
       <Select
+        value={selectedStylist} // Set selected stylist as the default value
         placeholder="Choose stylist (Optional)"
         onChange={(value) => {
-          const selectedStylist = stylists.find(
-            (stylist) => stylist.fullName === value
-          );
-          if (selectedStylist) {
-            setStylist({
-              id: selectedStylist.id,
-              fullName: selectedStylist.fullName,
-            });
+          setSelectedStylist(value); // Update selected stylist
+          const selected = stylists.find(stylist => stylist.fullName === value);
+          if (selected) {
+            setStylist({ id: selected.id, fullName: selected.fullName });
           }
         }}
         style={{ width: "100%" }}
@@ -142,6 +133,9 @@ const AppointmentSelector = ({
 };
 
 export default AppointmentSelector;
+
+
+
 
 /*
   <div className="stylist-container">

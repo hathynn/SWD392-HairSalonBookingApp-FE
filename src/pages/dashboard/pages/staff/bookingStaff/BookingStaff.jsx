@@ -95,12 +95,24 @@ const BookingStaff = () => {
     }
   };
 
+  const confirmBooking = async (bookingId) => {
+    try {
+      const response = await api.post(
+        `/Booking/CheckBooking/CheckBookingAsConfirmed?bookingId=${bookingId}`
+      );
+      message.success("Confirm this booking successfully!");
+      getBooking();
+    } catch (e) {
+      message.error("Confirm this booking unsuccessfully!");
+    }
+  };
+
   const columns = [
     {
       title: "Booking ID",
       dataIndex: "bookingId",
       key: "bookingId",
-      width:180,
+      width: 180,
       render: (text) => <p>{text}</p>,
     },
     {
@@ -132,6 +144,16 @@ const BookingStaff = () => {
           </Tag>
         ) : record.bookingStatus &&
           record.bookingStatus.toLowerCase() === "checked" ? (
+          <Tag className="booking-table-staff__tag" color="geekblue">
+            Confirmed
+          </Tag>
+        ) : record.bookingStatus &&
+          record.bookingStatus.toLowerCase() === "inProgress" ? (
+          <Tag className="booking-table-staff__tag" color="yellow">
+            In Progress
+          </Tag>
+        ) : record.bookingStatus &&
+          record.bookingStatus.toLowerCase() === "completed" ? (
           <Tag className="booking-table-staff__tag" color="green">
             Checked
           </Tag>
@@ -202,7 +224,7 @@ const BookingStaff = () => {
           >
             <Button
               className="booking-table-staff__button"
-              onClick={() => handleCheckBooking(record.bookingId)}
+              onClick={() => confirmBooking(record.bookingId)}
             >
               Confirm
             </Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Select } from "antd";
+import { Button, DatePicker, message, Select } from "antd";
 import api from "../../config/axios";
 import dayjs from "dayjs";
 
@@ -12,7 +12,7 @@ const AppointmentSelector = ({
   setStylist,
 }) => {
   const [stylists, setStylists] = useState([]);
-  const [selectedStylist, setSelectedStylist] = useState(null); 
+  const [selectedStylist, setSelectedStylist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
@@ -31,15 +31,6 @@ const AppointmentSelector = ({
       if (response.status === 200) {
         const stylistsData = response.data;
         setStylists(stylistsData);
-
-        if (stylistsData.length > 0) {
-          const defaultStylist = stylistsData[0]; //Get first stylist in the list
-          setSelectedStylist(defaultStylist.fullName);
-          setStylist({
-            id: defaultStylist.id,
-            fullName: defaultStylist.fullName,
-          });
-        }
       }
     } catch (error) {
       console.log("Error fetching stylists:", error);
@@ -61,7 +52,6 @@ const AppointmentSelector = ({
       message.error("Please select both date and time");
     }
   };
-
   return (
     <div className="dateSelector">
       <DatePicker
@@ -93,26 +83,68 @@ const AppointmentSelector = ({
         className="dateSelector__time"
         onChange={(value) => setSelectedTime(value)}
       >
-        {[ "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45",
-          "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45",
-          "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45",
-          "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45",
-          "16:00", "16:15", "16:30", "16:45", "17:00", "17:15", "17:30", "17:45",
-          "18:00", "18:15", "18:30", "18:45", "19:00", "19:15", "19:30", "19:45",
-          "20:00"
-        ].map(time => (
-          <Option key={time} value={time}>{time}</Option>
-        ))}
+        <Option value="08:00">08:00</Option>
+        <Option value="08:15">08:15</Option>
+        <Option value="08:30">08:30</Option>
+        <Option value="08:45">08:45</Option>
+        <Option value="09:00">09:00</Option>
+        <Option value="09:15">09:15</Option>
+        <Option value="09:30">09:30</Option>
+        <Option value="09:45">09:45</Option>
+        <Option value="10:00">10:00</Option>
+        <Option value="10:15">10:15</Option>
+        <Option value="10:30">10:30</Option>
+        <Option value="10:45">10:45</Option>
+        <Option value="11:00">11:00</Option>
+        <Option value="11:15">11:15</Option>
+        <Option value="11:30">11:30</Option>
+        <Option value="11:45">11:45</Option>
+        <Option value="12:00">12:00</Option>
+        <Option value="12:15">12:15</Option>
+        <Option value="12:30">12:30</Option>
+        <Option value="12:45">12:45</Option>
+        <Option value="13:00">13:00</Option>
+        <Option value="13:15">13:15</Option>
+        <Option value="13:30">13:30</Option>
+        <Option value="13:45">13:45</Option>
+        <Option value="14:00">14:00</Option>
+        <Option value="14:15">14:15</Option>
+        <Option value="14:30">14:30</Option>
+        <Option value="14:45">14:45</Option>
+        <Option value="15:00">15:00</Option>
+        <Option value="15:15">15:15</Option>
+        <Option value="15:30">15:30</Option>
+        <Option value="15:45">15:45</Option>
+        <Option value="16:00">16:00</Option>
+        <Option value="16:15">16:15</Option>
+        <Option value="16:30">16:30</Option>
+        <Option value="16:45">16:45</Option>
+        <Option value="17:00">17:00</Option>
+        <Option value="17:15">17:15</Option>
+        <Option value="17:30">17:30</Option>
+        <Option value="17:45">17:45</Option>
+        <Option value="18:00">18:00</Option>
+        <Option value="18:15">18:15</Option>
+        <Option value="18:30">18:30</Option>
+        <Option value="18:45">18:45</Option>
+        <Option value="19:00">19:00</Option>
+        <Option value="19:15">19:15</Option>
+        <Option value="19:30">19:30</Option>
+        <Option value="19:45">19:45</Option>
+        <Option value="20:00">20:00</Option>
       </Select>
 
       <Select
-        value={selectedStylist} // Set selected stylist as the default value
         placeholder="Choose stylist (Optional)"
         onChange={(value) => {
-          setSelectedStylist(value); // Update selected stylist
-          const selected = stylists.find(stylist => stylist.fullName === value);
-          if (selected) {
-            setStylist({ id: selected.id, fullName: selected.fullName });
+          const selectedStylist = stylists.find(
+            (stylist) => stylist.fullName === value
+          );
+          if (selectedStylist) {
+            setStylist({
+              id: selectedStylist.id,
+              fullName: selectedStylist.fullName,
+            });
           }
         }}
         style={{ width: "100%" }}
@@ -133,8 +165,6 @@ const AppointmentSelector = ({
 };
 
 export default AppointmentSelector;
-
-
 
 
 /*

@@ -112,7 +112,7 @@ const AppointmentSelector = ({
                     id: selectedStylist.id,
                     fullName: selectedStylist.fullName,
                   }
-                : null
+                : {}
             );
           }}
           style={{ width: "100%", marginTop: "1em" }}

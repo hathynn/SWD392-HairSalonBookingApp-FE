@@ -15,6 +15,7 @@ const AppointmentSelector = ({
   const [selectedStylist, setSelectedStylist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [showStylistSelect, setShowStylistSelect] = useState(false); // State để kiểm soát hiển thị Select stylist
 
   const getStylist = async (date, time) => {
     if (!date || !time) {
@@ -31,6 +32,7 @@ const AppointmentSelector = ({
       if (response.status === 200) {
         const stylistsData = response.data;
         setStylists(stylistsData);
+        setShowStylistSelect(true); // Hiển thị Select stylist khi stylists đã tải thành công
       }
     } catch (error) {
       console.log("Error fetching stylists:", error);
@@ -52,6 +54,7 @@ const AppointmentSelector = ({
       message.error("Please select both date and time");
     }
   };
+
   return (
     <div className="dateSelector">
       <DatePicker
@@ -63,19 +66,6 @@ const AppointmentSelector = ({
         disabledDate={disabledDate}
         style={{ marginBottom: "1em", marginRight: "1em" }}
       />
-
-      <Button
-        type="primary"
-        style={{
-          backgroundColor: "#FAA300",
-          color: "black",
-          padding: "10px 20px",
-          borderRadius: "8px",
-        }}
-        onClick={handleFindStylistsClick}
-      >
-        Find Stylists
-      </Button>
 
       <Select
         placeholder="Select time"
@@ -134,111 +124,53 @@ const AppointmentSelector = ({
         <Option value="20:00">20:00</Option>
       </Select>
 
-      <Select
-        placeholder="Choose stylist (Optional)"
-        onChange={(value) => {
-          const selectedStylist = stylists.find(
-            (stylist) => stylist.fullName === value
-          );
-          if (selectedStylist) {
-            setStylist({
-              id: selectedStylist.id,
-              fullName: selectedStylist.fullName,
-            });
-          }
+      <Button
+        type="primary"
+        style={{
+          backgroundColor: "#FAA300",
+          color: "black",
+          padding: "10px 20px",
+          borderRadius: "8px",
         }}
-        style={{ width: "100%" }}
-        className="dateSelector__stylist"
+        onClick={handleFindStylistsClick}
       >
-        {stylists && stylists.length > 0 ? (
-          stylists.map((stylist) => (
-            <Option key={stylist.email} value={stylist.fullName}>
-              {stylist.fullName}
-            </Option>
-          ))
-        ) : (
-          <Option disabled>Loading stylists...</Option>
-        )}
-      </Select>
+        Find Stylists
+      </Button>
+
+      {showStylistSelect && (
+        <Select
+          placeholder="Choose stylist (Optional)"
+          onChange={(value) => {
+            const selectedStylist = stylists.find(
+              (stylist) => stylist.fullName === value
+            );
+            if (selectedStylist) {
+              setStylist(
+                selectedStylist
+                  ? {
+                      id: selectedStylist.id,
+                      fullName: selectedStylist.fullName,
+                    }
+                  : null
+              );
+            }
+          }}
+          style={{ width: "100%", marginTop: "1em" }}
+          className="dateSelector__stylist"
+        >
+          {stylists && stylists.length > 0 ? (
+            stylists.map((stylist) => (
+              <Option key={stylist.email} value={stylist.fullName}>
+                {stylist.fullName}
+              </Option>
+            ))
+          ) : (
+            <Option disabled>Loading stylists...</Option>
+          )}
+        </Select>
+      )}
     </div>
   );
 };
 
 export default AppointmentSelector;
-
-
-/*
-  <div className="stylist-container">
-        <p  className="stylist-container__title"> Stylist</p>
-
-        <div className="stylist-container__scroll">
-          <Row gutter={[16, 16]}>
-            {salons.map((salon, index) => (
-              <Col span={6} key={index}>
-                <Card
-                  cover={
-                    <img
-                      alt={salon.title}
-                      src={salon.image}
-                      style={{ borderRadius: "0px", height: "32vh", objectFit:'cover' }}
-                    />
-                  }
-                  className="stylist-container__card"
-                >
-                  <div className="stylist-container__card__content">
-                    <p className="stylist-container__card__content__title">
-                      {salon.title}
-                    </p>
-                  
-                  </div>
-                  <div className="stylist-container__card__buttons">
-                    <ConfigProvider
-                      theme={{
-                        components: {
-                          Button: {
-                            defaultColor: "black",
-                            defaultBg: "none",
-                            defaultBorderColor: "#FAA300",
-                            defaultHoverBorderColor: "black",
-                            defaultHoverColor: "white",
-                            defaultHoverBg: "black",
-                            defaultActiveBg: "#FAA300",
-                            defaultActiveBorderColor: "#FAA300",
-                            defaultActiveColor: "black",
-                          },
-                        },
-                      }}
-                    >
-                      <Button className="stylist-container__card__buttons__left">
-                        5<span style={{ color: "#FAA300" }}>★</span>
-                      </Button>
-                    </ConfigProvider>
-                    <ConfigProvider
-                      theme={{
-                        components: {
-                          Button: {
-                            defaultColor: "black",
-                            defaultBg: "#FAA300",
-                            defaultBorderColor: "#FAA300",
-                            defaultHoverBorderColor: "black",
-                            defaultHoverColor: "white",
-                            defaultHoverBg: "black",
-                            defaultActiveBg: "#FAA300",
-                            defaultActiveBorderColor: "#FAA300",
-                            defaultActiveColor: "black",
-                          },
-                        },
-                      }}
-                    >
-                      <Button className="stylist-container__card__buttons__right">
-                        ✓
-                      </Button>
-                    </ConfigProvider>
-                  </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </div>
-*/

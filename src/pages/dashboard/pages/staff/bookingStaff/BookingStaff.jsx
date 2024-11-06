@@ -16,8 +16,6 @@ import api from "../../../../../config/axios";
 import ButtonGroup from "antd/es/button/button-group";
 
 const BookingStaff = () => {
-  const [uncheckedBookings, setUncheckedBookings] = useState([]);
-  const [checkedBookings, setCheckedBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [detail, setDetail] = useState([]);
@@ -88,6 +86,7 @@ const BookingStaff = () => {
       const response = await api.get(
         `/Booking/ViewBookingDetail?bookingId=${bookingId}`
       );
+      console.log(response.data.data)
       setDetail(response.data.data);
     } catch (error) {
       console.error("Failed to fetch booking details:", error);
@@ -255,6 +254,7 @@ const BookingStaff = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         width={900}
+         className="booking-table__modal"
       >
         {detail ? (
           <Descriptions bordered>
@@ -268,16 +268,17 @@ const BookingStaff = () => {
               {detail.paymentAmount} VND
             </Descriptions.Item>
             <Descriptions.Item label="Date">
-              {dayjs(detail.bookingDate).format("YYYY-MM-DD HH:mm")}
+              {dayjs(detail.bookingDate).format("YYYY-MM-DD")}
             </Descriptions.Item>
-            <Descriptions.Item label="Stylist Name">
-              {detail.comboServiceName?.comboServiceName}
-            </Descriptions.Item>
+          
             <Descriptions.Item label="Payment Status">
               <Badge
                 status={detail.checked ? "success" : "processing"}
                 text={detail.checked ? "Checked" : "Waiting"}
               />
+            </Descriptions.Item>
+            <Descriptions.Item label="Stylist">
+            {detail.comboServiceName?.stylistName}
             </Descriptions.Item>
             <Descriptions.Item label="Salon Address">
               123 ABC, D1

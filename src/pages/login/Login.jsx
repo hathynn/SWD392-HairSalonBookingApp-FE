@@ -27,12 +27,9 @@ function Login() {
     };
     try {
       const response = await api.post("/User/Login/login", payload);
-      // Lưu token vào localStorage
       const token = response.data.data;
       localStorage.setItem("token", token);
       const user = jwtDecode(token);
-      const responseUser = await api.get(`/User/GetUserById?id=${user.Id}`);
-  
       dispatch(login(user));
       if (user.Role === "Customer") {
         nav("/");
@@ -50,8 +47,8 @@ function Login() {
         nav("/dashboard/stylist");
       }
     } catch (error) {
-      console.error("Error:", error.message);
-      messageApi.error("Login Failed." + response.data.message);
+      const errorMessage = error.response.data.data || "Login Failed." || message;
+      message.error(errorMessage);
     }
   };
 
@@ -73,7 +70,12 @@ function Login() {
             onClick={() => nav("/")}
             src={Logo}
             alt="Logo"
-            style={{ width: "18vw", height: "9vh", marginBottom: "1em", cursor:'pointer' }}
+            style={{
+              width: "18vw",
+              height: "9vh",
+              marginBottom: "1em",
+              cursor: "pointer",
+            }}
           />
         </div>
         <form onSubmit={handleSubmit} className="login-form">

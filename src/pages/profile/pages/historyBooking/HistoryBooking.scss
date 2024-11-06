@@ -1,5 +1,53 @@
 @import "../../../../styles/variables.scss";
 
 .ant-table-thead tr {
-    background-color: $primary-color;
+  background-color: $primary-color;
+}
+
+.history {
+  &__table {
+    p {
+      font-family: "Gantari";
+    }
+  }
+
+  &__modal {
+    .form-row {
+        display: flex;
+        flex-wrap: wrap; /* Allows inputs to wrap onto the next line if needed */
+    }
+    
+    .form-row input {
+        width: 100%; /* Set the width to 48% or adjust as needed */
+        min-width: 200px; /* Ensures a minimum width for responsiveness */
+        margin: 5px 1%; /* Adds space between inputs */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: $font-secondary;
+        box-sizing: border-box; /* Prevents padding from affecting width */
+    }
+    
+
+    .ant-btn-variant-outlined {
+      color: black;
+      font-family: $font-secondary;
+    }
+
+    .ant-btn-variant-outlined:hover {
+      color: black !important;
+      border-color: black !important;
+    }
+
+    .ant-btn-variant-solid {
+      background-color: $primary-color;
+      font-family: $font-secondary;
+      color: black;
+      font-weight: 400;
+    }
+    .ant-btn-variant-solid:hover {
+      background-color: black !important;
+      color: white !important;
+      font-weight: 400;
+    }
+  }
 }

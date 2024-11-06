@@ -27,7 +27,7 @@ function Login() {
     };
     try {
       const response = await api.post("/User/Login/login", payload);
-      const token = response.data.data;
+      const token = response.data;
       localStorage.setItem("token", token);
       const user = jwtDecode(token);
       dispatch(login(user));
@@ -47,7 +47,7 @@ function Login() {
         nav("/dashboard/stylist");
       }
     } catch (error) {
-      const errorMessage = error.response.data.data || "Login Failed." || message;
+      const errorMessage = error.response?.data?.data || "Login Failed.";
       message.error(errorMessage);
     }
   };

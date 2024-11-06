@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Select } from "antd";
+import { Button, DatePicker, message, Select } from "antd";
 import api from "../../config/axios";
 import dayjs from "dayjs";
 
@@ -7,23 +7,33 @@ const { Option } = Select;
 
 const AppointmentSelector = ({
   personalInfo,
-  appointmentDate,
   setAppointmentDate,
-  appointmentTime,
   setAppointmentTime,
   setStylist,
 }) => {
-  const [stylists, setStylists] = useState();
-  const getStylist = async () => {
+  const [stylists, setStylists] = useState([]);
+  const [selectedStylist, setSelectedStylist] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  const getStylist = async (date, time) => {
+    if (!date || !time) {
+      console.log("Date or time not set");
+      return;
+    }
+
     try {
-      const [hour, minute] = appointmentTime.split(":");
-      const response = await api.get(`/Stylist/GetAvailableStylist/get-available-stylists?salonId=${personalInfo.salonId}&bookingDate=${appointmentDate}&bookingHour=${hour}&bookingMinute=${minute}`);
-      console.log(response.data);
+      const [hour, minute] = time.split(":");
+      const response = await api.get(
+        `/Stylist/GetAvailableStylist/get-available-stylists?salonId=${personalInfo.salonId}&bookingDate=${date}&bookingHour=${hour}&bookingMinute=${minute}`
+      );
+
       if (response.status === 200) {
-        setStylists(response.data);
+        const stylistsData = response.data;
+        setStylists(stylistsData);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching stylists:", error);
     }
   };
 
@@ -33,33 +43,45 @@ const AppointmentSelector = ({
     return current && current.valueOf() < today.getTime();
   };
 
-  useEffect(() => {
-    if (appointmentDate && appointmentTime) {
-      console.log("Triggering getStylist with Date and Time set");
-      getStylist();
+  const handleFindStylistsClick = () => {
+    if (selectedDate && selectedTime) {
+      setAppointmentDate(selectedDate);
+      setAppointmentTime(selectedTime);
+      getStylist(selectedDate, selectedTime);
+    } else {
+      message.error("Please select both date and time");
     }
-  }, [appointmentDate, appointmentTime]);
-
+  };
   return (
     <div className="dateSelector">
       <DatePicker
         onChange={(date) => {
-          const selectedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
-          console.log("Selected Date:", selectedDate); // Kiểm tra ngày đã chọn
-          setAppointmentDate(selectedDate);
+          const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
+          setSelectedDate(formattedDate);
         }}
         className="dateSelector__date"
         disabledDate={disabledDate}
         style={{ marginBottom: "1em", marginRight: "1em" }}
       />
+
+      <Button
+        type="primary"
+        style={{
+          backgroundColor: "#FAA300",
+          color: "black",
+          padding: "10px 20px",
+          borderRadius: "8px",
+        }}
+        onClick={handleFindStylistsClick}
+      >
+        Find Stylists
+      </Button>
+
       <Select
         placeholder="Select time"
         style={{ width: "100%", marginBottom: "1em" }}
         className="dateSelector__time"
-        onChange={(value) => {
-          console.log("Selected Time:", value);
-          setAppointmentTime(value);
-        }}
+        onChange={(value) => setSelectedTime(value)}
       >
         <Option value="08:00">08:00</Option>
         <Option value="08:15">08:15</Option>
@@ -111,6 +133,7 @@ const AppointmentSelector = ({
         <Option value="19:45">19:45</Option>
         <Option value="20:00">20:00</Option>
       </Select>
+
       <Select
         placeholder="Choose stylist (Optional)"
         onChange={(value) => {
@@ -142,6 +165,7 @@ const AppointmentSelector = ({
 };
 
 export default AppointmentSelector;
+
 
 /*
   <div className="stylist-container">

@@ -37,7 +37,7 @@ function Login() {
       if (user.Role === "Customer") {
         nav("/");
       }
-      if (user.Role === "admin") {
+      if (user.Role === "Admin") {
         nav("/dashboard");
       }
       if (user.Role === "Salon Manager") {

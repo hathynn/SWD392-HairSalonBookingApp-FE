@@ -44,7 +44,7 @@ function RegisterWorkshifts() {
       const responseData = response.data;
       if (responseData.error === 0) {
         message.success("Work schedule registered successfully");
-      } else {
+      } else if (responseData.error === 1) {
         message.error(responseData.message);
       }
     } catch (error) {

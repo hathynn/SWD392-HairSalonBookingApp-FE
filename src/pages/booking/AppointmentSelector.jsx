@@ -4,6 +4,7 @@ import api from "../../config/axios";
 import dayjs from "dayjs";
 
 const { Option } = Select;
+const DEFAULT_STYLIST_GUID = "d548c133-892b-4fae-b811-3e034a8efa2b";
 
 const AppointmentSelector = ({
   personalInfo,
@@ -14,6 +15,7 @@ const AppointmentSelector = ({
   const [stylists, setStylists] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedStylist, setSelectedStylist] = useState(null);
   const [showStylistSelect, setShowStylistSelect] = useState(false); // Kiểm soát hiển thị Select stylist
 
   const getStylist = async (date, time) => {
@@ -61,6 +63,14 @@ const AppointmentSelector = ({
     }
   }, [selectedDate, selectedTime]);
 
+  useEffect(() => {
+    if (!selectedStylist) {
+      setStylist({ id: DEFAULT_STYLIST_GUID, fullName: "No Stylist Selected" });
+    } else {
+      setStylist(selectedStylist);
+    }
+  }, [selectedStylist]);
+
   return (
     <div className="dateSelector">
       <DatePicker
@@ -83,6 +93,7 @@ const AppointmentSelector = ({
         <Option value="08:00">08:00</Option>
         <Option value="08:15">08:15</Option>
         {/* ... additional options */}
+        <Option value="14:00">14:00</Option>
         <Option value="20:00">20:00</Option>
       </Select>
 
@@ -103,14 +114,14 @@ const AppointmentSelector = ({
         <Select
           placeholder="Choose stylist (Optional)"
           onChange={(value) => {
-            const selectedStylist = stylists.find(
+            const selected = stylists.find(
               (stylist) => stylist.fullName === value
             );
-            setStylist(
-              selectedStylist
+            setSelectedStylist(
+              selected
                 ? {
-                    id: selectedStylist.id,
-                    fullName: selectedStylist.fullName,
+                    id: selected.id,
+                    fullName: selected.fullName,
                   }
                 : null
             );

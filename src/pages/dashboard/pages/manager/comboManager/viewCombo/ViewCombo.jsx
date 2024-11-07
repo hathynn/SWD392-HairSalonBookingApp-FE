@@ -68,29 +68,7 @@ function ViewCombo() {
                     </p>
                   )}
                 </div>
-                <div className="view-combo__card__button">
-                  <ConfigProvider
-                    theme={{
-                      components: {
-                        Button: {
-                          defaultColor: "black",
-                          defaultBg: "#FAA300",
-                          defaultBorderColor: "#FAA300",
-                          defaultHoverBorderColor: "black",
-                          defaultHoverColor: "white",
-                          defaultHoverBg: "black",
-                          defaultActiveBg: "#FAA300",
-                          defaultActiveBorderColor: "#FAA300",
-                          defaultActiveColor: "black",
-                        },
-                      },
-                    }}
-                  >
-                    <Button className="view-combo__card__button__buttons">
-                      Edit
-                    </Button>
-                  </ConfigProvider>
-                </div>
+               
               </Card>
             </Col>
           ))

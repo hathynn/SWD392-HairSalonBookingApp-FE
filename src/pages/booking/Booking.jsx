@@ -114,31 +114,44 @@ function Booking() {
     try {
       const response = await api.post(
         `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
-
       );
-
-      console.log(response)
-      if (response.status === 200) {
+  
+      console.log(response);
+  
+      // Check if the response contains an error even if status is 200
+      if (response.data.error === 1) {
+        messageApi.error(response.data.message);  // Show backend error message
+      } else {
         const bookingId = response.data.data.id;
         messageApi.success("Booking successfully!");
-
+  
+        // Proceed to payment
         const paymentResponse = await api.post(
           `/Payments/create?bookingId=${bookingId}`
         );
+  
         const paymentUrl = paymentResponse.data.data.checkoutUrl;
         if (paymentUrl) {
           window.location.href = paymentUrl;
         } else {
-          messageApi.error("Can not find any payment");
+          messageApi.error("Cannot find payment URL");
         }
-
-
       }
     } catch (error) {
-      console.log(error);
-      messageApi.error("Booking failed.");
+      console.error(error);
+  
+      // Enhanced error handling for backend response
+      if (error.response) {
+        const errorMessage = error.response.data.message || 'An error occurred';
+        messageApi.error(errorMessage);
+      } else if (error.request) {
+        messageApi.error("Booking failed. No response from server.");
+      } else {
+        messageApi.error("Booking failed. Error: " + error.message);
+      }
     }
   };
+  
 
   return (
     <div className="booking">

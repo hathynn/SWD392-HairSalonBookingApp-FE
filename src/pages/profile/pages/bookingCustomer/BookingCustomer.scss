@@ -1,7 +1,9 @@
 @import "../../../../styles/variables.scss";
 
 .booking-steps {
-    margin-top:1em;
+  padding-top: 1em;
+  
+
   &__step {
     font-family: $font-secondary;
   }
@@ -40,5 +42,6 @@
 
 .booking-detail {
   font-family: $font-secondary;
-  margin-top: 3em;
+  margin: 3em 0;
+
 }

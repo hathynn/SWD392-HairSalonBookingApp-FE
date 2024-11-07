@@ -31,6 +31,7 @@ function Header() {
             <Flex className="header__item__menu">
               <p onClick={() => nav("/")}>Home</p>
               <p onClick={() => nav("/booking")}>Booking</p>
+              <p onClick={() => nav("/feedback")}>Feedback</p>
               <p onClick={() => nav("/about-us")}>About us</p>
             </Flex>
             <Flex className="header__item__profile">
@@ -56,6 +57,7 @@ function Header() {
             <Flex className="header__item__menu">
               <p onClick={() => nav("/")}>Home</p>
               <p onClick={() => nav("/services")}>Services</p>
+              <p onClick={() => nav("/feedback")}>Feedback</p>
               <p onClick={() => nav("/about-us")}>About us</p>
             </Flex>
             <Flex className="header__item__button">

@@ -1,0 +1,63 @@
+@import "../../styles/variables.scss";
+
+.cardDetail {
+  border-bottom: 2px solid #4c4c4c; /* Light gray border */
+  border-radius: 0px;
+  border-left: none;
+  border-right: none;
+  font-family: "Gantari";
+  display: flex;
+
+  &__icon {
+   font-size: 2em;
+   transform: translateY(-18px);
+  }
+  &__info {
+    padding-left: 2em;
+    line-height: 1.8em;
+    &__name {
+      font-weight: 500;
+      color: black;
+      font-size: 1.1em;
+      font-family: "Gantari";
+    }
+
+    &__content {
+      font-size: 1em;
+      font-family: "Gantari";
+    }
+
+  }
+}
+
+.cardDetail:last-child {
+  border-bottom: none;
+}
+
+.feedback {
+  .about-us {
+    overflow-y: hidden;
+    position: relative;
+    width: 100%;
+    height: 40vh;
+
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__text {
+      position: absolute;
+      top: 27%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $text-color;
+      font-size: 4em;
+      font-weight: bold;
+      text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      font-family: "Teko";
+    }
+  }
+}

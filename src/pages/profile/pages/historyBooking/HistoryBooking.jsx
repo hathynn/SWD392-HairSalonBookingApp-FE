@@ -40,8 +40,7 @@ function HistoryBooking() {
 
       setHistory(formattedBookings);
     } catch (e) {
-      console.error(e);
-      message.error("Fail to load customer booking history");
+      message.error('No booking found');
     }
   };
 

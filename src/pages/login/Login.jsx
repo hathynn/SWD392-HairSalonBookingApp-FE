@@ -14,10 +14,29 @@ import { useDispatch } from "react-redux";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [messageApi, contextHolder] = message.useMessage();
   const nav = useNavigate();
   const dispatch = useDispatch();
+
+  const handleLoginGoogle = async () => {
+    const auth = getAuth();
+    const result = await signInWithPopup(auth, provider);
+    console.log(result);
+    const token = result.user.accessToken;
+    console.log(token);
+    const res = await api.post("/login-gg", { token });
+    const role = res.data.role;
+
+    console.log(res.data.role);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("accountId", res.id);
+
+    dispatch(login(user));
+    if (user.Role === "Customer") {
+      nav("/");
+    }
+    message.success('Login successfully')
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,8 +65,13 @@ function Login() {
       if (user.Role === "Stylist") {
         nav("/dashboard/stylist");
       }
+      message.success('Login successfully')
     } catch (error) {
-      const errorMessage = error.response?.data?.data || "Login Failed.";
+      let errorMessage = "An error occurred. Please try again.";
+      if (error.response && error.response.data) {
+        errorMessage = error.response.data;
+      }
+
       message.error(errorMessage);
     }
   };

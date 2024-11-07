@@ -139,7 +139,6 @@ const AppointmentSelector = ({
         <Option value="19:45">19:45</Option>
         <Option value="20:00">20:00</Option>
       </Select>
-
       <Button
         type="primary"
         style={{

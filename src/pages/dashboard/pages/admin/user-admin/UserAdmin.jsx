@@ -8,7 +8,7 @@ function UserAdmin() {
 
     const fetchUsers = async () => {
         try {
-            const response = await api.get("/Admin/PrintAllUser");
+            const response = await api.get("/Admin/ViewAllCustomer");
             if (response.data.error === 0) {
                 setUsers(response.data.data);
             } else {

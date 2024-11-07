@@ -28,6 +28,7 @@ function ViewService() {
     try {
       const response = await api.get("/Combo/getAll-comboDetails");
       const data = response.data.data;
+      console.log(data)
       setService(data);
     } catch (e) {
       message.error("Fail to load data");

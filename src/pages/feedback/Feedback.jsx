@@ -2,53 +2,27 @@ import { Col, Row } from "antd";
 import "./Feedback.scss";
 import FeedbackCard from "./FeedbackCard";
 import { useEffect, useState } from "react";
-// import api from "../../../../config/axios";
+import api from "../../config/axios";
 
 function Feedback() {
   const [feedback, setFeedback] = useState([]);
-  // const getFeedback = async () => {
-  //   try {
-  //     const response = await api.get("/api/Review/GetAllFeedback");
+  const getFeedback = async () => {
+    try {
+      const response = await api.get("/Admin/ViewListFeedback");
 
-  //     let data = response.data.$values.reverse();
+      let data = response.data.data;
 
-  //     setFeedback(data);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getFeedback();
-  // }, []);
-
-  const data = [
-    {
-      userName: "john_doe",
-      title: "Exploring JavaScript Basics",
-      description: "A beginner's guide to understanding variables, loops, and functions in JavaScript."
-    },
-    {
-      userName: "jane_smith",
-      title: "React Component Design",
-      description: "Tips and best practices for designing reusable components in React applications."
-    },
-    {
-      userName: "tech_guru",
-      title: "API Integration with Axios",
-      description: "Learn how to use Axios to fetch and manipulate data from external APIs in your projects."
-    },
-    {
-      userName: "dev_master",
-      title: "Getting Started with Firebase",
-      description: "An introduction to Firebase for building scalable backend solutions for web applications."
-    },
-    {
-      userName: "coder123",
-      title: "Introduction to CSS Flexbox",
-      description: "Understanding the basics of Flexbox and how to create responsive layouts with CSS."
+      setFeedback(data);
+    } catch (e) {
+      console.error(e);
     }
-  ];
+  };
+
+  useEffect(() => {
+    getFeedback();
+  }, []);
+
+ 
   
 
   return (
@@ -70,14 +44,14 @@ function Feedback() {
           {/* Sidebar placeholder */}
         </Col>
         <Col span={24} md={16} sm={24}>
-          {data.length > 0 ? (
-            data.map((item, index) => (
+          {feedback.length > 0 ? (
+            feedback.map((item, index) => (
               <Row key={index} style={{ marginBottom: "16px" }}>
                 <Col span={24}>
                   <FeedbackCard
                     userName={`Customer: ${item.userName}`}
                 
-                    title={`Product: ${item.title}`}
+                    title={item.title}
                     description={item.description}
             
                   />

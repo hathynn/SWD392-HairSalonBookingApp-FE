@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import "./HistoryBooking.scss";
-import { Button, ConfigProvider, message, Modal, Space, Table } from "antd";
+import {
+  Badge,
+  Button,
+  ConfigProvider,
+  Flex,
+  message,
+  Modal,
+  Table,
+  Tag,
+} from "antd";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../../redux/features/counterSlice";
 import api from "../../../../config/axios";
@@ -11,15 +20,46 @@ function HistoryBooking() {
   const [history, setHistory] = useState([]);
   const user = useSelector(selectUser);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [bookingId, setBookingId] = useState(null); // State for bookingId
 
-  const showModal = () => {
+  const showModal = (id) => {
+    setBookingId(id); // Set the bookingId when opening the modal
     setIsModalOpen(true);
+    setSelectedFeedback(null); // Reset the selected feedback when opening the modal
+    setFeedbackText(""); // Reset the feedback text when opening the modal
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+
+  const handleOk = async () => {
+    if (!selectedFeedback && !feedbackText) {
+      message.error("Please select a feedback option and input a description.");
+      return;
+    }
+
+    try {
+      const response = await api.post(`/User/UserFeedback`, {
+        bookingId: bookingId,
+        title: selectedFeedback,
+        desription: feedbackText,
+      });
+      message.success("Feedback submitted successfully!");
+      setIsModalOpen(false);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data;
+        message.error(errorMessage);
+      } else {
+        message.error("Error submitting feedback.");
+      }
+    }
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const handleFeedbackClick = (feedbackOption) => {
+    setSelectedFeedback(feedbackOption);
   };
 
   const getHistory = async () => {
@@ -31,16 +71,18 @@ function HistoryBooking() {
 
       const formattedBookings = bookings.map((booking) => ({
         key: booking.id,
+        bookingId: booking.id, // Add bookingId to the formatted data
         bookingDate: booking.bookingDate,
         price: booking.comboServiceName.price,
         service: booking.comboServiceName.comboServiceName,
         stylist: booking.stylistName,
         salon: booking.address,
+        bookingStatus: booking.bookingStatus,
       }));
 
       setHistory(formattedBookings);
     } catch (e) {
-      message.error('No booking found');
+      message.error("No booking found");
     }
   };
 
@@ -76,6 +118,25 @@ function HistoryBooking() {
       render: (text) => <p>{text}</p>,
     },
     {
+      title: "Status",
+      dataIndex: "bookingStatus",
+      key: "bookingStatus",
+      render: (bookingStatus) => (
+        <Tag
+          color={
+            bookingStatus === "Completed"
+              ? "green"
+              : bookingStatus === "Cancel"
+              ? "red"
+              : "default"
+          }
+          style={{ fontFamily: "Gantari"}}
+        >
+          {bookingStatus}
+        </Tag>
+      ),
+    },
+    {
       title: "Feedback",
       key: "feedback",
       render: (_, record) => (
@@ -98,7 +159,7 @@ function HistoryBooking() {
         >
           <Button
             className="booking-table-staff__button"
-            onClick={() => showModal(record.bookingId)}
+            onClick={() => showModal(record.bookingId)} // Pass the bookingId to the modal
           >
             Feedback
           </Button>
@@ -126,11 +187,45 @@ function HistoryBooking() {
           onCancel={handleCancel}
           className="history__modal"
         >
+          <Flex justify="space-between" style={{ margin: "1em 0" }}>
+            <Button
+              type={selectedFeedback === "Very Good" ? "primary" : "default"}
+              onClick={() => handleFeedbackClick("Very Good")}
+            >
+              Very Good
+            </Button>
+            <Button
+              type={selectedFeedback === "Good" ? "primary" : "default"}
+              onClick={() => handleFeedbackClick("Good")}
+            >
+              Good
+            </Button>
+            <Button
+              type={selectedFeedback === "Average" ? "primary" : "default"}
+              onClick={() => handleFeedbackClick("Average")}
+            >
+              Average
+            </Button>
+            <Button
+              type={selectedFeedback === "Bad" ? "primary" : "default"}
+              onClick={() => handleFeedbackClick("Bad")}
+            >
+              Bad
+            </Button>
+            <Button
+              type={selectedFeedback === "Very Bad" ? "primary" : "default"}
+              onClick={() => handleFeedbackClick("Very Bad")}
+            >
+              Very Bad
+            </Button>
+          </Flex>
           <TextArea
             rows={4}
-            placeholder="You can only input in 100 words"
-            maxLength={100}
-          /> 
+            placeholder="You can only input in 200 characters"
+            maxLength={200}
+            value={feedbackText}
+            onChange={(e) => setFeedbackText(e.target.value)}
+          />
         </Modal>
       </div>
     </div>

@@ -7,15 +7,16 @@ const FeedbackCard = ({ userName, title, description }) => {
   return (
     <Card className="cardDetail">
       <Row gutter={[16, 16]} align="bottom">
-        <Col>
-          <FaUserCircle className="cardDetail__icon"/>
+        <Col span={1} className="cardDetail__col1">
+          <FaUserCircle style={{fontSize:'2em'}} className="cardDetail__icon"/>
         </Col>
-        <Col flex="auto">
+        <Col span={20} className="cardDetail__col2">
           <Card.Meta
             className="cardDetail__info"
             title={userName}
             description={
               <>
+              
                 <p className="cardDetail__info__name">{title}</p>
                 <p className="cardDetail__info__content">{description}</p>
                 

@@ -1,8 +1,7 @@
-import { Layout, Card, Col, Row, Tag, Space, Table, message } from "antd";
+import { Layout, Card, Col, Row, Tag, Space, Table, message, Button, Modal, Descriptions, Badge } from "antd";
 import "./AdminDashboard.scss";
 import Statistic from "antd/es/statistic/Statistic";
 import { ArrowUpOutlined, DollarCircleFilled } from "@ant-design/icons";
-import { Column } from '@ant-design/charts';
 import api from "../../../../../config/axios";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
@@ -16,6 +15,20 @@ function AdminDashboard() {
   });
   const [totalCustomer, setTotalCustomer] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [detail, setDetail] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -44,6 +57,17 @@ function AdminDashboard() {
       message.error("An error occurred while fetching the dashboard data.");
     }
   };
+  const getDetailBooking = async (bookingId) => {
+    try {
+      const response = await api.get(
+        `/Booking/ViewBookingDetail?bookingId=${bookingId}`
+      );
+      setDetail(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch booking details:", error);
+      message.error("Failed to load booking details.");
+    }
+  };
 
   useEffect(() => {
     fetchDashboardData();
@@ -61,15 +85,14 @@ function AdminDashboard() {
       key: "customerPhoneNumber",
     },
     {
-      title: "Services",
-      dataIndex: "comboServiceName",
-      key: "comboServiceName",
-      // render: (services) =>
-      //   services.map((service) => (
-      //     <div key={service.id}>
-      //       {service.comboServiceName} - ${service.price}
-      //     </div>
-      //   )),
+        title: "Services",
+        dataIndex: "comboServiceName",
+        key: "comboServiceName",
+        render: (comboService) => (
+            <div>
+                {comboService.comboServiceName}
+            </div>
+        ),
     },
     {
       title: "Date",
@@ -89,10 +112,18 @@ function AdminDashboard() {
       key: "paymentStatus",
     },
     {
-      title: "Details",
-      key: "action",
+      title: "Detail",
+      key: "detail",
       render: (_, record) => (
-        <a href={`/bookings/${record.id}`}>View</a>
+        <Button
+          style={{ fontWeight: "600" }}
+          onClick={() => {
+            showModal();
+            getDetailBooking(record.id);
+          }}
+        >
+          Detail
+        </Button>
       ),
     },
   ];
@@ -203,6 +234,54 @@ function AdminDashboard() {
             </Card>
           </Col>
         </Row>
+        <Modal
+        title="Booking Detail"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={900}
+        className="booking-table__modal"
+      >
+        {detail ? (
+          <Descriptions bordered>
+            <Descriptions.Item label="Customer Name">
+              {detail.customerName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Phone Number">
+              {detail.customerPhoneNumber}
+            </Descriptions.Item>
+            <Descriptions.Item label="Price">
+              {detail.paymentAmount} VND
+            </Descriptions.Item>
+            <Descriptions.Item label="Date">
+              {dayjs(detail.bookingDate).format("YYYY-MM-DD")}
+            </Descriptions.Item>
+            <Descriptions.Item label="Payment Status">
+              <Badge
+                status={detail.checked ? "success" : "processing"}
+                text={detail.checked ? "Checked" : "Waiting"}
+              />
+            </Descriptions.Item>
+            <Descriptions.Item label="Stylist">
+              {detail.stylistName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Salon Address">
+              123 ABC, D1
+            </Descriptions.Item>
+            <Descriptions.Item label="Service">
+              {detail.comboServiceName?.length > 0 ? (
+                detail.comboServiceName.map((service) => (
+                  <div key={service.id}>{service.comboServiceName}</div>
+                ))
+              ) : (
+                <p>No services available</p>
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Modal>
         {/* <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
           <Col span={24}>
             <Card title="Income Overview" bordered={false} style={{ marginTop: '16px' }}>

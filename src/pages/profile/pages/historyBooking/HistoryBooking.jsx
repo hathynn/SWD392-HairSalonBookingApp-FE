@@ -35,7 +35,7 @@ function HistoryBooking() {
         price: booking.comboServiceName.price,
         service: booking.comboServiceName.comboServiceName,
         stylist: booking.stylistName,
-        salon: "Your Salon Name",
+        salon: booking.address,
       }));
 
       setHistory(formattedBookings);

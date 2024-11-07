@@ -34,6 +34,8 @@ import Services from "../pages/services/Services";
 import AdminDashboard from "../pages/dashboard/pages/admin/admin-dashboard/AdminDashboard";
 import UserAdmin from "../pages/dashboard/pages/admin/user-admin/UserAdmin";
 import Feedback from "../pages/feedback/Feedback";
+import AdminServices from "../pages/dashboard/pages/admin/services-admin/AdminServices";
+import MemberAdmin from "../pages/dashboard/pages/admin/member-admin/MemberAdmin";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
@@ -315,6 +317,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteAdmin>
             <UserAdmin />
+          </ProtectedRouteAdmin>
+        ),
+      },
+      {
+        path: "/dashboard/admin/members-manage",
+        element: (
+          <ProtectedRouteAdmin>
+            <MemberAdmin />
+          </ProtectedRouteAdmin>
+        ),
+      },
+      {
+        path: "/dashboard/admin/services-manage",
+        element: (
+          <ProtectedRouteAdmin>
+            <AdminServices />
           </ProtectedRouteAdmin>
         ),
       },

@@ -1,0 +1,34 @@
+@import '../../../../../styles/variables.scss';
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>th,
+:where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>td {
+    background-color: $primary-color;
+}
+.confirm-button {
+    background-color: $primary-color;
+    color: black;
+    font-family: $font-secondary;
+    font-weight: 500;
+    border-color: $primary-color;
+  }
+  
+  .cancel-button {
+    background-color: white;
+    color: rgb(117, 115, 115);
+    font-weight: 500;
+  }
+  
+  .confirm-button:hover {
+    background-color: black !important;
+    border-color: black;
+  }
+  
+  .cancel-button:hover {
+    background-color: #d32f2f;
+    border-color: rgb(0, 0, 0) !important;
+    color: black !important;
+  }
+  
+  .modal-confirm p {
+    font-family: $font-secondary;
+  }

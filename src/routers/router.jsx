@@ -33,6 +33,7 @@ import CancelCard from "../components/cancelCard/CancelCard";
 import Services from "../pages/services/Services";
 import AdminDashboard from "../pages/dashboard/pages/admin/admin-dashboard/AdminDashboard";
 import UserAdmin from "../pages/dashboard/pages/admin/user-admin/UserAdmin";
+import Feedback from "../pages/feedback/Feedback";
 
 const ProtectedRouteAuth = ({ children }) => {
   const user = useSelector(selectUser);
@@ -194,6 +195,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouteCustomer>
             <Booking />
+          </ProtectedRouteCustomer>
+        ),
+      },
+      {
+        path: "/feedback",
+        element: (
+          <ProtectedRouteCustomer>
+            <Feedback />
           </ProtectedRouteCustomer>
         ),
       },

@@ -1,4 +1,12 @@
-import { Badge, Descriptions, message, Steps, Empty } from "antd";
+import {
+  Badge,
+  Descriptions,
+  message,
+  Steps,
+  Empty,
+  Button,
+  ConfigProvider,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import "./BookingCustomer.scss";
 import { selectUser } from "../../../../redux/features/counterSlice";
@@ -12,11 +20,24 @@ function BookingCustomer() {
 
   const getBooking = async () => {
     try {
-      const response = await api.get(`/User/ViewBookingByUserId?userId=${user.Id}`);
+      const response = await api.get(
+        `/User/ViewBookingByUserId?userId=${user.Id}`
+      );
       const data = response.data.data;
       setBooking(data);
     } catch (e) {
       message.error(e.response?.data || "Failed to fetch booking details");
+    }
+  };
+
+  const handleCancel = async (bookingId) => {
+    console.log(bookingId)
+    try {
+      await api.delete(`/Booking/CancelBooking/CancelBooking?bookingId=${bookingId}`);
+      message.success("Booking cancelled successfully!");
+      getBooking();
+    } catch (e) {
+      message.error("Fail to cancel this booking");
     }
   };
 
@@ -43,8 +64,7 @@ function BookingCustomer() {
     <div className="booking-item">
       {booking.length > 0 ? (
         booking.map((item) => (
-          <div key={item.bookingId} >
-           
+          <div key={item.bookingId}>
             <div className="booking-steps">
               <Steps
                 className="booking-steps__step"
@@ -58,7 +78,11 @@ function BookingCustomer() {
                 ]}
               />
             </div>
-            <Descriptions title="Booking Detail" bordered className="booking-detail">
+            <Descriptions
+              title="Booking Detail"
+              bordered
+              className="booking-detail"
+            >
               <Descriptions.Item label="Customer Name">
                 {item.customerName}
               </Descriptions.Item>
@@ -106,6 +130,40 @@ function BookingCustomer() {
               </Descriptions.Item>
               <Descriptions.Item label="Service">
                 {item.comboServiceName.comboServiceName}
+              </Descriptions.Item>
+              <Descriptions.Item label="Cancel">
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      Button: {
+                        defaultColor: "white",
+                        defaultBg: "black",
+                        defaultBorderColor: "black",
+                        defaultHoverBorderColor: "grey",
+                        defaultHoverColor: "black",
+                        defaultHoverBg: "white",
+                        defaultActiveBg: "black",
+                        defaultActiveBorderColor: "black",
+                        defaultActiveColor: "#FAA300",
+                      },
+                    },
+                  }}
+                >
+                  <Button
+                    style={{
+                      fontFamily: "Gantari",
+                      fontWeight: "600",
+                      height: "5vh",
+                    }}
+                    disabled={
+                      item.bookingStatus.toLowerCase() === "in progress"
+                    }
+
+                    onClick={() => handleCancel(item.bookingId)}
+                  >
+                    Cancel Booking
+                  </Button>
+                </ConfigProvider>
               </Descriptions.Item>
             </Descriptions>
           </div>

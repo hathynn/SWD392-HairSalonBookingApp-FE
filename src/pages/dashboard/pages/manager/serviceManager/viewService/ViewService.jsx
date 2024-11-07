@@ -28,7 +28,7 @@ function ViewService() {
     try {
       const response = await api.get("/Combo/getAll-comboDetails");
       const data = response.data.data;
-      console.log(data)
+      console.log(data);
       setService(data);
     } catch (e) {
       message.error("Fail to load data");
@@ -83,25 +83,16 @@ function ViewService() {
     }
   };
 
-  const handleActive = async () => {
-    const formData = new FormData();
-    formData.append("Id", editingServiceId);
-    formData.append("Content", null);
-    formData.append("IsDeleted", false);
+  const handleActive = async (id) => {
+    console.log(id);
 
     try {
-      await api.put("/Combo/update-comboDetails", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      message.success("Service updated successfully!");
-      setUpdateServiceName("");
+      await api.put(`/Combo/Undeleted?comboDetailId=${id}`);
+      message.success("Active service successfully!");
       setEditingServiceId(null);
-      setIsEditing(false);
       getServices();
     } catch (e) {
-      message.error("Failed to update the service");
+      message.error("Failed to active the service");
     }
   };
 
@@ -200,7 +191,7 @@ function ViewService() {
                   defaultHoverBorderColor: "black",
                   defaultHoverColor: "white",
                   defaultHoverBg: "black",
-                  defaultActiveBg:"black",
+                  defaultActiveBg: "black",
                   defaultActiveBorderColor: "black",
                   defaultActiveColor: "black",
                 },
@@ -209,7 +200,7 @@ function ViewService() {
           >
             <Button
               className="view-service__button"
-              onClick={() => handleActive(record)}
+              onClick={() => handleActive(record.id)}
               disabled={!record.isDeleted}
             >
               Active
@@ -304,7 +295,7 @@ function ViewService() {
                   value={updateServiceName}
                   onChange={(e) => setUpdateServiceName(e.target.value)}
                 />
-            
+
                 <div className="update-service__button">
                   <ConfigProvider
                     theme={{

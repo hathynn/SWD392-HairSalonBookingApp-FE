@@ -7,11 +7,11 @@ function MemberAdmin() {
     const [users, setUsers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [isBanning, setIsBanning] = useState(true); // To track if we are banning or unbanning
+    const [isBanning, setIsBanning] = useState(true); 
 
     const showModal = (userId, isBanning) => {
-        setSelectedUserId(userId); // Set the selected user ID
-        setIsBanning(isBanning); // Set if action is ban or unban
+        setSelectedUserId(userId); 
+        setIsBanning(isBanning); 
         setIsModalOpen(true);
     };
 
@@ -23,13 +23,13 @@ function MemberAdmin() {
                 unbanUser(selectedUserId);
             }
             setIsModalOpen(false);
-            setSelectedUserId(null); // Clear the selected user ID
+            setSelectedUserId(null); 
         }
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
-        setSelectedUserId(null); // Clear the selected user ID
+        setSelectedUserId(null); 
     };
 
     const fetchMemberSalon = async () => {
@@ -42,7 +42,6 @@ function MemberAdmin() {
             }
         } catch (error) {
             message.error("An error occurred while fetching the user data.");
-            console.error("API Error:", error);
         }
     };
 
@@ -52,34 +51,30 @@ function MemberAdmin() {
 
     const banUser = async (userId) => {
         try {
-            const response = await api.post(`/Admin/BanUser?userId=${userId}`);
-            if (response.data.error === 0) {
+            const response = await api.put(`/Admin/BanSalonMember?salonMemberId=${userId}`);
+            if (response.data.error === 1) {
                 message.success("User has been banned successfully.");
-                fetchMemberSalon(); // Refresh the list after banning a user
+                fetchMemberSalon(); 
             } else {
                 message.error(response.data.message || "Failed to ban user.");
             }
         } catch (error) {
             message.error("An error occurred while banning the user.");
-            console.error("API Error:", error);
         }
     };
 
-    const unbanUser = async () => {
-        message.success("User has been unbanned successfully");
-        // try {
-        //     const response = await api.post(`/Admin/UnbanUser?userId=${userId}`);
-        //     if (response.data.error === 0) {
-        //         message.success("User has been unbanned successfully.");
-        //         fetchMemberSalon(); // Refresh the list after unbanning a user
-        //     } else {
-        //         message.error(response.data.message || "Failed to unban user.");
-        //     }
-        //     message.success("User has been unbanned successfully");
-        // } catch (error) {
-        //     message.error("An error occurred while unbanning the user.");
-        //     console.error("API Error:", error);
-        // }
+    const unbanUser = async (userId) => {
+        try {
+            const response = await api.put(`/Admin/UnbanSalonMember?salonMemberId=${userId}`);
+            if (response.data.error === 1) {
+                message.success("User has been unbanned successfully.");
+                fetchMemberSalon(); 
+            } else {
+                message.error(response.data.message || "Failed to unban user.");
+            }
+        } catch (error) {
+            message.error("An error occurred while unbanning the user.");
+        }
     };
 
     const columns = [
@@ -117,9 +112,9 @@ function MemberAdmin() {
             render: (_, record) => (
                 <Button
                     style={{ fontWeight: "600" }}
-                    onClick={() => showModal(record.id, record.status)}
+                    onClick={() => showModal(record.id, !record.isDeleted)} 
                 >
-                    {record.status ? 'Ban user' : 'Unban user'}
+                    {record.isDeleted ? 'Unban user' : 'Ban user'}
                 </Button>
             ),
         },

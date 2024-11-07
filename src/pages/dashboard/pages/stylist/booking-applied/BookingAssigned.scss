@@ -1,24 +1,89 @@
-@import '../../../../../styles/variables.scss';
+@import "../../../../../styles/variables.scss";
 
-.booking-applied {
-    h2 {
-        color: $secondary-color;
-        text-align: center;
-        margin-top: 20px;
+.booking-table-stylist {
+    padding: 3em 4em 0 0;
+    font-family: $font-secondary !important;
+
+    &__button {
         font-family: $font-secondary;
-        font-size: 30px;
+        font-weight: 600;
     }
 
-    :where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>th,
-    :where(.css-dev-only-do-not-override-ccdg5a).ant-table-wrapper .ant-table-thead>tr>td {
+    &__tag {
+        font-family: $font-secondary;
+    }
+
+    p {
+        font-family: $font-secondary !important;
+    }
+
+    .date-picker-range {
+        margin-bottom: 25px;
+    }
+
+    .ant-table-wrapper {
+        width: 90%;
+        margin: auto auto;
+
+        .ant-table-thead {
+
+            tr {
+                th {
+                    background-color: $primary-color;
+                    color: rgb(0, 0, 0);
+                    font-family: $font-secondary !important;
+                }
+
+                .ant-table-filter-column {
+                    span {
+                        color: white;
+                    }
+                }
+
+                .ant-table-cell::before {
+                    background-color: black !important;
+                }
+            }
+        }
+
+        .ant-pagination .ant-pagination-item-active {
+            font-weight: 600;
+            background-color: #ffffff !important;
+            border-color: #ffffff !important;
+            color: #ffffff;
+        }
+
+        .ant-pagination .ant-pagination-item a {
+            color: black !important;
+        }
+    }
+
+    .confirm-button {
         background-color: $primary-color;
-    }
-
-    :where(.css-dev-only-do-not-override-ccdg5a).ant-pagination .ant-pagination-item-active a {
-        color: $primary-color;
-    }
-
-    :where(.css-dev-only-do-not-override-ccdg5a).ant-pagination .ant-pagination-item-active {
+        color: black;
+        font-family: $font-secondary;
+        font-weight: 500;
         border-color: $primary-color;
+    }
+
+    .cancel-button {
+        background-color: white;
+        color: rgb(117, 115, 115);
+        font-weight: 500;
+    }
+
+    .confirm-button:hover {
+        background-color: black !important;
+        border-color: black;
+    }
+
+    .cancel-button:hover {
+        background-color: #d32f2f;
+        border-color: rgb(0, 0, 0) !important;
+        color: black !important;
+    }
+
+    .modal-confirm p {
+        font-family: $font-secondary;
     }
 }

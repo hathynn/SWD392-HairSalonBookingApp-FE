@@ -66,12 +66,17 @@ export const navDashboardConfigAdmin = [
     label: "Users",
   },
   {
+    key: "15",
+    icon: <TeamOutlined />,
+    label: "Salon Members",
+  },
+  {
     key: "6",
     icon: <ShopOutlined />,
     label: "Salon System",
   },
   {
-    key: "13",
+    key: "14",
     icon: <ShoppingCartOutlined />,
     label: "Service",
   },
@@ -129,6 +134,12 @@ export const navpath = {
   },
   5: {
     path: "/dashboard/admin",
+  },
+  14: {
+    path: "/dashboard/admin/services-manage",
+  },
+  15: {
+    path: "/dashboard/admin/members-manage",
   },
   8: {
     path: "/dashboard/admin/user-manage",

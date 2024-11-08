@@ -109,89 +109,85 @@ function Booking() {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   const [hour, minute] = appointmentTime.split(":");
-
-  //   try {
-  //     // Step 1: Create the booking and get bookingId and paymentId
-  //     const bookingResponse = await api.post(
-  //       `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
-  //     );
-
-  //     if (bookingResponse.data.error === 1) {
-  //       messageApi.error(bookingResponse.data.message);
-  //       return;
-  //     }
-
-  //     const {
-  //       id: bookingId,
-  //       paymentId,
-  //       checkoutUrl,
-  //     } = bookingResponse.data.data;
-  //     messageApi.success("Booking created successfully!");
-  //     console.log(paymentId);
-  //     console.log("Booking", bookingId);
-  //     console.log(bookingResponse.data.data);
-  //     // // Step 2: Redirect to payment URL if available
-  //     // if (checkoutUrl) {
-  //     //   window.location.href = checkoutUrl;
-  //     // } else {
-  //     //   messageApi.error("Cannot find payment URL");
-  //     //   return;
-  //     // }
-
-  //     // // Step 3: After payment completion, update payment status to "Paid"
-  //     // await api.put(`/Payments/update-payment/${paymentId}?PaymentStatus=Paid`);
-  //     // messageApi.success("Payment completed successfully!");
-  //   } catch (error) {
-  //     console.error(error);
-  //     const errorMessage = error.response?.data.message || "An error occurred";
-  //     messageApi.error(errorMessage);
-  //   }
-  // };
-  
   const handleSubmit = async () => {
     const [hour, minute] = appointmentTime.split(":");
+
     try {
-      const response = await api.post(
+      // Step 1: Create the booking and get bookingId and paymentId
+      const bookingResponse = await api.post(
         `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
       );
-  
-      console.log(response);
-  
-      // Check if the response contains an error even if status is 200
-      if (response.data.error === 1) {
-        messageApi.error(response.data.message);  // Show backend error message
+
+      if (bookingResponse.data.error === 1) {
+        messageApi.error(bookingResponse.data.message);
+        return;
+      }
+
+      const { id: bookingId, paymentId } = bookingResponse.data.data;
+      messageApi.success("Booking created successfully!");
+      console.log(paymentId);
+      localStorage.setItem("paymentId", paymentId);
+      console.log("Booking", bookingId);
+      console.log(bookingResponse.data.data);
+      const paymentResponse = await api.post(
+        `/Payments/create?bookingId=${bookingId}`
+      );
+
+      const paymentUrl = paymentResponse.data.data.checkoutUrl;
+      if (paymentUrl) {
+        window.location.href = paymentUrl;
       } else {
-        const bookingId = response.data.data.id;
-        messageApi.success("Booking successfully!");
-  
-        // Proceed to payment
-        const paymentResponse = await api.post(
-          `/Payments/create?bookingId=${bookingId}`
-        );
-  
-        const paymentUrl = paymentResponse.data.data.checkoutUrl;
-        if (paymentUrl) {
-          window.location.href = paymentUrl;
-        } else {
-          messageApi.error("Cannot find payment URL");
-        }
+        messageApi.error("Cannot find payment URL");
       }
     } catch (error) {
       console.error(error);
-  
-      // Enhanced error handling for backend response
-      if (error.response) {
-        const errorMessage = error.response.data.message || 'An error occurred';
-        messageApi.error(errorMessage);
-      } else if (error.request) {
-        messageApi.error("Booking failed. No response from server.");
-      } else {
-        messageApi.error("Booking failed. Error: " + error.message);
-      }
+      const errorMessage = error.response?.data.message || "An error occurred";
+      messageApi.error(errorMessage);
     }
   };
+
+  // const handleSubmit = async () => {
+  //   const [hour, minute] = appointmentTime.split(":");
+  //   try {
+  //     const response = await api.post(
+  //       `/Booking/AddBooking/AddBooking?CustomerId=${userId}&salonId=${personalInfo.salonId}&SalonMemberId=${selectedStylist.id}&cuttingDate=${appointmentDate}&hour=${hour}&minute=${minute}&ComboServiceId=${selectedService.id}&CustomerName=${personalInfo.fullName}&CustomerPhoneNumber=${personalInfo.phone}`
+  //     );
+
+  //     console.log(response);
+
+  //     // Check if the response contains an error even if status is 200
+  //     if (response.data.error === 1) {
+  //       messageApi.error(response.data.message);  // Show backend error message
+  //     } else {
+  //       const bookingId = response.data.data.id;
+  //       messageApi.success("Booking successfully!");
+
+  //       // Proceed to payment
+  //       const paymentResponse = await api.post(
+  //         `/Payments/create?bookingId=${bookingId}`
+  //       );
+
+  //       const paymentUrl = paymentResponse.data.data.checkoutUrl;
+  //       if (paymentUrl) {
+  //         window.location.href = paymentUrl;
+  //       } else {
+  //         messageApi.error("Cannot find payment URL");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+
+  //     // Enhanced error handling for backend response
+  //     if (error.response) {
+  //       const errorMessage = error.response.data.message || 'An error occurred';
+  //       messageApi.error(errorMessage);
+  //     } else if (error.request) {
+  //       messageApi.error("Booking failed. No response from server.");
+  //     } else {
+  //       messageApi.error("Booking failed. Error: " + error.message);
+  //     }
+  //   }
+  // };
   return (
     <div className="booking">
       {contextHolder}

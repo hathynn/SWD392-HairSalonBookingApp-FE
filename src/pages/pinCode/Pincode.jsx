@@ -43,13 +43,6 @@ function Pincode() {
         }
     };
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (count > 0) setCount(count - 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [count]);
-
     return (
         <div className="pin">
             <div className="pin__wrapper">
@@ -67,22 +60,8 @@ function Pincode() {
                     style={{ width: "100%", marginBottom: "10px" }} 
                 />
                 {message1 && <p className="pin__error">{message1}</p>}
-                {count > 0 ? (
-                    <p>PIN expires in: {count}s</p>
-                ) : (
-                    <p>Your PIN has expired</p>
-                )}
                 <div className="pin__btn" onClick={verifyPin}>
                     Verify Pin
-                </div>
-                <div
-                    className="pin__btn"
-                    onClick={() => {
-                        setCount(60);
-                        setPin(""); // Reset the pin input
-                    }}
-                >
-                    <ReloadOutlined /> Resend
                 </div>
             </div>
         </div>

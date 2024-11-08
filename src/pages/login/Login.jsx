@@ -133,16 +133,13 @@ function Login() {
               Recovery Password
             </a>
           </div>
-          <button type="submit" className="login-btn">
+          <button type="submit" className="login-btn" style={{marginTop:'3em'}}>
             Login
           </button>
           {/* {error && <p className="error-message">{error}</p>} */}
         </form>
         <div className="login-options">
-          <button className="google-login-btn">
-            <FontAwesomeIcon icon={faGoogle} style={{ paddingTop: "0.1em" }} />
-            Sign in with Google
-          </button>
+         
           <p>
             Don’t have an account yet?{" "}
             <a href="/sign-up" className="signup-link">

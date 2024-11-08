@@ -199,8 +199,8 @@ const BookingManager = () => {
                     ? "Paid"
                     : detail.paymentStatus?.toLowerCase() === "pending"
                     ? "Pending"
-                    : detail.paymentStatus?.toLowerCase() === "refund"
-                    ? "Refund"
+                    : detail.paymentStatus?.toLowerCase() === "cancel"
+                    ? "Cancel"
                     : "Unknown"
                 }
               />

@@ -144,17 +144,22 @@ const BookingStaff = () => {
         ) : record.bookingStatus &&
           record.bookingStatus.toLowerCase() === "checked" ? (
           <Tag className="booking-table-staff__tag" color="geekblue">
+            Checked
+          </Tag>
+        ) : record.bookingStatus &&
+          record.bookingStatus.toLowerCase() === "confirmed" ? (
+          <Tag className="booking-table-staff__tag" color="geekblue">
             Confirmed
           </Tag>
         ) : record.bookingStatus &&
-          record.bookingStatus.toLowerCase() === "inProgress" ? (
+          record.bookingStatus.toLowerCase() === "in progress" ? (
           <Tag className="booking-table-staff__tag" color="yellow">
             In Progress
           </Tag>
         ) : record.bookingStatus &&
           record.bookingStatus.toLowerCase() === "completed" ? (
           <Tag className="booking-table-staff__tag" color="green">
-            Checked
+            Completed
           </Tag>
         ) : (
           <Tag className="booking-table-staff__tag" color="default">
@@ -163,9 +168,10 @@ const BookingStaff = () => {
         ),
       filters: [
         { text: "Pending", value: "pending" },
-        { text: "Confirmed", value: "checked" },
-        { text: "In Progress", value: "inProgress" },
-        { text: "Checked", value: "completed" },
+        { text: "Confirmed", value: "confirmed" },
+        { text: "Checked", value: "checked" },
+        { text: "In Progress", value: "in progress" },
+        { text: "Completed", value: "completed" },
         { text: "Unknown", value: "unknown" },
       ],
       onFilter: (value, record) =>
@@ -287,8 +293,8 @@ const BookingStaff = () => {
                     ? "success"
                     : detail.paymentStatus?.toLowerCase() === "pending"
                     ? "processing"
-                    : detail.paymentStatus?.toLowerCase() === "refund"
-                    ? "error"
+                    : detail.paymentStatus?.toLowerCase() === "cancel"
+                    ? "Cancel"
                     : "default"
                 }
                 text={
@@ -296,8 +302,8 @@ const BookingStaff = () => {
                     ? "Paid"
                     : detail.paymentStatus?.toLowerCase() === "pending"
                     ? "Pending"
-                    : detail.paymentStatus?.toLowerCase() === "refund"
-                    ? "Refund"
+                    : detail.paymentStatus?.toLowerCase() === "cancel"
+                    ? "Cancel"
                     : "Unknown"
                 }
               />
@@ -310,7 +316,7 @@ const BookingStaff = () => {
             {detail.salonName}
             </Descriptions.Item>
             <Descriptions.Item label="Combo">
-              {detail.comboServiceName.comboServiceName}
+              {detail.comboServiceName?.comboServiceName}
             </Descriptions.Item>
           </Descriptions>
         ) : (

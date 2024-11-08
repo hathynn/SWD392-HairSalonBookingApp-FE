@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./CancelCard.scss";
 import thankyou from "../../assets/1.png";
-import { Button, ConfigProvider } from "antd";
+import { Button, ConfigProvider, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { CloseCircleTwoTone } from "@ant-design/icons";
+import api from "../../config/axios";
 function CancelCard() {
   const nav = useNavigate();
+
+  const paymentId = localStorage.getItem("paymentId"); 
+
+  
+    const updatePaymentStatus = async () => {
+      console.log(paymentId)
+      if (paymentId) {
+        try {
+          const response = await api.put(`/Payments/update-payment/${paymentId}?PaymentStatus=Cancel`);
+          
+          if (response.status === 200 && response.data.error === 0) {
+            message.success("Payment status updated successfully!");
+            localStorage.removeItem("paymentId");
+          } else {
+            message.error("Failed to update payment status.");
+          }
+        } catch (error) {
+          message.error("An error occurred while updating payment status.");
+          console.error("API Error:", error);
+        }
+      }
+    };
+
+    useEffect(() => {
+      updatePaymentStatus();
+    }, []);
+
   return (
     <div className="cancel-card">
       <img

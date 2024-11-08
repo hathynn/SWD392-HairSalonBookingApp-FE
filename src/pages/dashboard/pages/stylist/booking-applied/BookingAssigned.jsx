@@ -182,9 +182,9 @@ function BookingAssigned() {
         const status = record.status?.toLowerCase();
         let color = "default";
         let text = "Unknown";
-        if (status === "checked") {
+        if (status === "confirmed") {
           color = "geekblue";
-          text = "Checked";
+          text = "Confirmed";
         } else if (status === "inprogress") {
           color = "yellow";
           text = "In Progress";
@@ -235,7 +235,7 @@ function BookingAssigned() {
       render: (_, record) => (
         <Button
           className="booking-table-stylist__button"
-          disabled={record.status.toLowerCase() !== "checked"}
+          disabled={record.status.toLowerCase() !== "confirmed"}
           onClick={() => startProgress(record.id)}
         >
           {record.status.toLowerCase() === "inprogress" ? "In Progress" : "Start Progress"}
